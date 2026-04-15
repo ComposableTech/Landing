@@ -100,24 +100,29 @@
       margin-top: -4px; user-select: none; cursor: ew-resize;
     }
     .nav-slider-track { position: absolute; left:0; right:0; height:2px; background: var(--slate2); border-radius:99px; }
-    .nav-slider-fill  { position:absolute; left:0; height:2.5px; border-radius:99px; pointer-events:none;
+    /* Fill: fixed full-width, scaled from left via transform — no layout triggers */
+    .nav-slider-fill  { position:absolute; left:0; width:100%; height:2.5px; border-radius:99px; pointer-events:none;
       background: linear-gradient(90deg,#3D2DB5 0%,#F5A623 100%);
-      will-change: width; }
-    .nav-slider-thumb { position:absolute; width:14px; height:14px; transform:translateX(-50%);
+      transform-origin: left center;
+      will-change: transform; }
+    /* Thumb: positioned at left:0, translated via transform — no layout triggers */
+    .nav-slider-thumb { position:absolute; left:0; width:14px; height:14px;
+      transform: translateX(-50%);
       border-radius:50%; background:white; border:2px solid #5B4FE9;
-      box-shadow: 0 1px 6px rgba(91,79,233,0.35); cursor:ew-resize; transition: box-shadow 0.15s; }
+      box-shadow: 0 1px 6px rgba(91,79,233,0.35); cursor:ew-resize;
+      will-change: transform; transition: box-shadow 0.15s; }
     .nav-slider-thumb:hover { box-shadow: 0 0 0 4px rgba(91,79,233,0.15), 0 1px 6px rgba(91,79,233,0.3); }
 
     .nav-links { display: flex; align-items: center; gap: 32px; }
     .nav-links a { color: var(--text-2); font-size: 14px; text-decoration: none; transition: color 0.2s; }
     .nav-links a:hover { color: var(--midnight); }
     .nav-cta {
-      background: var(--indigo); color: #fff; font-family: var(--font-b);
-      font-size: 14px; font-weight: 600; padding: 10px 20px;
+      background: var(--amber); color: var(--navy); font-family: var(--font-b);
+      font-size: 14px; font-weight: 700; padding: 10px 20px;
       border-radius: 8px; border: none; cursor: pointer; text-decoration: none;
-      transition: background 0.2s;
+      transition: background 0.2s, box-shadow 0.2s;
     }
-    .nav-cta:hover { background: #4a3fd4; }
+    .nav-cta:hover { background: #e8970f; box-shadow: 0 2px 8px rgba(245,166,35,0.35); }
 
     /* ── HERO ── */
     .hero {
@@ -411,8 +416,8 @@
       <span class="nav-wordmark">COMPOSABLE</span>
       <div class="nav-slider-rail" id="nav-rail">
         <div class="nav-slider-track"></div>
-        <div class="nav-slider-fill" id="nav-fill" style="left:0;width:45%;"></div>
-        <div class="nav-slider-thumb" id="nav-thumb" style="left:45%;"></div>
+        <div class="nav-slider-fill" id="nav-fill" style="transform:scaleX(0.45);"></div>
+        <div class="nav-slider-thumb" id="nav-thumb"></div>
       </div>
     </a>
     <div class="nav-links">
@@ -918,11 +923,19 @@ function scrollToDemo()  { document.getElementById('demo').scrollIntoView({behav
   let dragging = false;
   let confettiFired = false;
 
+  function applyPct(p) {
+    // Use transform only — never touches left/width, so no layout recalc
+    // and the backdrop-filter layer is never invalidated.
+    const railW = rail.offsetWidth;
+    const thumbPx = (p / 100) * railW;
+    // translateX(-50%) centres the thumb; add thumbPx to place it
+    thumb.style.transform = `translateX(calc(${thumbPx}px - 50%))`;
+    fill.style.transform  = `scaleX(${p / 100})`;
+  }
+
   function setPct(p) {
     pct = Math.max(MIN_PCT, Math.min(MAX_PCT, p));
-    thumb.style.left  = pct + '%';
-    fill.style.left   = '0';
-    fill.style.width  = pct + '%';
+    applyPct(pct);
 
     // Confetti at the far right — fires once per drag-to-end
     if (pct >= MAX_PCT && !confettiFired) {
@@ -963,6 +976,10 @@ function scrollToDemo()  { document.getElementById('demo').scrollIntoView({behav
   thumb.addEventListener('touchstart', e => { e.preventDefault(); dragging = true; }, { passive: false });
   thumb.addEventListener('touchmove',  e => { e.preventDefault(); if (dragging) setPct(clientToRailPct(e.touches[0].clientX)); }, { passive: false });
   thumb.addEventListener('touchend',   () => { dragging = false; });
+
+  // Init + keep correct on resize
+  applyPct(pct);
+  window.addEventListener('resize', () => applyPct(pct));
 })();
 </script>
 </body>
