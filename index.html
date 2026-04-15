@@ -66,24 +66,15 @@
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       padding: 0 32px;
-      background: rgba(255,255,255,0.92);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      background: #ffffff;
       border-bottom: 1px solid var(--slate2);
-      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-      /* Promote to own GPU compositing layer so animated children
-         don't invalidate the backdrop-filter layer — prevents blink */
-      transform: translateZ(0);
-      -webkit-transform: translateZ(0);
-      will-change: transform;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
     }
     .nav-inner {
       max-width: 1160px; margin: 0 auto;
       height: 64px; display: flex; align-items: center; justify-content: space-between;
     }
-    .nav-logo { display: inline-flex; flex-direction: column; gap: 0; align-items: stretch; text-decoration: none;
-      /* Isolate animated children from backdrop-filter compositing */
-      isolation: isolate; }
+    .nav-logo { display: inline-flex; flex-direction: column; gap: 0; align-items: stretch; text-decoration: none; }
     .nav-wordmark {
       font-family: var(--font-d); font-size: 17px; font-weight: 700;
       letter-spacing: -0.02em; text-transform: uppercase;
