@@ -16,7 +16,7 @@
       --indigo:   #5B4FE9;
       --indigo-l: #7B72ED;
       --mint:     #00D4B1;
-      --amber:    #F5A623;
+      --amber:    #00D4B1;
       --frost:    #F8F9FB;
       --cloud:    #FFFFFF;
       --slate:    #94A3B8;   /* decorative / borders only — fails AA as body text */
@@ -52,7 +52,7 @@
     @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
 
     .grad-text {
-      background: linear-gradient(90deg, #3D2DB5 0%, #F5A623 50%, #3D2DB5 100%);
+      background: linear-gradient(90deg, #3D2DB5 0%, #00D4B1 50%, #3D2DB5 100%);
       background-size: 200% 100%;
       -webkit-background-clip: text; background-clip: text;
       -webkit-text-fill-color: transparent; color: transparent;
@@ -78,7 +78,7 @@
     .nav-wordmark {
       font-family: var(--font-d); font-size: 17px; font-weight: 700;
       letter-spacing: -0.02em; text-transform: uppercase;
-      background: linear-gradient(90deg, #3D2DB5 0%, #F5A623 50%, #3D2DB5 100%);
+      background: linear-gradient(90deg, #3D2DB5 0%, #00D4B1 50%, #3D2DB5 100%);
       background-size: 200% 100%;
       -webkit-background-clip: text; background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -93,7 +93,7 @@
     .nav-slider-track { position: absolute; left:0; right:0; height:2px; background: var(--slate2); border-radius:99px; }
     /* Fill: fixed full-width, scaled from left via transform — no layout triggers */
     .nav-slider-fill  { position:absolute; left:0; width:100%; height:2.5px; border-radius:99px; pointer-events:none;
-      background: linear-gradient(90deg,#3D2DB5 0%,#F5A623 100%);
+      background: linear-gradient(90deg,#3D2DB5 0%,#00D4B1 100%);
       transform-origin: left center;
       will-change: transform; }
     /* Thumb: positioned at left:0, translated via transform — no layout triggers */
@@ -113,7 +113,7 @@
       border-radius: 8px; border: none; cursor: pointer; text-decoration: none;
       transition: background 0.2s, box-shadow 0.2s;
     }
-    .nav-cta:hover { background: #e8970f; box-shadow: 0 2px 8px rgba(245,166,35,0.35); }
+    .nav-cta:hover { background: #00bfa3; box-shadow: 0 2px 8px rgba(0,212,177,0.35); }
 
     /* ── HERO ── */
     .hero {
@@ -838,7 +838,7 @@ let animId = null;
 function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
 window.addEventListener('resize', resize); resize();
 
-const COLORS = ['#3D2DB5','#5B4FE9','#F5A623','#D4910A','#1B2A4A','#7B72ED'];
+const COLORS = ['#3D2DB5','#5B4FE9','#00D4B1','#00B896','#1B2A4A','#7B72ED'];
 
 function spawnConfetti(x, y) {
   for (let i = 0; i < 80; i++) {
