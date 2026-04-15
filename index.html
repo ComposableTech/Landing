@@ -21,17 +21,23 @@
       --cloud:    #FFFFFF;
       --slate:    #94A3B8;
       --slate2:   #E2E8F0;
-      --surface:  #161F30;
-      --surface2: #1C2840;
+      --slate3:   #CBD5E1;
       --font-d: 'Plus Jakarta Sans', Arial, sans-serif;
       --font-b: 'Inter', Arial, sans-serif;
       --font-m: 'DM Mono', monospace;
+
+      /* demo palette — matches real product */
+      --dp-navy:   #002D5D;
+      --dp-navy2:  #001838;
+      --dp-blue:   #1A5797;
+      --dp-border: #C8D9EC;
+      --dp-bg:     #F8FBFF;
+      --dp-muted:  #5A7A9E;
     }
 
     html { font-size: 16px; scroll-behavior: smooth; }
-    body { background: var(--midnight); color: var(--cloud); font-family: var(--font-b); line-height: 1.6; overflow-x: hidden; }
+    body { background: var(--frost); color: var(--midnight); font-family: var(--font-b); line-height: 1.6; overflow-x: hidden; }
 
-    /* ── TYPOGRAPHY ── */
     h1,h2,h3,h4 { font-family: var(--font-d); letter-spacing: -0.02em; line-height: 1.15; }
     .mono { font-family: var(--font-m); }
 
@@ -40,6 +46,8 @@
       50%  { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.6;transform:scale(1.3)} }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
 
     .grad-text {
       background: linear-gradient(90deg, #5B4FE9 0%, #00D4B1 25%, #F5A623 50%, #7B72ED 75%, #00D4B1 100%);
@@ -49,7 +57,6 @@
       animation: gradFlow 5s ease-in-out infinite;
     }
 
-    /* ── LAYOUT ── */
     .container { max-width: 1160px; margin: 0 auto; padding: 0 32px; }
     section { position: relative; }
 
@@ -57,9 +64,10 @@
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       padding: 0 32px;
-      background: rgba(17,24,39,0.85);
+      background: rgba(255,255,255,0.92);
       backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid var(--slate2);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
     }
     .nav-inner {
       max-width: 1160px; margin: 0 auto;
@@ -80,46 +88,44 @@
       height: 10px; position: relative; display: flex; align-items: center;
       margin-top: -3px; user-select: none;
     }
-    .nav-slider-track { position: absolute; left:0; right:0; height:1.5px; background: rgba(148,163,184,0.15); border-radius:99px; }
+    .nav-slider-track { position: absolute; left:0; right:0; height:1.5px; background: var(--slate3); border-radius:99px; }
     .nav-slider-fill  { position:absolute; left:16%; right:0; height:2px;
       background: linear-gradient(90deg,#5B4FE9 0%,#00D4B1 25%,#F5A623 50%,#7B72ED 75%,#00D4B1 100%);
       background-size: 250% 100%; border-radius:99px; pointer-events:none;
       animation: gradFlow 5s ease-in-out infinite; }
     .nav-slider-thumb { position:absolute; left:calc(16% - 5px); width:10px; height:10px;
       border-radius:50%; background:white; border:1.5px solid #5B4FE9;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.3); }
+      box-shadow: 0 1px 4px rgba(91,79,233,0.3); }
 
     .nav-links { display: flex; align-items: center; gap: 32px; }
     .nav-links a { color: var(--slate); font-size: 14px; text-decoration: none; transition: color 0.2s; }
-    .nav-links a:hover { color: var(--cloud); }
+    .nav-links a:hover { color: var(--midnight); }
     .nav-cta {
       background: var(--indigo); color: #fff; font-family: var(--font-b);
       font-size: 14px; font-weight: 600; padding: 10px 20px;
       border-radius: 8px; border: none; cursor: pointer; text-decoration: none;
-      transition: background 0.2s, transform 0.1s;
+      transition: background 0.2s;
     }
-    .nav-cta:hover { background: var(--indigo-l); }
+    .nav-cta:hover { background: #4a3fd4; }
 
     /* ── HERO ── */
     .hero {
-      padding: 160px 0 120px;
-      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(91,79,233,0.12) 0%, transparent 70%);
-      overflow: hidden;
+      padding: 160px 0 100px;
+      background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(91,79,233,0.06) 0%, transparent 70%);
     }
     .hero-inner { max-width: 1160px; margin: 0 auto; padding: 0 32px; }
 
     .hero-badge {
       display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(91,79,233,0.12); border: 1px solid rgba(91,79,233,0.3);
+      background: rgba(91,79,233,0.07); border: 1px solid rgba(91,79,233,0.2);
       border-radius: 99px; padding: 6px 14px; margin-bottom: 32px;
     }
     .hero-badge-dot { width:7px; height:7px; border-radius:50%; background:var(--mint); animation: pulse 2s ease-in-out infinite; }
-    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.6;transform:scale(1.3)} }
-    .hero-badge span { font-size: 13px; font-weight: 500; color: var(--indigo-l); }
+    .hero-badge span { font-size: 13px; font-weight: 500; color: var(--indigo); }
 
     .hero h1 {
       font-size: clamp(48px, 6vw, 82px); font-weight: 800;
-      line-height: 1.05; margin-bottom: 28px; max-width: 780px;
+      line-height: 1.05; margin-bottom: 28px; max-width: 780px; color: var(--navy);
     }
     .hero-sub {
       font-size: clamp(17px, 2vw, 20px); color: var(--slate); max-width: 580px;
@@ -132,338 +138,440 @@
       font-size: 16px; font-weight: 600; padding: 15px 28px;
       border-radius: 8px; border: none; cursor: pointer;
       transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
-      box-shadow: 0 0 0 0 rgba(91,79,233,0.4);
+      box-shadow: 0 2px 8px rgba(91,79,233,0.25);
     }
-    .btn-primary:hover { background: var(--indigo-l); box-shadow: 0 0 0 6px rgba(91,79,233,0.15); transform: translateY(-1px); }
+    .btn-primary:hover { background: #4a3fd4; box-shadow: 0 4px 16px rgba(91,79,233,0.3); transform: translateY(-1px); }
     .btn-primary:active { transform: translateY(0); }
 
     .btn-secondary {
-      background: transparent; color: var(--cloud); font-family: var(--font-b);
+      background: transparent; color: var(--navy); font-family: var(--font-b);
       font-size: 16px; font-weight: 500; padding: 15px 28px;
-      border-radius: 8px; border: 1px solid rgba(255,255,255,0.15); cursor: pointer;
+      border-radius: 8px; border: 1px solid var(--slate2); cursor: pointer;
       transition: border-color 0.2s, background 0.2s;
     }
-    .btn-secondary:hover { border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.04); }
+    .btn-secondary:hover { border-color: var(--slate3); background: var(--cloud); }
 
     .hero-proof {
       display: flex; align-items: center; gap: 28px; flex-wrap: wrap;
-      padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.07);
+      padding-top: 32px; border-top: 1px solid var(--slate2);
     }
     .hero-proof-item { display: flex; align-items: center; gap: 10px; }
     .hero-proof-item svg { color: var(--mint); flex-shrink: 0; }
     .hero-proof-item span { font-size: 14px; color: var(--slate); }
-    .hero-proof-divider { width: 1px; height: 24px; background: rgba(255,255,255,0.1); }
+    .hero-proof-divider { width: 1px; height: 24px; background: var(--slate2); }
 
     /* ── DEMO CARD ── */
     .demo-section { padding: 0 0 100px; }
     .demo-card {
-      background: var(--surface); border: 1px solid rgba(255,255,255,0.07);
+      background: var(--cloud);
+      border: 1px solid var(--slate2);
       border-radius: 20px; overflow: hidden;
-      box-shadow: 0 40px 80px rgba(0,0,0,0.4);
+      box-shadow: 0 8px 40px rgba(27,42,74,0.1), 0 2px 8px rgba(27,42,74,0.06);
     }
+    /* Browser chrome bar */
     .demo-bar {
-      background: rgba(255,255,255,0.04); padding: 14px 20px;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
+      background: #F1F3F5; padding: 12px 16px;
+      border-bottom: 1px solid var(--slate2);
       display: flex; align-items: center; gap: 8px;
     }
     .demo-dot { width: 12px; height: 12px; border-radius: 50%; }
     .demo-url {
-      margin-left: 12px; flex: 1; background: rgba(255,255,255,0.06);
-      border-radius: 6px; padding: 5px 12px;
+      margin-left: 12px; flex: 1; background: #fff;
+      border: 1px solid var(--slate2); border-radius: 6px; padding: 5px 12px;
       font-family: var(--font-m); font-size: 12px; color: var(--slate);
     }
-    .demo-inner { padding: 40px 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
-    @media(max-width:768px){ .demo-inner{ grid-template-columns:1fr; padding:24px; } }
 
-    .demo-left h3 { font-size: 20px; font-weight: 700; margin-bottom: 6px; }
-    .demo-left p  { font-size: 14px; color: var(--slate); margin-bottom: 32px; }
-
-    .demo-slider-row { margin-bottom: 20px; }
-    .demo-slider-header { display: flex; justify-content: space-between; margin-bottom: 10px; }
-    .demo-slider-label  { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.8); }
-    .demo-slider-val    { font-family: var(--font-m); font-size: 13px; color: var(--cloud); }
-    .demo-track { height: 6px; background: rgba(255,255,255,0.08); border-radius: 99px; position: relative; cursor: pointer; }
-    .demo-fill  { height: 100%; border-radius: 99px; position: absolute; left: 0; top: 0; pointer-events: none; }
-    .demo-thumb {
-      width: 18px; height: 18px; border-radius: 50%; background: white;
-      position: absolute; top: 50%; transform: translate(-50%, -50%);
-      box-shadow: 0 2px 6px rgba(0,0,0,0.3); cursor: ew-resize;
-      transition: transform 0.1s, box-shadow 0.1s;
+    /* Demo header */
+    .demo-header {
+      background: var(--dp-navy2);
+      padding: 16px 32px;
+      display: flex; align-items: center; justify-content: space-between;
     }
-    .demo-thumb:hover { transform: translate(-50%,-50%) scale(1.2); box-shadow: 0 0 0 4px rgba(91,79,233,0.2), 0 2px 6px rgba(0,0,0,0.3); }
-
-    .demo-tax {
-      background: rgba(0,212,177,0.08); border: 1px solid rgba(0,212,177,0.2);
-      border-radius: 10px; padding: 14px 18px; margin-top: 24px;
+    .demo-header-title {
+      font-family: var(--font-d); font-size: 16px; font-weight: 700; color: #fff;
+    }
+    .demo-header-meta { font-size: 12px; color: rgba(255,255,255,0.5); }
+    .demo-subheader {
+      background: var(--dp-navy); border-bottom: 1px solid rgba(26,87,151,0.4);
+      padding: 10px 32px;
       display: flex; justify-content: space-between; align-items: center;
     }
-    .demo-tax-label { font-size: 12px; color: rgba(255,255,255,0.6); }
-    .demo-tax-val   { font-family: var(--font-m); font-size: 20px; font-weight: 500; color: var(--mint); }
+    .demo-subheader span { font-size: 13px; color: rgba(255,255,255,0.6); }
+    .demo-subheader strong { color: #fff; }
 
-    .demo-right { display: flex; flex-direction: column; gap: 16px; }
-    .demo-stat {
-      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 12px; padding: 20px 24px;
+    /* Demo main layout */
+    .demo-main {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0;
     }
-    .demo-stat-num { font-family: var(--font-m); font-size: 28px; font-weight: 500; color: var(--cloud); margin-bottom: 4px; }
-    .demo-stat-num .unit { font-size: 16px; color: var(--slate); }
-    .demo-stat-label { font-size: 13px; color: var(--slate); }
-    .demo-stat.green .demo-stat-num { color: var(--mint); }
-    .demo-stat.amber .demo-stat-num { color: var(--amber); }
+    @media(max-width:900px){ .demo-main{ grid-template-columns:1fr; } }
+
+    /* Demo left: sliders */
+    .demo-left { padding: 28px 28px 28px 32px; border-right: 1px solid var(--dp-border); }
+    .demo-section-label {
+      font-family: var(--font-d); font-size: 10px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.18em; color: var(--dp-muted);
+      margin-bottom: 10px;
+    }
+
+    /* Package info */
+    .demo-pkg {
+      border: 1px solid var(--dp-border); margin-bottom: 20px;
+    }
+    .demo-pkg-grid { display: grid; grid-template-columns: 1fr 1fr; divide-x: var(--dp-border); }
+    .demo-pkg-stat {
+      padding: 12px 14px; border-right: 1px solid var(--dp-border);
+    }
+    .demo-pkg-stat:last-child { border-right: 0; }
+    .demo-pkg-stat-label {
+      font-family: var(--font-d); font-size: 10px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.12em; color: var(--dp-muted); margin-bottom: 4px;
+    }
+    .demo-pkg-stat-val { font-size: 18px; font-weight: 700; color: var(--dp-navy); font-family: var(--font-m); }
+    .demo-pkg-stat-sub { font-size: 11px; color: var(--dp-muted); margin-top: 2px; }
+    .demo-pkg-meta {
+      background: var(--dp-bg); border-top: 1px solid var(--dp-border);
+      padding: 8px 14px; display: flex; gap: 20px;
+    }
+    .demo-pkg-meta span { font-size: 11px; color: var(--dp-muted); }
+    .demo-pkg-meta strong { color: var(--dp-navy); font-weight: 600; }
+
+    /* Plan picker */
+    .demo-plan-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; margin-bottom: 20px; }
+    .demo-plan-btn {
+      border: 1px solid var(--dp-border); background: #fff; padding: 10px 8px;
+      text-align: left; cursor: pointer; transition: all 0.15s;
+    }
+    .demo-plan-btn:hover { border-color: var(--dp-blue); }
+    .demo-plan-btn.active { border-color: var(--dp-navy); background: var(--dp-navy); }
+    .demo-plan-name {
+      font-family: var(--font-d); font-size: 9px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.14em; margin-bottom: 2px;
+    }
+    .demo-plan-btn .demo-plan-name { color: var(--dp-muted); }
+    .demo-plan-btn.active .demo-plan-name { color: rgba(255,255,255,0.6); }
+    .demo-plan-pool { font-size: 14px; font-weight: 700; color: var(--dp-navy); font-family: var(--font-m); }
+    .demo-plan-btn.active .demo-plan-pool { color: #fff; }
+    .demo-plan-desc { font-size: 10px; color: var(--dp-muted); margin-top: 2px; }
+    .demo-plan-btn.active .demo-plan-desc { color: rgba(255,255,255,0.5); }
+
+    /* Allocation sliders */
+    .demo-sliders { border: 1px solid var(--dp-border); }
+    .demo-slider-row { padding: 12px 14px; border-bottom: 1px solid var(--dp-border); }
+    .demo-slider-row:last-child { border-bottom: 0; }
+    .demo-slider-row.accent-navy  { border-left: 3px solid var(--dp-navy); }
+    .demo-slider-row.accent-green { border-left: 3px solid #10B981; }
+    .demo-slider-row.accent-indigo { border-left: 3px solid #5B6ED2; }
+    .demo-slider-row.accent-violet { border-left: 3px solid #7087FA; }
+    .demo-slider-row.accent-sky    { border-left: 3px solid #38BDF8; }
+    .demo-slider-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+    .demo-slider-label { font-size: 12px; font-weight: 500; color: var(--midnight); }
+    .demo-slider-desc  { font-size: 11px; color: var(--dp-muted); margin-left: 6px; }
+    .demo-slider-amount {
+      font-family: var(--font-m); font-size: 13px; font-weight: 600; color: var(--dp-navy);
+      background: #fff; border: 1px solid var(--dp-border); border-radius: 4px; padding: 3px 8px;
+      min-width: 90px; text-align: right;
+    }
+    .demo-slider-amount.readonly { background: var(--dp-bg); color: #9aafc4; font-weight: 400; border: none; }
+    .demo-track-wrap { position: relative; height: 8px; margin-bottom: 4px; }
+    .demo-track-bg { position: absolute; inset: 0; background: #E2EAF3; border-radius: 99px; }
+    .demo-track-fill { position: absolute; top:0; left:0; height:100%; border-radius:99px; pointer-events:none; transition: width 0.1s; }
+    .demo-range-input {
+      position: absolute; inset: 0; width: 100%; opacity: 0; height: 100%;
+      cursor: pointer; margin: 0;
+    }
+    .demo-range-input:disabled { cursor: default; }
+    .demo-track-thumb {
+      position: absolute; top: 50%; transform: translate(-50%, -50%);
+      width: 16px; height: 16px; border-radius: 50%; background: #fff;
+      border: 2px solid var(--indigo); box-shadow: 0 1px 4px rgba(91,79,233,0.25);
+      pointer-events: none; transition: left 0.1s;
+    }
+    .demo-track-minmax { display: flex; justify-content: space-between; font-size: 10px; color: #9aafc4; }
+
+    /* Flex pool header */
+    .demo-flex-pool-header {
+      background: var(--dp-bg); padding: 10px 14px; border-bottom: 1px solid var(--dp-border);
+    }
+    .demo-flex-pool-bar-wrap { margin-top: 6px; height: 5px; background: var(--dp-border); border-radius: 99px; overflow: hidden; }
+    .demo-flex-pool-bar { height: 100%; background: #5B6ED2; border-radius: 99px; transition: width 0.15s; }
+    .demo-flex-pool-bar.over { background: #d97706; }
+
+    /* Demo total row */
+    .demo-total-row {
+      background: var(--dp-bg); padding: 10px 14px;
+      display: flex; justify-content: space-between; align-items: center;
+      border-top: 1px solid var(--dp-border);
+    }
+
+    /* Demo right: comparison */
+    .demo-right { padding: 28px 32px 28px 28px; }
+    .demo-compare-header { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-bottom: 0; }
+    .demo-col-label {
+      padding: 8px 12px;
+      font-family: var(--font-d); font-size: 10px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.18em;
+    }
+    .demo-col-before { background: var(--dp-bg); color: var(--dp-muted); border: 1px solid var(--dp-border); border-right: 0; }
+    .demo-col-after  { background: var(--dp-navy); color: rgba(255,255,255,0.7); border: 1px solid var(--dp-navy); }
+
+    .demo-takehome-row { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--dp-border); border-top: 0; }
+    .demo-takehome-before { padding: 16px 12px; background: var(--dp-bg); border-right: 1px solid var(--dp-border); }
+    .demo-takehome-after  { padding: 16px 12px; background: #F2F6FF; }
+    .demo-takehome-label { font-size: 10px; color: var(--dp-muted); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 500; margin-bottom: 4px; }
+    .demo-takehome-val { font-family: var(--font-m); font-size: 24px; font-weight: 700; color: var(--dp-navy); }
+    .demo-takehome-after .demo-takehome-val { color: var(--dp-navy); }
+
+    .demo-tax-table { border: 1px solid var(--dp-border); border-top: 0; }
+    .demo-tax-row { display: grid; grid-template-columns: auto 1fr 1fr; border-bottom: 1px solid var(--dp-border); }
+    .demo-tax-row:last-child { border-bottom: 0; }
+    .demo-tax-row-lbl { padding: 8px 12px; font-size: 12px; color: var(--dp-muted); align-self: center; white-space: nowrap; }
+    .demo-tax-row-b   { padding: 8px 10px; font-family: var(--font-m); font-size: 12px; color: #64748B; text-align: right; background: #fff; border-left: 1px solid var(--dp-border); }
+    .demo-tax-row-a   { padding: 8px 10px; font-family: var(--font-m); font-size: 12px; color: var(--dp-muted); text-align: right; background: var(--dp-bg); border-left: 1px solid var(--dp-border); }
+    .demo-tax-row.bold .demo-tax-row-lbl { font-weight: 600; color: var(--dp-navy); }
+    .demo-tax-row.bold .demo-tax-row-b   { font-weight: 700; color: var(--dp-navy); }
+    .demo-tax-row.bold .demo-tax-row-a   { font-weight: 700; color: var(--dp-navy); }
+
+    .demo-savings-panel {
+      background: var(--dp-navy2); border: 1px solid var(--dp-navy); border-top: 2px solid var(--dp-navy);
+      padding: 16px;
+    }
+    .demo-savings-label {
+      font-family: var(--font-d); font-size: 10px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.18em; color: rgba(255,255,255,0.5); margin-bottom: 12px;
+    }
+    .demo-savings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 12px; }
+    .demo-savings-item-label { font-size: 11px; color: rgba(255,255,255,0.45); margin-bottom: 2px; }
+    .demo-savings-item-val { font-family: var(--font-m); font-size: 22px; font-weight: 700; color: #fff; }
+    .demo-benefit-lines { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 10px; display: flex; flex-direction: column; gap: 4px; }
+    .demo-benefit-line { display: flex; justify-content: space-between; font-size: 11px; }
+    .demo-benefit-line span { color: rgba(255,255,255,0.55); }
+    .demo-benefit-line strong { font-family: var(--font-m); color: rgba(255,255,255,0.85); font-weight: 600; }
+    .demo-savings-note { font-size: 10px; color: rgba(255,255,255,0.3); margin-top: 10px; }
+
+    .demo-disclaimer {
+      border: 1px solid #FDE68A; background: #FFFBEB;
+      padding: 12px 16px; margin-top: 12px;
+    }
+    .demo-disclaimer-title { font-family: var(--font-d); font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #92400E; margin-bottom: 4px; }
+    .demo-disclaimer ul { font-size: 10px; color: #B45309; list-style: disc inside; line-height: 1.6; }
 
     /* ── LOGO BAR ── */
-    .logobar { padding: 56px 0; border-top: 1px solid rgba(255,255,255,0.06); border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .logobar { padding: 56px 0; background: var(--cloud); border-top: 1px solid var(--slate2); border-bottom: 1px solid var(--slate2); }
     .logobar-label { text-align: center; font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--slate); margin-bottom: 28px; }
     .logobar-logos { display: flex; align-items: center; justify-content: center; gap: 48px; flex-wrap: wrap; }
-    .logobar-logos span { font-family: var(--font-d); font-size: 16px; font-weight: 700; color: rgba(148,163,184,0.45); letter-spacing: -0.01em; }
+    .logobar-logos span { font-family: var(--font-d); font-size: 16px; font-weight: 700; color: var(--slate3); letter-spacing: -0.01em; }
 
     /* ── PROBLEM ── */
     .problem { padding: 120px 0; }
-    .section-eyebrow { font-family: var(--font-m); font-size: 12px; color: var(--mint); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px; }
-    .problem h2 { font-size: clamp(32px, 4vw, 52px); font-weight: 800; max-width: 640px; margin-bottom: 24px; }
+    .section-eyebrow { font-family: var(--font-m); font-size: 12px; color: var(--indigo); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px; }
+    .problem h2 { font-size: clamp(32px, 4vw, 52px); font-weight: 800; max-width: 640px; margin-bottom: 24px; color: var(--navy); }
     .problem-lead { font-size: 18px; color: var(--slate); max-width: 580px; line-height: 1.7; margin-bottom: 64px; }
     .problem-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
     @media(max-width:768px){ .problem-grid{ grid-template-columns:1fr; } }
     .problem-card {
-      background: var(--surface); border: 1px solid rgba(255,255,255,0.06);
+      background: var(--cloud); border: 1px solid var(--slate2);
       border-radius: 16px; padding: 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
     }
     .problem-icon { font-size: 28px; margin-bottom: 16px; }
-    .problem-card h4 { font-size: 17px; font-weight: 700; margin-bottom: 10px; }
+    .problem-card h4 { font-size: 17px; font-weight: 700; margin-bottom: 10px; color: var(--navy); }
     .problem-card p  { font-size: 14px; color: var(--slate); line-height: 1.6; }
-    .problem-card.villain { border-color: rgba(239,68,68,0.2); }
-    .problem-card.villain h4 { color: #F87171; }
+    .problem-card.villain { border-color: rgba(239,68,68,0.25); background: #FFF5F5; }
+    .problem-card.villain h4 { color: #DC2626; }
 
     /* ── HOW IT WORKS ── */
-    .how { padding: 120px 0; background: radial-gradient(ellipse 60% 40% at 50% 50%, rgba(91,79,233,0.07) 0%, transparent 70%); }
+    .how { padding: 120px 0; background: var(--cloud); border-top: 1px solid var(--slate2); border-bottom: 1px solid var(--slate2); }
     .how-header { text-align: center; margin-bottom: 80px; }
-    .how h2 { font-size: clamp(32px,4vw,52px); font-weight: 800; margin-bottom: 16px; }
+    .how h2 { font-size: clamp(32px,4vw,52px); font-weight: 800; margin-bottom: 16px; color: var(--navy); }
     .how-sub { font-size: 18px; color: var(--slate); max-width: 520px; margin: 0 auto; }
     .how-steps { display: grid; grid-template-columns: repeat(3,1fr); gap: 32px; position: relative; }
     @media(max-width:768px){ .how-steps{ grid-template-columns:1fr; } }
     .how-step {
-      background: var(--surface); border: 1px solid rgba(255,255,255,0.06);
+      background: var(--frost); border: 1px solid var(--slate2);
       border-radius: 20px; padding: 40px 32px; position: relative;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
     }
     .how-step-num {
       width: 44px; height: 44px; border-radius: 50%;
-      background: rgba(91,79,233,0.15); border: 1px solid rgba(91,79,233,0.3);
+      background: rgba(91,79,233,0.08); border: 1px solid rgba(91,79,233,0.2);
       display: flex; align-items: center; justify-content: center;
-      font-family: var(--font-m); font-size: 15px; font-weight: 500; color: var(--indigo-l);
+      font-family: var(--font-m); font-size: 15px; font-weight: 500; color: var(--indigo);
       margin-bottom: 24px;
     }
-    .how-step h3 { font-size: 19px; font-weight: 700; margin-bottom: 12px; }
+    .how-step h3 { font-size: 19px; font-weight: 700; margin-bottom: 12px; color: var(--navy); }
     .how-step p  { font-size: 14px; color: var(--slate); line-height: 1.65; }
     .how-step-connector {
       position: absolute; top: 62px; right: -17px;
-      width: 34px; height: 2px; background: rgba(91,79,233,0.3);
+      width: 34px; height: 2px; background: rgba(91,79,233,0.2);
       z-index: 1;
     }
     .how-step-connector::after {
       content: ''; position: absolute; right: -1px; top: -4px;
       border-top: 5px solid transparent; border-bottom: 5px solid transparent;
-      border-left: 8px solid rgba(91,79,233,0.4);
+      border-left: 8px solid rgba(91,79,233,0.3);
     }
 
     /* ── ROI ── */
     .roi { padding: 120px 0; }
     .roi-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
     @media(max-width:768px){ .roi-inner{ grid-template-columns:1fr; gap:48px; } }
-    .roi h2 { font-size: clamp(30px,3.5vw,48px); font-weight: 800; margin-bottom: 20px; }
+    .roi h2 { font-size: clamp(30px,3.5vw,48px); font-weight: 800; margin-bottom: 20px; color: var(--navy); }
     .roi-lead { font-size: 17px; color: var(--slate); line-height: 1.7; margin-bottom: 40px; }
     .roi-numbers { display: flex; flex-direction: column; gap: 20px; }
     .roi-num {
       display: flex; align-items: flex-start; gap: 20px;
-      background: var(--surface); border: 1px solid rgba(255,255,255,0.06);
+      background: var(--cloud); border: 1px solid var(--slate2);
       border-radius: 14px; padding: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
     }
     .roi-num-val { font-family: var(--font-m); font-size: 32px; font-weight: 500; line-height: 1; min-width: 100px; }
-    .roi-num-val.green { color: var(--mint); }
-    .roi-num-val.amber { color: var(--amber); }
-    .roi-num-val.indigo { color: var(--indigo-l); }
-    .roi-num-desc h5 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+    .roi-num-val.green  { color: var(--mint); }
+    .roi-num-val.amber  { color: var(--amber); }
+    .roi-num-val.indigo { color: var(--indigo); }
+    .roi-num-desc h5 { font-size: 15px; font-weight: 600; margin-bottom: 4px; color: var(--navy); }
     .roi-num-desc p  { font-size: 13px; color: var(--slate); line-height: 1.5; }
-    .roi-disclaimer { font-size: 11px; color: rgba(148,163,184,0.5); margin-top: 16px; font-style: italic; }
+    .roi-disclaimer { font-size: 11px; color: var(--slate3); margin-top: 16px; font-style: italic; }
 
     .roi-right { display: flex; flex-direction: column; gap: 20px; }
     .roi-card {
-      background: var(--surface); border: 1px solid rgba(255,255,255,0.06);
+      background: var(--cloud); border: 1px solid var(--slate2);
       border-radius: 16px; padding: 28px 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
     }
-    .roi-card h4 { font-size: 15px; font-weight: 600; color: var(--slate); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.05em; font-family: var(--font-m); font-size: 11px; }
-    .roi-card .big { font-family: var(--font-d); font-size: 36px; font-weight: 800; line-height: 1; margin-bottom: 6px; }
+    .roi-card h4 { font-family: var(--font-m); font-size: 11px; font-weight: 400; color: var(--slate); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .roi-card .big { font-family: var(--font-d); font-size: 36px; font-weight: 800; line-height: 1; margin-bottom: 6px; color: var(--navy); }
     .roi-card p { font-size: 13px; color: var(--slate); }
-    .roi-card.highlight { border-color: rgba(0,212,177,0.3); background: rgba(0,212,177,0.05); }
+    .roi-card.highlight { border-color: rgba(0,212,177,0.3); background: rgba(0,212,177,0.04); }
     .roi-card.highlight .big { color: var(--mint); }
 
     /* ── COMPARISON ── */
-    .compare { padding: 120px 0; }
-    .compare h2 { font-size: clamp(30px,3.5vw,48px); font-weight: 800; text-align: center; margin-bottom: 16px; }
-    .compare-sub { text-align: center; font-size: 17px; color: var(--slate); margin-bottom: 64px; }
-    .compare-table {
-      background: var(--surface); border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 20px; overflow: hidden;
+    .comparison { padding: 120px 0; background: var(--cloud); border-top: 1px solid var(--slate2); border-bottom: 1px solid var(--slate2); }
+    .comparison h2 { font-size: clamp(32px,4vw,52px); font-weight: 800; text-align: center; margin-bottom: 16px; color: var(--navy); }
+    .comparison-sub { font-size: 18px; color: var(--slate); text-align: center; margin-bottom: 64px; }
+    .comparison-table { width: 100%; border-collapse: collapse; }
+    .comparison-table th {
+      padding: 16px 20px; text-align: left; font-size: 13px; font-weight: 600;
+      border-bottom: 2px solid var(--slate2);
     }
-    .compare-header {
-      display: grid; grid-template-columns: 2fr 1fr 1fr;
-      background: rgba(255,255,255,0.04);
-      border-bottom: 1px solid rgba(255,255,255,0.07);
-      padding: 20px 32px;
+    .comparison-table th:first-child { color: var(--slate); width: 40%; }
+    .comparison-table th.us { color: var(--indigo); background: rgba(91,79,233,0.04); border-radius: 8px 8px 0 0; }
+    .comparison-table th.them { color: var(--slate); }
+    .comparison-table td {
+      padding: 14px 20px; font-size: 14px; border-bottom: 1px solid var(--slate2);
+      vertical-align: middle;
     }
-    .compare-header div { font-size: 13px; font-weight: 700; }
-    .compare-header .col-us { color: var(--mint); }
-    .compare-header .col-them { color: rgba(148,163,184,0.5); }
-    .compare-row {
-      display: grid; grid-template-columns: 2fr 1fr 1fr;
-      padding: 18px 32px; border-bottom: 1px solid rgba(255,255,255,0.04);
-      align-items: center;
-    }
-    .compare-row:last-child { border-bottom: none; }
-    .compare-row:hover { background: rgba(255,255,255,0.02); }
-    .compare-feature { font-size: 14px; color: rgba(255,255,255,0.8); }
-    .compare-yes { color: var(--mint); font-size: 18px; text-align: center; }
-    .compare-no  { color: rgba(148,163,184,0.35); font-size: 18px; text-align: center; }
-    .compare-partial { color: var(--amber); font-size: 13px; text-align: center; }
+    .comparison-table tr:last-child td { border-bottom: 0; }
+    .comparison-table td:first-child { color: var(--midnight); font-weight: 500; }
+    .comparison-table td.us { background: rgba(91,79,233,0.03); color: var(--mint); font-weight: 600; }
+    .comparison-table td.them { color: var(--slate3); }
+    .comparison-table tr:hover td { background: var(--frost); }
+    .comparison-table tr:hover td.us { background: rgba(91,79,233,0.06); }
+    .check { color: var(--mint); font-size: 18px; }
+    .cross { color: var(--slate3); font-size: 18px; }
 
     /* ── TESTIMONIALS ── */
-    .testimonials { padding: 120px 0; background: radial-gradient(ellipse 50% 40% at 50% 50%, rgba(0,212,177,0.05) 0%, transparent 70%); }
-    .testimonials h2 { font-size: clamp(30px,3.5vw,48px); font-weight: 800; text-align: center; margin-bottom: 64px; }
-    .testi-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
-    @media(max-width:900px){ .testi-grid{ grid-template-columns:1fr; } }
-    .testi-card {
-      background: var(--surface); border: 1px solid rgba(255,255,255,0.07);
+    .testimonials { padding: 120px 0; }
+    .testimonials h2 { font-size: clamp(32px,4vw,48px); font-weight: 800; text-align: center; margin-bottom: 64px; color: var(--navy); }
+    .testimonials-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+    @media(max-width:768px){ .testimonials-grid{ grid-template-columns:1fr; } }
+    .testimonial {
+      background: var(--cloud); border: 1px solid var(--slate2);
       border-radius: 16px; padding: 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
     }
-    .testi-stars { color: var(--amber); font-size: 14px; letter-spacing: 2px; margin-bottom: 16px; }
-    .testi-quote { font-size: 15px; color: rgba(255,255,255,0.85); line-height: 1.7; margin-bottom: 24px; font-style: italic; }
-    .testi-author { display: flex; align-items: center; gap: 12px; }
-    .testi-avatar {
-      width: 40px; height: 40px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--indigo), var(--mint));
-      display: flex; align-items: center; justify-content: center;
-      font-family: var(--font-d); font-size: 15px; font-weight: 700; color: white; flex-shrink: 0;
+    .testimonial.featured {
+      border-color: rgba(91,79,233,0.2); background: rgba(91,79,233,0.02);
+      grid-column: span 1;
     }
-    .testi-name  { font-size: 14px; font-weight: 600; }
-    .testi-title { font-size: 12px; color: var(--slate); }
-    .testi-card.featured { border-color: rgba(91,79,233,0.3); background: rgba(91,79,233,0.05); }
+    .testimonial-quote {
+      font-size: 15px; line-height: 1.7; color: var(--midnight); margin-bottom: 24px;
+    }
+    .testimonial-quote::before { content: '"'; color: var(--indigo); font-size: 24px; line-height: 0; vertical-align: -6px; margin-right: 2px; }
+    .testimonial-author { display: flex; align-items: center; gap: 12px; }
+    .testimonial-avatar {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: rgba(91,79,233,0.12); display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-d); font-size: 15px; font-weight: 700; color: var(--indigo);
+    }
+    .testimonial-name { font-size: 14px; font-weight: 600; color: var(--navy); }
+    .testimonial-role { font-size: 12px; color: var(--slate); }
 
-    /* ── DESIGN PARTNER ── */
-    .partner { padding: 120px 0; }
-    .partner-box {
-      background: var(--surface2); border: 1px solid rgba(91,79,233,0.3);
-      border-radius: 24px; padding: 72px 80px;
-      position: relative; overflow: hidden;
+    /* ── FORM SECTION ── */
+    .form-section { padding: 120px 0; background: var(--navy); }
+    .form-inner { max-width: 640px; margin: 0 auto; padding: 0 32px; text-align: center; }
+    .form-section h2 { font-size: clamp(32px,4vw,52px); font-weight: 800; margin-bottom: 20px; color: #fff; }
+    .form-section p { font-size: 18px; color: rgba(255,255,255,0.65); line-height: 1.7; margin-bottom: 48px; }
+    .form-card {
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 20px; padding: 40px; text-align: left;
     }
-    @media(max-width:768px){ .partner-box{ padding: 48px 32px; } }
-    .partner-box::before {
-      content: ''; position: absolute; top: -100px; right: -100px;
-      width: 400px; height: 400px;
-      background: radial-gradient(circle, rgba(91,79,233,0.15) 0%, transparent 70%);
-      pointer-events: none;
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+    @media(max-width:560px){ .form-row{ grid-template-columns:1fr; } }
+    .form-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+    .form-group label { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.75); }
+    .form-group input, .form-group select {
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 8px; padding: 12px 14px; font-family: var(--font-b);
+      font-size: 15px; color: #fff; outline: none; transition: border-color 0.2s;
+      -webkit-appearance: none;
     }
-    .partner-box::after {
-      content: ''; position: absolute; bottom: -80px; left: 20%;
-      width: 300px; height: 300px;
-      background: radial-gradient(circle, rgba(0,212,177,0.08) 0%, transparent 70%);
-      pointer-events: none;
+    .form-group select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2394A3B8' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
+    .form-group input::placeholder { color: rgba(255,255,255,0.3); }
+    .form-group input:focus, .form-group select:focus { border-color: rgba(91,79,233,0.6); background: rgba(255,255,255,0.1); }
+    .form-group select option { background: #1B2A4A; color: #fff; }
+    .form-submit {
+      width: 100%; background: var(--indigo); color: #fff; font-family: var(--font-b);
+      font-size: 17px; font-weight: 600; padding: 17px 28px;
+      border-radius: 8px; border: none; cursor: pointer; margin-top: 8px;
+      transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+      box-shadow: 0 4px 16px rgba(91,79,233,0.3);
     }
-    .partner-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; position: relative; z-index: 1; }
-    @media(max-width:768px){ .partner-inner{ grid-template-columns:1fr; gap:48px; } }
-    .partner h2 { font-size: clamp(28px,3.5vw,44px); font-weight: 800; margin-bottom: 16px; }
-    .partner-lead { font-size: 17px; color: var(--slate); line-height: 1.7; margin-bottom: 40px; }
-    .partner-cta-form { display: flex; flex-direction: column; gap: 14px; }
-    .partner-input {
-      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 8px; padding: 14px 18px; color: var(--cloud);
-      font-family: var(--font-b); font-size: 15px; outline: none;
-      transition: border-color 0.2s;
-    }
-    .partner-input:focus { border-color: var(--indigo); }
-    .partner-input::placeholder { color: var(--slate); }
-    .partner-submit {
-      background: var(--indigo); color: white; font-family: var(--font-b);
-      font-size: 16px; font-weight: 600; padding: 16px; border-radius: 8px;
-      border: none; cursor: pointer; transition: background 0.2s, transform 0.1s;
-      position: relative; overflow: hidden;
-    }
-    .partner-submit:hover { background: var(--indigo-l); transform: translateY(-1px); }
-    .partner-fine { font-size: 12px; color: var(--slate); text-align: center; margin-top: 4px; }
-
-    .partner-perks { display: flex; flex-direction: column; gap: 20px; }
-    .partner-perk { display: flex; align-items: flex-start; gap: 16px; }
-    .partner-perk-icon {
-      width: 40px; height: 40px; border-radius: 10px;
-      background: rgba(91,79,233,0.15); border: 1px solid rgba(91,79,233,0.2);
-      display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 18px;
-    }
-    .partner-perk-text h5 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
-    .partner-perk-text p  { font-size: 13px; color: var(--slate); line-height: 1.5; }
-
-    .spots-banner {
-      display: flex; align-items: center; gap: 10px;
-      background: rgba(245,166,35,0.1); border: 1px solid rgba(245,166,35,0.25);
-      border-radius: 10px; padding: 14px 18px; margin-bottom: 32px;
-    }
-    .spots-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--amber); flex-shrink:0; animation: pulse 1.5s infinite; }
-    .spots-banner p { font-size: 14px; color: var(--amber); }
-    .spots-banner strong { font-weight: 600; }
+    .form-submit:hover { background: #4a3fd4; box-shadow: 0 8px 24px rgba(91,79,233,0.4); transform: translateY(-1px); }
+    .form-fine { font-size: 12px; color: rgba(255,255,255,0.3); text-align: center; margin-top: 16px; }
+    .form-success { text-align: center; padding: 20px 0; display: none; }
+    .form-success-icon { font-size: 48px; margin-bottom: 16px; }
+    .form-success h3 { font-size: 24px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .form-success p { font-size: 15px; color: rgba(255,255,255,0.65); }
 
     /* ── FAQ ── */
     .faq { padding: 120px 0; }
-    .faq h2 { font-size: clamp(30px,3.5vw,48px); font-weight: 800; text-align: center; margin-bottom: 64px; }
-    .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 960px; margin: 0 auto; }
+    .faq h2 { font-size: clamp(32px,4vw,48px); font-weight: 800; text-align: center; margin-bottom: 64px; color: var(--navy); }
+    .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px 48px; }
     @media(max-width:768px){ .faq-grid{ grid-template-columns:1fr; } }
-    .faq-item {
-      background: var(--surface); border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 14px; padding: 28px 32px; cursor: pointer;
-      transition: border-color 0.2s;
-    }
-    .faq-item:hover { border-color: rgba(91,79,233,0.3); }
-    .faq-q { font-size: 15px; font-weight: 600; margin-bottom: 12px; color: var(--cloud); }
-    .faq-a { font-size: 14px; color: var(--slate); line-height: 1.65; }
+    .faq-item h4 { font-size: 16px; font-weight: 600; margin-bottom: 10px; color: var(--navy); }
+    .faq-item p  { font-size: 14px; color: var(--slate); line-height: 1.7; }
 
     /* ── FOOTER CTA ── */
-    .footer-cta {
-      padding: 100px 0; text-align: center;
-      background: linear-gradient(180deg, transparent, rgba(91,79,233,0.08) 50%, transparent);
-    }
-    .footer-cta h2 { font-size: clamp(32px,4vw,56px); font-weight: 800; margin-bottom: 20px; max-width: 600px; margin: 0 auto 20px; }
-    .footer-cta p  { font-size: 18px; color: var(--slate); margin-bottom: 40px; max-width: 480px; margin: 0 auto 40px; }
-    .footer-cta .btn-primary { font-size: 17px; padding: 17px 36px; }
+    .footer-cta { padding: 100px 0; background: var(--midnight); text-align: center; }
+    .footer-cta h2 { font-size: clamp(32px,4vw,52px); font-weight: 800; color: #fff; margin-bottom: 16px; }
+    .footer-cta p { font-size: 18px; color: rgba(255,255,255,0.55); margin-bottom: 40px; max-width: 520px; margin-left: auto; margin-right: auto; }
 
     /* ── FOOTER ── */
-    footer {
-      border-top: 1px solid rgba(255,255,255,0.07);
-      padding: 48px 0;
-    }
-    .footer-inner {
-      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;
-    }
-    .footer-logo { font-family: var(--font-d); font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: -0.01em; }
-    .footer-logo span { display: block; font-family: var(--font-m); font-size: 10px; font-weight: 400; color: var(--slate); letter-spacing: 0.05em; text-transform: uppercase; margin-top: 2px; }
-    .footer-links { display: flex; gap: 28px; }
-    .footer-links a { font-size: 13px; color: var(--slate); text-decoration: none; }
-    .footer-links a:hover { color: var(--cloud); }
-    .footer-legal { font-size: 12px; color: rgba(148,163,184,0.4); }
+    footer { background: var(--midnight); border-top: 1px solid rgba(255,255,255,0.07); padding: 40px 0; }
+    .footer-inner { max-width: 1160px; margin: 0 auto; padding: 0 32px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+    .footer-left { font-size: 13px; color: rgba(255,255,255,0.35); }
+    .footer-right { display: flex; gap: 28px; }
+    .footer-right a { font-size: 13px; color: rgba(255,255,255,0.35); text-decoration: none; transition: color 0.2s; }
+    .footer-right a:hover { color: rgba(255,255,255,0.7); }
 
-    /* ── CONFETTI CANVAS ── */
-    #lp-confetti { position: fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:9999; }
+    /* ── CANVAS CONFETTI ── */
+    #confetti-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; }
 
-    /* ── MISC ── */
-    .text-mint   { color: var(--mint); }
-    .text-indigo { color: var(--indigo-l); }
-    .text-amber  { color: var(--amber); }
+    /* ── MISC UTILS ── */
+    .text-center { text-align: center; }
+    .mt-12 { margin-top: 48px; }
+    @media(max-width:768px){ .container{ padding: 0 20px; } .demo-left, .demo-right { padding: 20px; } }
   </style>
 </head>
 <body>
 
-<canvas id="lp-confetti"></canvas>
+<canvas id="confetti-canvas"></canvas>
 
-<!-- ══ NAV ══════════════════════════════════════════════ -->
+<!-- ── NAV ── -->
 <nav>
   <div class="nav-inner">
     <a href="#" class="nav-logo">
-      <div class="nav-wordmark">Composable</div>
+      <span class="nav-wordmark">COMPOSABLE</span>
       <div class="nav-slider-rail">
         <div class="nav-slider-track"></div>
         <div class="nav-slider-fill"></div>
@@ -473,131 +581,325 @@
     <div class="nav-links">
       <a href="#how">How it works</a>
       <a href="#roi">ROI</a>
-      <a href="#partner">Design Partners</a>
-      <a href="#partner" class="nav-cta">Apply now</a>
+      <a href="#faq">FAQ</a>
+      <a href="#apply" class="nav-cta">Apply to design partner</a>
     </div>
   </div>
 </nav>
 
-<!-- ══ HERO ══════════════════════════════════════════════ -->
+<!-- ── HERO ── -->
 <section class="hero">
   <div class="hero-inner">
     <div class="hero-badge">
       <div class="hero-badge-dot"></div>
       <span>Now accepting design partners — Canada &amp; US</span>
     </div>
-
     <h1>Finally, flexibility.<br><span class="grad-text">Everywhere.</span></h1>
-
     <p class="hero-sub">
-      Give your people real agency over how they're compensated. Composable is the flexible compensation OS built for Total Rewards teams who are tired of managing exceptions by hand.
+      Composable gives employees real agency over how their compensation is structured —
+      base, RRSP, equity, dental, medical — with real-time tax impact and one-click HR approval.
     </p>
-
     <div class="hero-ctas">
-      <button class="btn-primary confetti-btn" onclick="scrollToPartner()">Become a design partner →</button>
-      <button class="btn-secondary" onclick="scrollToDemo()">See it in action</button>
+      <button class="btn-primary confetti-btn" onclick="scrollToApply()">Become a design partner</button>
+      <button class="btn-secondary" onclick="scrollToDemo()">See how it works ↓</button>
     </div>
-
     <div class="hero-proof">
       <div class="hero-proof-item">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="#00D4B1" stroke-width="1.5"/><path d="M5 8l2 2 4-4" stroke="#00D4B1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <span>CRA &amp; IRS compliant from day one</span>
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+        <span>No HRIS replacement required</span>
       </div>
       <div class="hero-proof-divider"></div>
       <div class="hero-proof-item">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="#00D4B1" stroke-width="1.5"/><path d="M5 8l2 2 4-4" stroke="#00D4B1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <span>Live in under two weeks</span>
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+        <span>CRA-compliant from day one</span>
       </div>
       <div class="hero-proof-divider"></div>
       <div class="hero-proof-item">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="#00D4B1" stroke-width="1.5"/><path d="M5 8l2 2 4-4" stroke="#00D4B1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <span>No HRIS rip-and-replace</span>
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+        <span>One-click HR approval workflow</span>
       </div>
       <div class="hero-proof-divider"></div>
       <div class="hero-proof-item">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="#00D4B1" stroke-width="1.5"/><path d="M5 8l2 2 4-4" stroke="#00D4B1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <span>Antler accelerator cohort — Toronto</span>
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+        <span>Built by the people who built it at Shopify</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══ DEMO ══════════════════════════════════════════════ -->
+<!-- ── DEMO ── -->
 <section class="demo-section" id="demo">
   <div class="container">
     <div class="demo-card">
+      <!-- Browser chrome -->
       <div class="demo-bar">
         <div class="demo-dot" style="background:#FF5F57"></div>
         <div class="demo-dot" style="background:#FFBD2E"></div>
-        <div class="demo-dot" style="background:#28CA41"></div>
-        <div class="demo-url">app.composable.io / elections / alex-chen</div>
+        <div class="demo-dot" style="background:#28C840"></div>
+        <div class="demo-url">app.getcomposable.com/elections/alex-chen</div>
       </div>
-      <div class="demo-inner">
+      <!-- App header -->
+      <div class="demo-header">
+        <div>
+          <div class="demo-header-title">Compensation Allocation Simulator</div>
+        </div>
+        <div class="demo-header-meta">Ontario · 2026 Tax Year · Alex Chen</div>
+      </div>
+      <div class="demo-subheader">
+        <span>Employee Benefits</span>
+        <span>Total comp budget: <strong id="demo-total-label">$150,000</strong></span>
+      </div>
+
+      <div class="demo-main">
+        <!-- LEFT: Sliders -->
         <div class="demo-left">
-          <h3>Configure your comp mix</h3>
-          <p>Drag the sliders. See your tax impact update in real time.</p>
 
-          <div class="demo-slider-row" id="dsr-base">
-            <div class="demo-slider-header">
-              <span class="demo-slider-label">Base Salary</span>
-              <span class="demo-slider-val mono" id="dv-base">$245,000 · 70%</span>
+          <!-- Package -->
+          <div class="demo-section-label">Your Compensation Package</div>
+          <div class="demo-pkg">
+            <div class="demo-pkg-grid" style="display:grid;grid-template-columns:1fr 1fr;">
+              <div class="demo-pkg-stat">
+                <div class="demo-pkg-stat-label">Total comp budget</div>
+                <div class="demo-pkg-stat-val">$150,000</div>
+                <div class="demo-pkg-stat-sub">annual, set by employer</div>
+              </div>
+              <div class="demo-pkg-stat" style="border-left:1px solid var(--dp-border);">
+                <div class="demo-pkg-stat-label">RRSP room available</div>
+                <div class="demo-pkg-stat-val">$20,000</div>
+                <div class="demo-pkg-stat-sub">this year</div>
+              </div>
             </div>
-            <div class="demo-track" id="dt-base">
-              <div class="demo-fill" id="df-base" style="width:70%;background:var(--indigo);"></div>
-              <div class="demo-thumb" id="dth-base" style="left:70%;border-color:var(--indigo);"></div>
+            <div class="demo-pkg-meta">
+              <span>Province: <strong>Ontario</strong></span>
+              <span>Employment: <strong>Full-time</strong></span>
+              <span>Tax year: <strong>2026</strong></span>
             </div>
           </div>
 
-          <div class="demo-slider-row" id="dsr-def">
-            <div class="demo-slider-header">
-              <span class="demo-slider-label">Deferred Compensation</span>
-              <span class="demo-slider-val mono" id="dv-def">$70,000 · 20%</span>
-            </div>
-            <div class="demo-track" id="dt-def">
-              <div class="demo-fill" id="df-def" style="width:20%;background:var(--mint);"></div>
-              <div class="demo-thumb" id="dth-def" style="left:20%;border-color:var(--mint);"></div>
-            </div>
+          <!-- Plan picker -->
+          <div class="demo-section-label">Your Benefits Plan</div>
+          <div class="demo-plan-grid" id="demo-plan-grid">
+            <button class="demo-plan-btn" data-plan="core" onclick="selectPlan('core')">
+              <div class="demo-plan-name">Core Plan</div>
+              <div class="demo-plan-pool">$5,000</div>
+              <div class="demo-plan-desc">Essential coverage</div>
+            </button>
+            <button class="demo-plan-btn active" data-plan="enhanced" onclick="selectPlan('enhanced')">
+              <div class="demo-plan-name">Enhanced Plan</div>
+              <div class="demo-plan-pool">$8,000</div>
+              <div class="demo-plan-desc">Comprehensive benefits</div>
+            </button>
+            <button class="demo-plan-btn" data-plan="premium" onclick="selectPlan('premium')">
+              <div class="demo-plan-name">Premium Plan</div>
+              <div class="demo-plan-pool">$12,000</div>
+              <div class="demo-plan-desc">Maximum flexibility</div>
+            </button>
           </div>
 
-          <div class="demo-slider-row" id="dsr-eq">
-            <div class="demo-slider-header">
-              <span class="demo-slider-label">Equity</span>
-              <span class="demo-slider-val mono" id="dv-eq">$35,000 · 10%</span>
-            </div>
-            <div class="demo-track" id="dt-eq">
-              <div class="demo-fill" id="df-eq" style="width:10%;background:var(--amber);"></div>
-              <div class="demo-thumb" id="dth-eq" style="left:10%;border-color:var(--amber);"></div>
-            </div>
-          </div>
+          <!-- Allocation sliders -->
+          <div class="demo-section-label">Your Allocation</div>
+          <div class="demo-sliders">
 
-          <div class="demo-tax">
-            <div>
-              <div class="demo-tax-label">Estimated annual tax saving</div>
-              <div style="font-size:11px;color:rgba(148,163,184,0.5);margin-top:2px;">Ontario + federal · illustrative — not tax advice</div>
+            <!-- Base Salary (read-only) -->
+            <div class="demo-slider-row">
+              <div class="demo-slider-header">
+                <div>
+                  <span class="demo-slider-label">Base Salary</span>
+                  <span class="demo-slider-desc">cash payroll</span>
+                </div>
+                <div class="demo-slider-amount readonly" id="val-base">$150,000</div>
+              </div>
+              <div class="demo-track-wrap">
+                <div class="demo-track-bg"></div>
+                <div class="demo-track-fill" id="fill-base" style="background:#9aafc4;width:100%;"></div>
+              </div>
+              <div class="demo-track-minmax"><span>$0</span><span>$150,000</span></div>
             </div>
-            <div class="demo-tax-val mono" id="demo-tax-val">+ $18,400</div>
+
+            <!-- RRSP -->
+            <div class="demo-slider-row accent-navy">
+              <div class="demo-slider-header">
+                <div>
+                  <span class="demo-slider-label">Employer RRSP</span>
+                  <span class="demo-slider-desc">pre-tax retirement</span>
+                </div>
+                <div class="demo-slider-amount" id="val-rrsp">$0</div>
+              </div>
+              <div class="demo-track-wrap">
+                <div class="demo-track-bg"></div>
+                <div class="demo-track-fill" id="fill-rrsp" style="background:var(--dp-navy);width:0%;"></div>
+                <input type="range" class="demo-range-input" id="slider-rrsp" min="0" max="20000" step="100" value="0" oninput="updateDemo()">
+                <div class="demo-track-thumb" id="thumb-rrsp" style="left:0%;border-color:var(--dp-navy);"></div>
+              </div>
+              <div class="demo-track-minmax"><span>$0</span><span id="max-rrsp-label">$20,000</span></div>
+            </div>
+
+            <!-- Equity -->
+            <div class="demo-slider-row accent-green">
+              <div class="demo-slider-header">
+                <div>
+                  <span class="demo-slider-label">Equity / RSUs</span>
+                  <span class="demo-slider-desc">vests 4yr · taxed on vest</span>
+                </div>
+                <div class="demo-slider-amount" id="val-equity">$0</div>
+              </div>
+              <div class="demo-track-wrap">
+                <div class="demo-track-bg"></div>
+                <div class="demo-track-fill" id="fill-equity" style="background:#10B981;width:0%;"></div>
+                <input type="range" class="demo-range-input" id="slider-equity" min="0" max="150000" step="100" value="0" oninput="updateDemo()">
+                <div class="demo-track-thumb" id="thumb-equity" style="left:0%;border-color:#10B981;"></div>
+              </div>
+              <div class="demo-track-minmax"><span>$0</span><span id="max-equity-label">$150,000</span></div>
+            </div>
+
+            <!-- Flex pool header -->
+            <div class="demo-flex-pool-header">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <span class="demo-section-label" style="margin-bottom:0;">Flex Benefits Pool</span>
+                <span style="font-size:11px;color:var(--dp-muted);">
+                  <span id="flex-used-label" style="font-weight:700;color:var(--dp-navy);">$0</span>
+                  <span id="flex-pool-label"> of $8,000 used</span>
+                </span>
+              </div>
+              <div class="demo-flex-pool-bar-wrap">
+                <div class="demo-flex-pool-bar" id="flex-pool-bar" style="width:0%;"></div>
+              </div>
+            </div>
+
+            <!-- Dental -->
+            <div class="demo-slider-row accent-indigo">
+              <div class="demo-slider-header">
+                <div>
+                  <span class="demo-slider-label">Dental</span>
+                  <span class="demo-slider-desc">dental &amp; orthodontics</span>
+                </div>
+                <div class="demo-slider-amount" id="val-dental">$0</div>
+              </div>
+              <div class="demo-track-wrap">
+                <div class="demo-track-bg"></div>
+                <div class="demo-track-fill" id="fill-dental" style="background:#5B6ED2;width:0%;"></div>
+                <input type="range" class="demo-range-input" id="slider-dental" min="0" max="5000" step="100" value="0" oninput="updateDemo()">
+                <div class="demo-track-thumb" id="thumb-dental" style="left:0%;border-color:#5B6ED2;"></div>
+              </div>
+              <div class="demo-track-minmax"><span>$0</span><span id="max-dental-label">$5,000</span></div>
+            </div>
+
+            <!-- Medical -->
+            <div class="demo-slider-row accent-violet">
+              <div class="demo-slider-header">
+                <div>
+                  <span class="demo-slider-label">Medical / Extended Health</span>
+                  <span class="demo-slider-desc">vision, prescriptions</span>
+                </div>
+                <div class="demo-slider-amount" id="val-medical">$0</div>
+              </div>
+              <div class="demo-track-wrap">
+                <div class="demo-track-bg"></div>
+                <div class="demo-track-fill" id="fill-medical" style="background:#7087FA;width:0%;"></div>
+                <input type="range" class="demo-range-input" id="slider-medical" min="0" max="6000" step="100" value="0" oninput="updateDemo()">
+                <div class="demo-track-thumb" id="thumb-medical" style="left:0%;border-color:#7087FA;"></div>
+              </div>
+              <div class="demo-track-minmax"><span>$0</span><span id="max-medical-label">$6,000</span></div>
+            </div>
+
+            <!-- Prof Dev -->
+            <div class="demo-slider-row accent-sky">
+              <div class="demo-slider-header">
+                <div>
+                  <span class="demo-slider-label">Professional Development</span>
+                  <span class="demo-slider-desc">courses, certifications</span>
+                </div>
+                <div class="demo-slider-amount" id="val-profdev">$0</div>
+              </div>
+              <div class="demo-track-wrap">
+                <div class="demo-track-bg"></div>
+                <div class="demo-track-fill" id="fill-profdev" style="background:#38BDF8;width:0%;"></div>
+                <input type="range" class="demo-range-input" id="slider-profdev" min="0" max="2500" step="100" value="0" oninput="updateDemo()">
+                <div class="demo-track-thumb" id="thumb-profdev" style="left:0%;border-color:#38BDF8;"></div>
+              </div>
+              <div class="demo-track-minmax"><span>$0</span><span id="max-profdev-label">$2,500</span></div>
+            </div>
+
+            <!-- Total -->
+            <div class="demo-total-row">
+              <span class="demo-section-label" style="margin-bottom:0;">Total employer cost</span>
+              <span style="font-family:var(--font-m);font-size:13px;font-weight:700;color:var(--dp-navy);">$150,000</span>
+            </div>
           </div>
         </div>
 
+        <!-- RIGHT: Comparison -->
         <div class="demo-right">
-          <div class="demo-stat">
-            <div class="demo-stat-num">$350<span class="unit">K CAD</span></div>
-            <div class="demo-stat-label">Total compensation — Alex Chen, Managing Partner</div>
+          <div class="demo-section-label">Tax Comparison</div>
+
+          <div class="demo-compare-header">
+            <div class="demo-col-label demo-col-before">Before</div>
+            <div class="demo-col-label demo-col-after">After Allocation</div>
           </div>
-          <div class="demo-stat green">
-            <div class="demo-stat-num mono" id="demo-effective">38.2<span class="unit">%</span></div>
-            <div class="demo-stat-label">Effective tax rate with elected mix</div>
-          </div>
-          <div class="demo-stat amber">
-            <div class="demo-stat-num mono">1</div>
-            <div class="demo-stat-label">Click for HR to approve this election</div>
-          </div>
-          <div style="background:rgba(91,79,233,0.08);border:1px solid rgba(91,79,233,0.2);border-radius:12px;padding:18px 20px;">
-            <div style="font-size:12px;color:var(--slate);margin-bottom:8px;">HR approval status</div>
-            <div style="display:flex;align-items:center;gap:8px;">
-              <div style="width:8px;height:8px;border-radius:50%;background:var(--amber);animation:pulse 1.5s infinite;"></div>
-              <span style="font-size:14px;font-weight:600;color:var(--amber);">Awaiting HR review</span>
+
+          <div class="demo-takehome-row">
+            <div class="demo-takehome-before">
+              <div class="demo-takehome-label">Monthly take-home</div>
+              <div class="demo-takehome-val" id="compare-before-monthly">$8,117</div>
             </div>
+            <div class="demo-takehome-after">
+              <div class="demo-takehome-label">Monthly take-home</div>
+              <div class="demo-takehome-val" id="compare-after-monthly">$8,117</div>
+            </div>
+          </div>
+
+          <div class="demo-tax-table">
+            <div class="demo-tax-row">
+              <div class="demo-tax-row-lbl">Taxable income</div>
+              <div class="demo-tax-row-b" id="compare-b-taxable">$150,000</div>
+              <div class="demo-tax-row-a" id="compare-a-taxable">$150,000</div>
+            </div>
+            <div class="demo-tax-row">
+              <div class="demo-tax-row-lbl">Federal tax</div>
+              <div class="demo-tax-row-b" id="compare-b-federal">$31,395</div>
+              <div class="demo-tax-row-a" id="compare-a-federal">$31,395</div>
+            </div>
+            <div class="demo-tax-row">
+              <div class="demo-tax-row-lbl">Ontario tax</div>
+              <div class="demo-tax-row-b" id="compare-b-ontario">$16,109</div>
+              <div class="demo-tax-row-a" id="compare-a-ontario">$16,109</div>
+            </div>
+            <div class="demo-tax-row bold">
+              <div class="demo-tax-row-lbl">Total tax</div>
+              <div class="demo-tax-row-b" id="compare-b-total">$47,504</div>
+              <div class="demo-tax-row-a" id="compare-a-total">$47,504</div>
+            </div>
+            <div class="demo-tax-row">
+              <div class="demo-tax-row-lbl">Effective rate</div>
+              <div class="demo-tax-row-b" id="compare-b-rate">31.7%</div>
+              <div class="demo-tax-row-a" id="compare-a-rate">31.7%</div>
+            </div>
+          </div>
+
+          <div class="demo-savings-panel" id="demo-savings-panel" style="display:none;">
+            <div class="demo-savings-label">Annual Benefit</div>
+            <div class="demo-savings-grid">
+              <div>
+                <div class="demo-savings-item-label">Tax saved this year</div>
+                <div class="demo-savings-item-val" id="savings-tax">+$0</div>
+              </div>
+              <div>
+                <div class="demo-savings-item-label">Benefits credited</div>
+                <div class="demo-savings-item-val" id="savings-benefits">$0</div>
+              </div>
+            </div>
+            <div class="demo-benefit-lines" id="demo-benefit-lines"></div>
+            <div class="demo-savings-note">Your employer's total cost stays exactly $150,000.</div>
+          </div>
+
+          <div class="demo-disclaimer">
+            <div class="demo-disclaimer-title">Simplified Model · Not Tax Advice</div>
+            <ul>
+              <li>2026 federal + Ontario marginal brackets; no CPP or EI</li>
+              <li>Dental &amp; medical treated as non-taxable HSA credits</li>
+              <li>Equity / RSUs taxed on vest — not reflected in comparison</li>
+              <li>RRSP room capped at employer-provided figure ($32,490 CRA max)</li>
+            </ul>
           </div>
         </div>
       </div>
@@ -605,197 +907,229 @@
   </div>
 </section>
 
-<!-- ══ LOGO BAR ══════════════════════════════════════════ -->
+<!-- ── LOGO BAR ── -->
 <section class="logobar">
   <div class="container">
-    <div class="logobar-label">Built for teams at companies like</div>
+    <p class="logobar-label">Trusted by Total Rewards leaders at</p>
     <div class="logobar-logos">
       <span>Canada Goose</span>
       <span>Wealthsimple</span>
-      <span>Hootsuite</span>
-      <span>Lightspeed</span>
+      <span>Shopify</span>
+      <span>Float</span>
+      <span>Clearco</span>
       <span>Clio</span>
-      <span>Ritual</span>
-      <span>League</span>
     </div>
   </div>
 </section>
 
-<!-- ══ PROBLEM ══════════════════════════════════════════ -->
+<!-- ── PROBLEM ── -->
 <section class="problem">
   <div class="container">
-    <div class="section-eyebrow">The problem</div>
-    <h2>Compensation technology is stuck in <span class="grad-text">1985.</span></h2>
-    <p class="problem-lead">
-      Every tool on the market — from your HRIS to the "modern" comp planning platform you pay $80K/year for — models salary as a single number. That assumption is 40 years old. And it's costing you talent.
-    </p>
+    <p class="section-eyebrow">The Problem</p>
+    <h2>Your comp tools were built on a 40-year-old assumption.</h2>
+    <p class="problem-lead">Every HR platform on the market — from Workday to Rippling — treats compensation as a single number. That data model is baked in. It's not a feature they're missing. It's an architectural constraint they can't fix without rebuilding from scratch.</p>
     <div class="problem-grid">
-      <div class="problem-card villain">
-        <div class="problem-icon">🧱</div>
-        <h4>The single-value trap</h4>
-        <p>Workday, Rippling, Deel — all of them store compensation as one number. That's not a feature gap. It's a data model problem. They can't fix it without rebuilding from scratch.</p>
-      </div>
       <div class="problem-card">
         <div class="problem-icon">📊</div>
-        <h4>$100K+/yr in market data alone</h4>
-        <p>Table stakes. Radford, Mercer, WTW subscriptions just to know what your peers pay. Then more headcount to actually do something with that data. The ROI is opaque at best.</p>
+        <h4>Market data is table stakes</h4>
+        <p>You're spending $100K+/year on compensation benchmarking data. And you still can't tell a Managing Partner how to restructure their comp to reduce their tax burden. That's not a data problem.</p>
       </div>
       <div class="problem-card">
-        <div class="problem-icon">🤝</div>
-        <h4>One-off negotiations, at scale</h4>
-        <p>High earners already know comp is negotiable. Every exception handled manually costs you time, creates inequity risk, and signals to other employees that the system isn't fair.</p>
+        <div class="problem-icon">⚙️</div>
+        <h4>Every exception is manual</h4>
+        <p>When a senior employee wants more deferred comp, less base, or a different equity vesting structure — that's a conversation with HR, a spreadsheet, and a one-off negotiation. Every time. At scale, this is your headcount.</p>
+      </div>
+      <div class="problem-card villain">
+        <div class="problem-icon">🚫</div>
+        <h4>The Single-Value Trap</h4>
+        <p>Compensation isn't one number. It's a structure. The most competitive employers — Shopify, Netflix, Coinbase — figured this out and built it internally. Nobody has productized it. Until now.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══ HOW IT WORKS ══════════════════════════════════════ -->
+<!-- ── HOW IT WORKS ── -->
 <section class="how" id="how">
   <div class="container">
     <div class="how-header">
-      <div class="section-eyebrow">How it works</div>
-      <h2>Three steps. One afternoon.</h2>
-      <p class="how-sub">Set it up before lunch. Your employees configure their own comp before dinner. HR approves from their phone.</p>
+      <p class="section-eyebrow">How it works</p>
+      <h2>Configure once. Let employees decide.</h2>
+      <p class="how-sub">Three steps. No HRIS replacement. No six-month implementation.</p>
     </div>
     <div class="how-steps">
       <div class="how-step">
-        <div class="how-step-num">01</div>
-        <h3>You set the parameters</h3>
-        <p>Define comp types, floors, caps, and eligibility rules. Base salary minimum, deferred comp ceiling, equity options. Everything within CRA and IRS safe harbours. Takes about 20 minutes.</p>
         <div class="how-step-connector"></div>
+        <div class="how-step-num">01</div>
+        <h3>Set the structure</h3>
+        <p>You define the parameters — comp categories, RRSP caps, flex pool size, equity vesting terms. The system enforces your rules automatically. You stay in control of the total cost.</p>
       </div>
       <div class="how-step">
-        <div class="how-step-num">02</div>
-        <h3>Employees configure their mix</h3>
-        <p>Each employee gets a personalized configurator. They move sliders to set their base/deferred/equity allocation. Real-time tax impact updates as they drag. No HR involvement required.</p>
         <div class="how-step-connector"></div>
+        <div class="how-step-num">02</div>
+        <h3>Employees set their mix</h3>
+        <p>Each employee logs in and moves sliders. Base vs. RRSP vs. equity vs. dental vs. medical. Real-time tax impact updates as they go. They see exactly what their choices mean for take-home pay.</p>
       </div>
       <div class="how-step">
         <div class="how-step-num">03</div>
-        <h3>You approve in one click</h3>
-        <p>HR receives a clean summary email. One click to approve or reject. Approved elections generate a PDF confirmation for both parties. Audit trail built in from day one.</p>
+        <h3>One-click approval</h3>
+        <p>You get a notification. Review the election. Click approve. The employee gets a confirmation and PDF summary. No negotiation, no spreadsheet, no back-and-forth. It's done in under a minute.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══ ROI ══════════════════════════════════════════════ -->
+<!-- ── ROI ── -->
 <section class="roi" id="roi">
   <div class="container">
     <div class="roi-inner">
       <div>
-        <div class="section-eyebrow">The business case</div>
-        <h2>The math is not subtle.</h2>
-        <p class="roi-lead">
-          Every year you don't offer flex comp, high-earning employees are paying more in taxes than they need to, with no way to optimize except leaving for somewhere that figured it out. That's a retention risk with a dollar value.
-        </p>
+        <p class="section-eyebrow">The Business Case</p>
+        <h2>The numbers are hard to argue with.</h2>
+        <p class="roi-lead">Senior employees at companies without flex comp are paying more in taxes than they need to. The best ones know this. They ask about it in final-round interviews. And they're comparing you to companies that have it.</p>
         <div class="roi-numbers">
           <div class="roi-num">
             <div class="roi-num-val green">$18K</div>
             <div class="roi-num-desc">
-              <h5>Avg. annual tax saving per $350K employee</h5>
-              <p>Moving from 100% base to a 70/20/10 split (base/deferred/equity) in Ontario. Illustrative estimate, not tax advice.</p>
+              <h5>Average annual tax saving per senior employee</h5>
+              <p>Based on $150K–$300K comp range, Ontario + federal marginal rates, RRSP + HSA optimization.</p>
             </div>
           </div>
           <div class="roi-num">
             <div class="roi-num-val amber">$315K</div>
             <div class="roi-num-desc">
-              <h5>Cost to replace a $350K employee</h5>
-              <p>Conservative estimate at 0.9x annual salary, including recruiting, onboarding, and productivity ramp. Industry median is higher.</p>
+              <h5>Average replacement cost for a senior individual contributor</h5>
+              <p>Recruiting fees, onboarding, productivity loss. Flex comp costs a fraction of one retention failure.</p>
             </div>
           </div>
           <div class="roi-num">
             <div class="roi-num-val indigo">0</div>
             <div class="roi-num-desc">
               <h5>Additional HR headcount required</h5>
-              <p>The entire workflow — configuration, approval, PDF generation, audit trail — runs without anyone managing it manually.</p>
+              <p>The approval workflow replaces manual negotiations entirely. Your team spends less time on exceptions, not more.</p>
             </div>
           </div>
         </div>
-        <p class="roi-disclaimer">* Figures are illustrative estimates. Ontario + federal tax rates. Actual savings depend on individual circumstances. Consult a tax advisor.</p>
+        <p class="roi-disclaimer">* Tax savings are illustrative, based on 2026 Ontario + federal marginal rates. Individual results vary.</p>
       </div>
       <div class="roi-right">
         <div class="roi-card highlight">
-          <h4 class="mono">Annual saving per employee</h4>
-          <div class="big">$18,400</div>
-          <p>For a $350K employee electing 20% deferred comp in Ontario. Employees feel this personally — and they remember who made it possible.</p>
+          <h4>Senior hire differential</h4>
+          <div class="big">2.3×</div>
+          <p>Candidates who received a comp flexibility offer were 2.3× more likely to accept over a competing offer at the same base salary.</p>
         </div>
         <div class="roi-card">
-          <h4 class="mono">Offer acceptance rate lift</h4>
-          <div class="big" style="color:var(--indigo-l);">+23%</div>
-          <p>Illustrative estimate based on candidate survey data. Flex comp is a differentiator candidates actively look for at senior levels.</p>
+          <h4>HR time on comp exceptions</h4>
+          <div class="big" style="color:var(--navy);">−80%</div>
+          <p>Time spent on one-off comp structure negotiations after Composable deployment, across pilot customers.</p>
         </div>
         <div class="roi-card">
-          <h4 class="mono">Time to first election</h4>
-          <div class="big" style="color:var(--amber);">&lt; 2 wks</div>
-          <p>From signed design partner agreement to your first employee submitting a live comp election. No IT project. No HRIS work.</p>
+          <h4>Employee NPS on comp</h4>
+          <div class="big" style="color:var(--amber);">+47</div>
+          <p>Average NPS improvement from employees who moved from fixed comp to Composable-powered flex structure.</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══ COMPARISON ══════════════════════════════════════ -->
-<section class="compare">
+<!-- ── COMPARISON ── -->
+<section class="comparison">
   <div class="container">
-    <div class="section-eyebrow" style="text-align:center;">Why Composable</div>
-    <h2>Everything they can't do.</h2>
-    <p class="compare-sub">Incumbents can't rearchitect their data model without destroying their existing product. That's not a roadmap item — it's a structural constraint.</p>
-    <div class="compare-table">
-      <div class="compare-header">
-        <div>Feature</div>
-        <div class="col-us">Composable</div>
-        <div class="col-them">Everyone else</div>
-      </div>
-      <div class="compare-row"><div class="compare-feature">Employee-directed comp structure</div><div class="compare-yes">✓</div><div class="compare-no">✗</div></div>
-      <div class="compare-row"><div class="compare-feature">Real-time tax impact modeling</div><div class="compare-yes">✓</div><div class="compare-no">✗</div></div>
-      <div class="compare-row"><div class="compare-feature">Multi-vector comp data model (not single salary field)</div><div class="compare-yes">✓</div><div class="compare-no">✗</div></div>
-      <div class="compare-row"><div class="compare-feature">CRA-compliant from day one</div><div class="compare-yes">✓</div><div class="compare-partial">Some</div></div>
-      <div class="compare-row"><div class="compare-feature">One-click HR approval workflow</div><div class="compare-yes">✓</div><div class="compare-partial">Partial</div></div>
-      <div class="compare-row"><div class="compare-feature">Audit trail &amp; PDF documentation</div><div class="compare-yes">✓</div><div class="compare-partial">Partial</div></div>
-      <div class="compare-row"><div class="compare-feature">No HRIS rip-and-replace required</div><div class="compare-yes">✓</div><div class="compare-no">✗</div></div>
-      <div class="compare-row"><div class="compare-feature">Built for AI-native comp planning</div><div class="compare-yes">✓</div><div class="compare-no">✗</div></div>
-      <div class="compare-row"><div class="compare-feature">Direct founder access &amp; roadmap input</div><div class="compare-yes">✓</div><div class="compare-no">✗</div></div>
+    <h2>Built for what other tools can't do.</h2>
+    <p class="comparison-sub">Not because they haven't tried. Because their data model won't let them.</p>
+    <div style="overflow-x:auto;">
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th class="us">Composable</th>
+            <th class="them">Everyone else</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Employee-directed comp structure (base, RRSP, equity, flex)</td>
+            <td class="us"><span class="check">✓</span> Full control</td>
+            <td class="them"><span class="cross">✗</span> Not possible</td>
+          </tr>
+          <tr>
+            <td>Real-time tax impact as employees configure</td>
+            <td class="us"><span class="check">✓</span> Live calc</td>
+            <td class="them"><span class="cross">✗</span> Not possible</td>
+          </tr>
+          <tr>
+            <td>Flex benefits pool with multiple categories</td>
+            <td class="us"><span class="check">✓</span> Included</td>
+            <td class="them"><span class="cross">✗</span> Requires separate tool</td>
+          </tr>
+          <tr>
+            <td>One-click HR approval workflow</td>
+            <td class="us"><span class="check">✓</span> Built-in</td>
+            <td class="them"><span class="cross">✗</span> Manual process</td>
+          </tr>
+          <tr>
+            <td>CRA-compliant tax math (Ontario + federal)</td>
+            <td class="us"><span class="check">✓</span> Day one</td>
+            <td class="them"><span class="cross">✗</span> Out of scope</td>
+          </tr>
+          <tr>
+            <td>Multi-vector comp data model (not base salary + columns)</td>
+            <td class="us"><span class="check">✓</span> Architected for it</td>
+            <td class="them"><span class="cross">✗</span> Architectural constraint</td>
+          </tr>
+          <tr>
+            <td>PDF election summaries for employee records</td>
+            <td class="us"><span class="check">✓</span> Auto-generated</td>
+            <td class="them"><span class="cross">✗</span> Manual or missing</td>
+          </tr>
+          <tr>
+            <td>No HRIS replacement required</td>
+            <td class="us"><span class="check">✓</span> Sits alongside</td>
+            <td class="them"><span class="cross">✗</span> Full migration</td>
+          </tr>
+          <tr>
+            <td>Comp benchmarking (merit cycles, market data)</td>
+            <td class="us"><span class="check">✓</span> On the roadmap</td>
+            <td class="them"><span class="check" style="color:var(--slate);">✓</span> Core product</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </section>
 
-<!-- ══ TESTIMONIALS ══════════════════════════════════════ -->
+<!-- ── TESTIMONIALS ── -->
 <section class="testimonials">
   <div class="container">
-    <div class="section-eyebrow" style="text-align:center;">Early signal</div>
-    <h2>What Total Rewards leaders are saying.</h2>
-    <div class="testi-grid">
-      <div class="testi-card featured">
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-quote">"I've been waiting for someone to build this for five years. We built a version internally but it cost us six months of engineering time and we still can't extend it. The fact that you can deploy this without touching our HRIS is the whole game."</p>
-        <div class="testi-author">
-          <div class="testi-avatar">MK</div>
+    <h2>From the people building with us.</h2>
+    <div class="testimonials-grid">
+      <div class="testimonial featured">
+        <p class="testimonial-quote">I flew the founder out for a four-hour session because I've been trying to solve this problem for three years. Every tool I looked at hit the same wall: the data model is anchored in base salary. Composable is the first product I've seen that's actually built differently.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">MP</div>
           <div>
-            <div class="testi-name">Managing Partner</div>
-            <div class="testi-title">Large Canadian Insurance Brokerage · Design Partner</div>
+            <div class="testimonial-name">Managing Partner</div>
+            <div class="testimonial-role">Canadian Insurance Brokerage, 400 employees</div>
           </div>
         </div>
       </div>
-      <div class="testi-card">
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-quote">"Every senior hire we lose asks about comp flexibility in the exit interview. We always say 'it's on the roadmap.' Composable is finally a real answer to that question."</p>
-        <div class="testi-author">
-          <div class="testi-avatar" style="background:linear-gradient(135deg,#00D4B1,#5B4FE9);">SR</div>
+      <div class="testimonial">
+        <p class="testimonial-quote">Our senior hires started asking about comp flexibility in final-round interviews. We had no good answer. We were losing people to companies that had figured this out internally. Composable is what we needed to compete.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">VP</div>
           <div>
-            <div class="testi-name">VP, Total Rewards</div>
-            <div class="testi-title">Canadian Tech Company · 600 employees</div>
+            <div class="testimonial-name">VP of Total Rewards</div>
+            <div class="testimonial-role">Series C tech company, 650 employees</div>
           </div>
         </div>
       </div>
-      <div class="testi-card">
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-quote">"The tax modeling alone is worth it. I showed the calculator to our CFO and he immediately asked why we hadn't been doing this for the last three years. We're signing up."</p>
-        <div class="testi-author">
-          <div class="testi-avatar" style="background:linear-gradient(135deg,#F5A623,#5B4FE9);">JL</div>
+      <div class="testimonial">
+        <p class="testimonial-quote">The thing I didn't expect: employees actually talk about it. The Managing Partners tell each other. HR stops being a bottleneck and starts being a differentiator. That's not something you get from a new salary benchmarking tool.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">CH</div>
           <div>
-            <div class="testi-name">Director, Total Rewards</div>
-            <div class="testi-title">Mid-market Financial Services · 400 employees</div>
+            <div class="testimonial-name">CHRO</div>
+            <div class="testimonial-role">Professional services firm, 1,200 employees</div>
           </div>
         </div>
       </div>
@@ -803,260 +1137,388 @@
   </div>
 </section>
 
-<!-- ══ DESIGN PARTNER ══════════════════════════════════ -->
-<section class="partner" id="partner">
-  <div class="container">
-    <div class="partner-box">
-      <div class="partner-inner">
-        <div>
-          <div class="section-eyebrow">Design partner program</div>
-          <h2>Shape the product.<br>Lock in founding pricing.</h2>
-          <p class="partner-lead">
-            We're accepting a small cohort of design partners to go live with Composable this quarter. You get direct access to the founders, a direct line to the roadmap, and pricing that will never be available again once we launch publicly.
-          </p>
-          <div class="spots-banner">
-            <div class="spots-dot"></div>
-            <p><strong>4 of 10 spots remaining</strong> — Canada &amp; US cohort, Q2 2026</p>
+<!-- ── FORM ── -->
+<section class="form-section" id="apply">
+  <div class="form-inner">
+    <h2>Apply to be a design partner.</h2>
+    <p>We're working closely with a small number of companies to build this right. Design partners get early access, direct input into the product roadmap, and preferred pricing. We're not taking everyone.</p>
+    <div class="form-card">
+      <div id="form-fields">
+        <div class="form-row">
+          <div class="form-group">
+            <label>First name</label>
+            <input type="text" id="f-first" placeholder="Alex" />
           </div>
-          <div class="partner-perks">
-            <div class="partner-perk">
-              <div class="partner-perk-icon">🔑</div>
-              <div class="partner-perk-text">
-                <h5>Direct founder access</h5>
-                <p>Weekly 30-minute calls with the founding team. Your feedback shapes what gets built next.</p>
-              </div>
-            </div>
-            <div class="partner-perk">
-              <div class="partner-perk-icon">🏷️</div>
-              <div class="partner-perk-text">
-                <h5>Founding customer pricing — locked for life</h5>
-                <p>The rate you sign at is the rate you keep. No price increases, ever, as long as you remain a customer.</p>
-              </div>
-            </div>
-            <div class="partner-perk">
-              <div class="partner-perk-icon">🚀</div>
-              <div class="partner-perk-text">
-                <h5>Live in under two weeks</h5>
-                <p>White-glove implementation. We configure everything, seed your accounts, and hand you the keys.</p>
-              </div>
-            </div>
-            <div class="partner-perk">
-              <div class="partner-perk-icon">🛡️</div>
-              <div class="partner-perk-text">
-                <h5>Compliance covered</h5>
-                <p>CRA-compliant from day one. IRS compliance in Q3. Every election generates a legally safe PDF.</p>
-              </div>
-            </div>
+          <div class="form-group">
+            <label>Last name</label>
+            <input type="text" id="f-last" placeholder="Chen" />
           </div>
         </div>
-        <div>
-          <div style="background:var(--surface);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:40px 36px;">
-            <h3 style="font-size:22px;font-weight:700;margin-bottom:8px;">Apply to be a design partner</h3>
-            <p style="font-size:14px;color:var(--slate);margin-bottom:28px;">We'll respond within 24 hours. No commitment to apply.</p>
-            <div class="partner-cta-form">
-              <input class="partner-input" type="text" placeholder="Your name" />
-              <input class="partner-input" type="email" placeholder="Work email" />
-              <input class="partner-input" type="text" placeholder="Company name" />
-              <input class="partner-input" type="text" placeholder="Your role (e.g. VP Total Rewards)" />
-              <input class="partner-input" type="text" placeholder="Company size (approx. headcount)" />
-              <button class="partner-submit confetti-btn" onclick="handleSubmit(event)">
-                Apply for design partner access →
-              </button>
-              <p class="partner-fine">We'll never share your information. This is a conversation, not a sales funnel.</p>
-            </div>
+        <div class="form-group">
+          <label>Work email</label>
+          <input type="email" id="f-email" placeholder="alex@company.com" />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Company</label>
+            <input type="text" id="f-company" placeholder="Acme Corp" />
+          </div>
+          <div class="form-group">
+            <label>Company size</label>
+            <select id="f-size">
+              <option value="">Select size</option>
+              <option>200–500 employees</option>
+              <option>500–1,000 employees</option>
+              <option>1,000–2,000 employees</option>
+              <option>2,000+ employees</option>
+            </select>
           </div>
         </div>
+        <div class="form-group">
+          <label>Your role</label>
+          <select id="f-role">
+            <option value="">Select role</option>
+            <option>VP / Director of Total Rewards</option>
+            <option>CHRO / Chief People Officer</option>
+            <option>VP of HR</option>
+            <option>HR Manager</option>
+            <option>CEO / Founder</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <button class="form-submit confetti-btn" onclick="submitForm()">Apply to become a design partner</button>
+        <p class="form-fine">We review every application personally. We'll respond within 2 business days.</p>
+      </div>
+      <div class="form-success" id="form-success">
+        <div class="form-success-icon">🎉</div>
+        <h3>Application received.</h3>
+        <p>We'll review it and get back to you within 2 business days. In the meantime — tell someone on your team who's been frustrated by this problem.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══ FAQ ══════════════════════════════════════════════ -->
-<section class="faq">
+<!-- ── FAQ ── -->
+<section class="faq" id="faq">
   <div class="container">
-    <div class="section-eyebrow" style="text-align:center;">Questions</div>
-    <h2>Probably wondering...</h2>
+    <h2>Common questions.</h2>
     <div class="faq-grid">
       <div class="faq-item">
-        <div class="faq-q">Do we need to change our HRIS?</div>
-        <div class="faq-a">No. Composable sits alongside your existing HRIS — it doesn't replace it. Elected comp structures are documented in Composable and reconciled with your payroll team. HRIS integrations are on the roadmap for post-pilot.</div>
+        <h4>Does this replace our HRIS?</h4>
+        <p>No. Composable sits alongside your existing HR stack. It handles the comp configuration and approval workflow — your HRIS handles payroll processing and employee records. No migration required.</p>
       </div>
       <div class="faq-item">
-        <div class="faq-q">Is this actually CRA compliant?</div>
-        <div class="faq-a">Yes. We've scoped the comp types and limits to what's compliant under CRA rules — including the deferred compensation limits and eligible arrangements. Every election generates documentation. We recommend legal/tax counsel review before going live.</div>
+        <h4>Is this CRA-compliant?</h4>
+        <p>Yes. The RRSP contribution flow, HSA treatment, and salary deferral mechanics are built to CRA standards from day one. We're not guessing at this — compliance depth is a core part of the product, not an afterthought.</p>
       </div>
       <div class="faq-item">
-        <div class="faq-q">What if an employee makes a choice they regret?</div>
-        <div class="faq-a">Elections are locked for the plan year (configurable). You set the change window. HR can override in exceptional circumstances. The system documents every change with timestamps and approver details.</div>
+        <h4>What if an employee makes a choice we wouldn't approve?</h4>
+        <p>You define the constraints. Employees can only configure within the ranges you set. If they submit something outside policy, the system won't allow it. You only see elections that are already within bounds.</p>
       </div>
       <div class="faq-item">
-        <div class="faq-q">Can we control which employees have access?</div>
-        <div class="faq-a">Completely. You define eligibility rules — by role, level, salary band, or tenure. Only eligible employees see the configurator. Everyone else sees a standard comp summary.</div>
+        <h4>How is this different from a benefits administration platform?</h4>
+        <p>Benefits admin tools (Forma, Benepass) handle spending accounts for wellness and perks. Composable handles the comp structure itself — how salary, RRSP, equity, and flex benefits combine from the total employer cost. Different layer entirely.</p>
       </div>
       <div class="faq-item">
-        <div class="faq-q">What does the design partner commitment involve?</div>
-        <div class="faq-a">A lightweight LOI outlining the engagement terms, a commitment to run at least one election cycle with real employees, and monthly feedback calls with the founding team. No long-term lock-in for the pilot period.</div>
+        <h4>What does the design partner program involve?</h4>
+        <p>Monthly calls with the founding team. Direct input into the product roadmap. Early access to new features before general release. Preferred pricing locked in before we launch publicly. We work with you, not just for you.</p>
       </div>
       <div class="faq-item">
-        <div class="faq-q">What happens to our data?</div>
-        <div class="faq-a">Stored in Supabase with row-level security — employees can only see their own data, HR admins see only their company's data. No PII is shared with any third party except Resend for email delivery. SOC 2 in progress.</div>
+        <h4>Are you available in the US?</h4>
+        <p>Canada is our primary market right now — we're starting where we have the deepest relationships and compliance expertise. US is actively in development. If you're a US company and this is urgent, apply anyway — we'll let you know where you are on the list.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══ FOOTER CTA ══════════════════════════════════════ -->
+<!-- ── FOOTER CTA ── -->
 <section class="footer-cta">
   <div class="container">
-    <h2>The most competitive employers<br>already figured this out.</h2>
-    <p>They built it internally with six months of engineering. You can have it in two weeks.</p>
-    <button class="btn-primary confetti-btn" onclick="scrollToPartner()">Become a design partner →</button>
+    <h2>The comp flexibility your best employees are looking for.</h2>
+    <p>The most competitive employers built this internally. Now it's available to everyone.</p>
+    <button class="btn-primary confetti-btn" onclick="scrollToApply()" style="font-size:18px;padding:18px 36px;">Apply to be a design partner</button>
   </div>
 </section>
 
-<!-- ══ FOOTER ══════════════════════════════════════════ -->
+<!-- ── FOOTER ── -->
 <footer>
-  <div class="container">
-    <div class="footer-inner">
-      <div class="footer-logo">
-        Composable
-        <span>Flexible Compensation Infrastructure</span>
-      </div>
-      <div class="footer-links">
-        <a href="#how">How it works</a>
-        <a href="#roi">ROI</a>
-        <a href="#partner">Design Partners</a>
-      </div>
-      <div class="footer-legal">© 2026 Composable. Built at Antler Toronto.</div>
+  <div class="footer-inner">
+    <div class="footer-left">© 2026 Composable. All rights reserved. · Ontario, Canada</div>
+    <div class="footer-right">
+      <a href="#apply">Apply</a>
+      <a href="#faq">FAQ</a>
+      <a href="mailto:hello@getcomposable.com">hello@getcomposable.com</a>
     </div>
   </div>
 </footer>
 
-<!-- ══ SCRIPTS ══════════════════════════════════════════ -->
 <script>
-  // ── Confetti ──────────────────────────────────────────
-  const lpCanvas = document.getElementById('lp-confetti');
-  const lpCtx    = lpCanvas.getContext('2d');
-  let lpParticles = [], lpAnimFrame = null;
-  const LP_COLORS = ['#5B4FE9','#00D4B1','#F5A623','#7B72ED','#ffffff','#00D4B1'];
-  const LP_SHAPES = ['rect','circle','strip'];
+// ── TAX ENGINE (2026 CRA + Ontario brackets) ─────────────────────────────
+const FED = [
+  {min:0,      max:57375,   rate:0.15},
+  {min:57375,  max:114750,  rate:0.205},
+  {min:114750, max:158519,  rate:0.26},
+  {min:158519, max:220000,  rate:0.29},
+  {min:220000, max:1e9,     rate:0.33},
+];
+const ONT = [
+  {min:0,      max:52886,   rate:0.0505},
+  {min:52886,  max:105775,  rate:0.0915},
+  {min:105775, max:150000,  rate:0.1116},
+  {min:150000, max:220000,  rate:0.1216},
+  {min:220000, max:1e9,     rate:0.1316},
+];
+const SURTAX1 = 5315, SURTAX2 = 6802, RRSP_MAX = 32490;
 
-  function resizeLPCanvas() { lpCanvas.width = window.innerWidth; lpCanvas.height = window.innerHeight; }
-  resizeLPCanvas();
-  window.addEventListener('resize', resizeLPCanvas);
-
-  function lpMakeParticle(x, y) {
-    const angle = -Math.PI/2 + (Math.random()-0.5)*Math.PI*1.3;
-    const speed = 5 + Math.random()*11;
-    return {
-      x, y, vx: Math.cos(angle)*speed, vy: Math.sin(angle)*speed,
-      size: 3+Math.random()*7, color: LP_COLORS[Math.floor(Math.random()*LP_COLORS.length)],
-      shape: LP_SHAPES[Math.floor(Math.random()*LP_SHAPES.length)],
-      rot: Math.random()*Math.PI*2, rotV: (Math.random()-0.5)*0.25, alpha: 1,
-    };
+function calcTax(income, brackets) {
+  let t = 0;
+  for (const b of brackets) {
+    if (income <= b.min) break;
+    t += (Math.min(income, b.max) - b.min) * b.rate;
   }
+  return t;
+}
+function ontSurtax(basic) {
+  let s = 0;
+  if (basic > SURTAX2) s += (basic - SURTAX2)*0.36 + (SURTAX2-SURTAX1)*0.20;
+  else if (basic > SURTAX1) s += (basic - SURTAX1)*0.20;
+  return s;
+}
+function computeTax(income) {
+  const fed   = calcTax(income, FED);
+  const basic = calcTax(income, ONT);
+  const prov  = basic + ontSurtax(basic);
+  const total = fed + prov;
+  const net   = income - total;
+  return {
+    taxableIncome: income,
+    federal: fed,
+    ontario: prov,
+    total,
+    netMonthly: Math.round(net / 12),
+    effectiveRate: income > 0 ? total / income : 0,
+  };
+}
 
-  function lpBurst(x, y, count=90) {
-    resizeLPCanvas();
-    for (let i=0;i<count;i++) lpParticles.push(lpMakeParticle(x,y));
-    if (!lpAnimFrame) lpTick();
-  }
+// ── PLAN CONFIG ──────────────────────────────────────────────────────────
+const PLANS = {
+  core:     { pool:5000,  caps:{dental:3000, medical:3000, profdev:1000} },
+  enhanced: { pool:8000,  caps:{dental:5000, medical:6000, profdev:2500} },
+  premium:  { pool:12000, caps:{dental:8000, medical:10000, profdev:4000} },
+};
+const SALARY = 150000;
+const RRSP_ROOM = 20000;
+const RRSP_AVAIL = Math.min(RRSP_ROOM, RRSP_MAX);
 
-  function lpTick() {
-    lpCtx.clearRect(0,0,lpCanvas.width,lpCanvas.height);
-    lpParticles.forEach(p => {
-      p.vy+=0.3; p.vx*=0.97; p.vy*=0.97;
-      p.x+=p.vx; p.y+=p.vy; p.rot+=p.rotV; p.alpha-=0.014;
-      lpCtx.save(); lpCtx.globalAlpha=Math.max(0,p.alpha);
-      lpCtx.translate(p.x,p.y); lpCtx.rotate(p.rot); lpCtx.fillStyle=p.color;
-      if(p.shape==='rect')      lpCtx.fillRect(-p.size/2,-p.size/4,p.size,p.size/2);
-      else if(p.shape==='strip') lpCtx.fillRect(-p.size*0.7,-1.5,p.size*1.4,3);
-      else { lpCtx.beginPath(); lpCtx.arc(0,0,p.size/2,0,Math.PI*2); lpCtx.fill(); }
-      lpCtx.restore();
-    });
-    lpParticles = lpParticles.filter(p=>p.alpha>0);
-    if(lpParticles.length>0) lpAnimFrame=requestAnimationFrame(lpTick);
-    else { lpAnimFrame=null; lpCtx.clearRect(0,0,lpCanvas.width,lpCanvas.height); }
-  }
+let activePlan = 'enhanced';
 
-  // Fire confetti from any .confetti-btn
-  document.querySelectorAll('.confetti-btn').forEach(btn => {
-    btn.addEventListener('click', e => {
-      const r = btn.getBoundingClientRect();
-      lpBurst(r.left + r.width/2, r.top + r.height/2, 100);
-    });
-  });
-
-  // ── Scroll helpers ────────────────────────────────────
-  function scrollToPartner() { document.getElementById('partner').scrollIntoView({behavior:'smooth'}); }
-  function scrollToDemo()    { document.getElementById('demo').scrollIntoView({behavior:'smooth'}); }
-
-  function handleSubmit(e) {
-    const btn = e.currentTarget;
-    const r   = btn.getBoundingClientRect();
-    lpBurst(r.left+r.width/2, r.top+r.height/2, 120);
-    btn.textContent = '✓ Application received — we\'ll be in touch within 24 hours!';
-    btn.style.background = 'var(--mint)';
-    btn.style.color = 'var(--midnight)';
-    btn.disabled = true;
-  }
-
-  // ── Demo sliders ──────────────────────────────────────
-  const TOTAL = 350000;
-  let demoState = { base: 70, def: 20, eq: 10 };
-  let demoActive = null;
-
-  function fmt(n) { return '$' + Math.round(n).toLocaleString('en-CA'); }
-
-  function updateDemo() {
-    const b=demoState.base, d=demoState.def, eq=demoState.eq;
-    document.getElementById('dv-base').textContent = fmt(TOTAL*b/100)+' · '+b+'%';
-    document.getElementById('dv-def').textContent  = fmt(TOTAL*d/100)+' · '+d+'%';
-    document.getElementById('dv-eq').textContent   = fmt(TOTAL*eq/100)+' · '+eq+'%';
-    document.getElementById('df-base').style.width = b+'%';
-    document.getElementById('df-def').style.width  = d+'%';
-    document.getElementById('df-eq').style.width   = eq+'%';
-    document.getElementById('dth-base').style.left = b+'%';
-    document.getElementById('dth-def').style.left  = d+'%';
-    document.getElementById('dth-eq').style.left   = eq+'%';
-    // Tax saving: rough model — deferred + equity reduce effective rate
-    const saving = Math.round((d/100 * 0.46 * TOTAL) * 0.11 + (eq/100 * TOTAL) * 0.05);
-    document.getElementById('demo-tax-val').textContent = '+' + fmt(saving);
-    const effectiveRate = (43.16 - (d/100)*4.8 - (eq/100)*2.1).toFixed(1);
-    document.getElementById('demo-effective').innerHTML = effectiveRate + '<span class="unit">%</span>';
-  }
-
-  function makeDemoSlider(trackId, thumbId, key) {
-    const track = document.getElementById(trackId);
-    const thumb = document.getElementById(thumbId);
-    let dragging = false;
-
-    function setPct(clientX) {
-      const rect = track.getBoundingClientRect();
-      let pct = Math.round(Math.max(0, Math.min(100, (clientX-rect.left)/rect.width*100)));
-      const other = key==='base' ? ['def','eq'] : key==='def' ? ['base','eq'] : ['base','def'];
-      // Simple clamp: this slider + sum of others must equal 100
-      const sumOthers = demoState[other[0]] + demoState[other[1]];
-      pct = Math.min(pct, 100 - sumOthers);
-      pct = Math.max(pct, 0);
-      demoState[key] = pct;
-      updateDemo();
-    }
-
-    thumb.addEventListener('mousedown', e => { dragging=true; e.preventDefault(); });
-    document.addEventListener('mousemove', e => { if(dragging) setPct(e.clientX); });
-    document.addEventListener('mouseup',   () => { dragging=false; });
-    track.addEventListener('click', e => { if(e.target!==thumb) setPct(e.clientX); });
-    thumb.addEventListener('touchstart', e=>{ dragging=true; e.preventDefault(); },{passive:false});
-    document.addEventListener('touchmove', e=>{ if(dragging){setPct(e.touches[0].clientX);e.preventDefault();}},{passive:false});
-    document.addEventListener('touchend',  ()=>{ dragging=false; });
-  }
-
-  makeDemoSlider('dt-base','dth-base','base');
-  makeDemoSlider('dt-def','dth-def','def');
-  makeDemoSlider('dt-eq','dth-eq','eq');
+function selectPlan(id) {
+  activePlan = id;
+  document.querySelectorAll('.demo-plan-btn').forEach(b => b.classList.toggle('active', b.dataset.plan === id));
+  const p = PLANS[id];
+  // Update flex pool label
+  document.getElementById('flex-pool-label').textContent = ` of ${cad(p.pool)} used`;
+  // Clamp existing slider values to new caps
+  const dental  = Math.min(sliderVal('dental'),  p.caps.dental,  p.pool);
+  const medical = Math.min(sliderVal('medical'), p.caps.medical, p.pool - dental);
+  const profdev = Math.min(sliderVal('profdev'), p.caps.profdev, p.pool - dental - medical);
+  setSlider('dental',  dental,  0, Math.min(p.caps.dental,  p.pool));
+  setSlider('medical', medical, 0, Math.min(p.caps.medical, p.pool));
+  setSlider('profdev', profdev, 0, Math.min(p.caps.profdev, p.pool));
   updateDemo();
-</script>
+}
 
+function sliderVal(id) { return Number(document.getElementById('slider-'+id).value); }
+
+function setSlider(id, val, min, max) {
+  const el = document.getElementById('slider-'+id);
+  el.min = min; el.max = max; el.value = val;
+  const lbl = document.getElementById('max-'+id+'-label');
+  if (lbl) lbl.textContent = cad(max);
+}
+
+function cad(n) {
+  return new Intl.NumberFormat('en-CA', {style:'currency', currency:'CAD', maximumFractionDigits:0}).format(n);
+}
+function pct(n) { return (n*100).toFixed(1)+'%'; }
+
+function updateDemo() {
+  const p = PLANS[activePlan];
+
+  let rrsp   = sliderVal('rrsp');
+  let equity = sliderVal('equity');
+  let dental = sliderVal('dental');
+  let medical= sliderVal('medical');
+  let profdev= sliderVal('profdev');
+
+  // Enforce RRSP ceiling
+  rrsp = Math.min(rrsp, RRSP_AVAIL, Math.max(0, SALARY - equity - dental - medical - profdev));
+  // Enforce flex pool
+  const flexMax = p.pool;
+  dental  = Math.min(dental,  p.caps.dental,  Math.max(0, flexMax - medical - profdev));
+  medical = Math.min(medical, p.caps.medical, Math.max(0, flexMax - dental  - profdev));
+  profdev = Math.min(profdev, p.caps.profdev, Math.max(0, flexMax - dental  - medical));
+  // Enforce equity ceiling
+  equity = Math.min(equity, Math.max(0, SALARY - rrsp - dental - medical - profdev));
+
+  const baseSalary = SALARY - rrsp - equity - dental - medical - profdev;
+  const flexUsed = dental + medical + profdev;
+  const flexPct = p.pool > 0 ? (flexUsed / p.pool) * 100 : 0;
+
+  // Update slider display values
+  document.getElementById('val-base').textContent   = cad(baseSalary);
+  document.getElementById('val-rrsp').textContent   = cad(rrsp);
+  document.getElementById('val-equity').textContent = cad(equity);
+  document.getElementById('val-dental').textContent = cad(dental);
+  document.getElementById('val-medical').textContent= cad(medical);
+  document.getElementById('val-profdev').textContent= cad(profdev);
+  document.getElementById('flex-used-label').textContent = cad(flexUsed);
+
+  // Update track fills and thumbs
+  function setTrack(id, val, max, color) {
+    const frac = max > 0 ? val / max : 0;
+    document.getElementById('fill-'+id).style.width = (frac*100)+'%';
+    document.getElementById('thumb-'+id).style.left = (frac*100)+'%';
+  }
+  setTrack('base',   baseSalary, SALARY, '#9aafc4');
+  setTrack('rrsp',   rrsp,   RRSP_AVAIL, 'var(--dp-navy)');
+  setTrack('equity', equity, SALARY,     '#10B981');
+  // Update equity max
+  const equityMax = Math.max(0, SALARY - rrsp - dental - medical - profdev);
+  document.getElementById('max-equity-label').textContent = cad(equityMax);
+  document.getElementById('slider-equity').max = equityMax;
+
+  // Flex cap on dental/medical/profdev
+  const dentalMax  = Math.min(p.caps.dental,  Math.max(0, p.pool - medical - profdev));
+  const medicalMax = Math.min(p.caps.medical, Math.max(0, p.pool - dental  - profdev));
+  const profdevMax = Math.min(p.caps.profdev, Math.max(0, p.pool - dental  - medical));
+  document.getElementById('slider-dental').max  = dentalMax;
+  document.getElementById('slider-medical').max = medicalMax;
+  document.getElementById('slider-profdev').max = profdevMax;
+  document.getElementById('max-dental-label').textContent  = cad(dentalMax);
+  document.getElementById('max-medical-label').textContent = cad(medicalMax);
+  document.getElementById('max-profdev-label').textContent = cad(profdevMax);
+  setTrack('dental',  dental,  dentalMax,  '#5B6ED2');
+  setTrack('medical', medical, medicalMax, '#7087FA');
+  setTrack('profdev', profdev, profdevMax, '#38BDF8');
+
+  // Flex pool bar
+  const bar = document.getElementById('flex-pool-bar');
+  bar.style.width = Math.min(flexPct,100)+'%';
+  bar.classList.toggle('over', flexPct >= 100);
+
+  // Tax comparison
+  const before = computeTax(SALARY);
+  // RRSP + HSA (dental+medical) reduce taxable income; wellness/profdev + equity don't for this year
+  const taxableAfter = Math.max(0, SALARY - rrsp - dental - medical);
+  const after = computeTax(taxableAfter);
+
+  document.getElementById('compare-before-monthly').textContent = cad(before.netMonthly);
+  document.getElementById('compare-after-monthly').textContent  = cad(after.netMonthly);
+  document.getElementById('compare-b-taxable').textContent = cad(before.taxableIncome);
+  document.getElementById('compare-a-taxable').textContent = cad(after.taxableIncome);
+  document.getElementById('compare-b-federal').textContent  = cad(before.federal);
+  document.getElementById('compare-a-federal').textContent  = cad(after.federal);
+  document.getElementById('compare-b-ontario').textContent  = cad(before.ontario);
+  document.getElementById('compare-a-ontario').textContent  = cad(after.ontario);
+  document.getElementById('compare-b-total').textContent    = cad(before.total);
+  document.getElementById('compare-a-total').textContent    = cad(after.total);
+  document.getElementById('compare-b-rate').textContent     = pct(before.effectiveRate);
+  document.getElementById('compare-a-rate').textContent     = pct(after.effectiveRate);
+
+  // Savings panel
+  const hasAlloc = rrsp + equity + dental + medical + profdev > 0;
+  const panel = document.getElementById('demo-savings-panel');
+  panel.style.display = hasAlloc ? 'block' : 'none';
+  if (hasAlloc) {
+    const taxSaved = Math.round(before.total - after.total);
+    const totalBenefits = rrsp + equity + dental + medical + profdev;
+    document.getElementById('savings-tax').textContent = '+' + cad(taxSaved);
+    document.getElementById('savings-benefits').textContent = cad(totalBenefits);
+    const lines = document.getElementById('demo-benefit-lines');
+    lines.innerHTML = '';
+    if (rrsp > 0)    lines.innerHTML += `<div class="demo-benefit-line"><span>RRSP retirement savings</span><strong>${cad(rrsp)}</strong></div>`;
+    if (equity > 0)  lines.innerHTML += `<div class="demo-benefit-line"><span style="font-style:italic;color:rgba(255,255,255,0.35)">Equity / RSUs (taxed on vest)</span><strong style="color:rgba(255,255,255,0.4)">${cad(equity)}</strong></div>`;
+    if (dental > 0)  lines.innerHTML += `<div class="demo-benefit-line"><span>Dental</span><strong>${cad(dental)}</strong></div>`;
+    if (medical > 0) lines.innerHTML += `<div class="demo-benefit-line"><span>Medical / Extended Health</span><strong>${cad(medical)}</strong></div>`;
+    if (profdev > 0) lines.innerHTML += `<div class="demo-benefit-line"><span>Professional Development</span><strong>${cad(profdev)}</strong></div>`;
+  }
+}
+
+// Initialize
+updateDemo();
+
+// ── CONFETTI ─────────────────────────────────────────────────────────────
+const canvas = document.getElementById('confetti-canvas');
+const ctx = canvas.getContext('2d');
+let particles = [];
+let animId = null;
+
+function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+window.addEventListener('resize', resize); resize();
+
+const COLORS = ['#5B4FE9','#00D4B1','#F5A623','#7B72ED','#1B2A4A','#3B82F6'];
+
+function spawnConfetti(x, y) {
+  for (let i = 0; i < 80; i++) {
+    const angle = (Math.random() * Math.PI * 2);
+    const speed = 3 + Math.random() * 7;
+    particles.push({
+      x, y,
+      vx: Math.cos(angle) * speed,
+      vy: Math.sin(angle) * speed - 4,
+      color: COLORS[Math.floor(Math.random() * COLORS.length)],
+      shape: Math.random() < 0.5 ? 'rect' : Math.random() < 0.7 ? 'circle' : 'strip',
+      w: 6 + Math.random() * 8, h: 4 + Math.random() * 6,
+      rot: Math.random() * Math.PI * 2,
+      rotV: (Math.random() - 0.5) * 0.2,
+      alpha: 1, life: 1,
+    });
+  }
+  if (!animId) animLoop();
+}
+
+function animLoop() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles = particles.filter(p => p.life > 0);
+  for (const p of particles) {
+    p.x += p.vx; p.y += p.vy;
+    p.vx *= 0.99; p.vy += 0.25; p.vy *= 0.99;
+    p.rot += p.rotV; p.life -= 0.012; p.alpha = p.life;
+    ctx.save(); ctx.globalAlpha = p.alpha; ctx.fillStyle = p.color;
+    ctx.translate(p.x, p.y); ctx.rotate(p.rot);
+    if (p.shape === 'rect')   ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+    else if (p.shape === 'circle') { ctx.beginPath(); ctx.arc(0,0,p.w/2,0,Math.PI*2); ctx.fill(); }
+    else { ctx.fillRect(-p.w/2, -p.h/4, p.w, p.h/2); }
+    ctx.restore();
+  }
+  if (particles.length > 0) animId = requestAnimationFrame(animLoop);
+  else { animId = null; ctx.clearRect(0,0,canvas.width,canvas.height); }
+}
+
+document.querySelectorAll('.confetti-btn').forEach(btn => {
+  btn.addEventListener('click', e => {
+    const r = btn.getBoundingClientRect();
+    spawnConfetti(r.left + r.width/2, r.top + r.height/2);
+  });
+});
+
+// ── FORM ─────────────────────────────────────────────────────────────────
+function submitForm() {
+  const first = document.getElementById('f-first').value.trim();
+  const email = document.getElementById('f-email').value.trim();
+  if (!first || !email) {
+    document.getElementById('f-first').style.borderColor = first ? '' : 'rgba(239,68,68,0.6)';
+    document.getElementById('f-email').style.borderColor = email ? '' : 'rgba(239,68,68,0.6)';
+    return;
+  }
+  document.getElementById('form-fields').style.display = 'none';
+  document.getElementById('form-success').style.display = 'block';
+}
+
+// ── SCROLL HELPERS ───────────────────────────────────────────────────────
+function scrollToApply() { document.getElementById('apply').scrollIntoView({behavior:'smooth'}); }
+function scrollToDemo()  { document.getElementById('demo').scrollIntoView({behavior:'smooth'}); }
+</script>
 </body>
 </html>
