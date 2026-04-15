@@ -68,14 +68,22 @@
       padding: 0 32px;
       background: rgba(255,255,255,0.92);
       backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--slate2);
       box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      /* Promote to own GPU compositing layer so animated children
+         don't invalidate the backdrop-filter layer — prevents blink */
+      transform: translateZ(0);
+      -webkit-transform: translateZ(0);
+      will-change: transform;
     }
     .nav-inner {
       max-width: 1160px; margin: 0 auto;
       height: 64px; display: flex; align-items: center; justify-content: space-between;
     }
-    .nav-logo { display: inline-flex; flex-direction: column; gap: 0; align-items: stretch; text-decoration: none; }
+    .nav-logo { display: inline-flex; flex-direction: column; gap: 0; align-items: stretch; text-decoration: none;
+      /* Isolate animated children from backdrop-filter compositing */
+      isolation: isolate; }
     .nav-wordmark {
       font-family: var(--font-d); font-size: 17px; font-weight: 700;
       letter-spacing: -0.02em; text-transform: uppercase;
@@ -84,6 +92,7 @@
       -webkit-background-clip: text; background-clip: text;
       -webkit-text-fill-color: transparent;
       animation: gradFlow 5s ease-in-out infinite;
+      will-change: background-position;
       position: relative; z-index: 1;
     }
     .nav-slider-rail {
@@ -91,10 +100,9 @@
       margin-top: -4px; user-select: none; cursor: ew-resize;
     }
     .nav-slider-track { position: absolute; left:0; right:0; height:2px; background: var(--slate2); border-radius:99px; }
-    .nav-slider-fill  { position:absolute; height:2.5px; border-radius:99px; pointer-events:none;
-      background: linear-gradient(90deg,#3D2DB5 0%,#F5A623 50%,#3D2DB5 100%);
-      background-size: 200% 100%;
-      animation: gradFlow 5s ease-in-out infinite; }
+    .nav-slider-fill  { position:absolute; left:0; height:2.5px; border-radius:99px; pointer-events:none;
+      background: linear-gradient(90deg,#3D2DB5 0%,#F5A623 100%);
+      will-change: width; }
     .nav-slider-thumb { position:absolute; width:14px; height:14px; transform:translateX(-50%);
       border-radius:50%; background:white; border:2px solid #5B4FE9;
       box-shadow: 0 1px 6px rgba(91,79,233,0.35); cursor:ew-resize; transition: box-shadow 0.15s; }
@@ -403,8 +411,8 @@
       <span class="nav-wordmark">COMPOSABLE</span>
       <div class="nav-slider-rail" id="nav-rail">
         <div class="nav-slider-track"></div>
-        <div class="nav-slider-fill" id="nav-fill" style="left:18%;right:0;"></div>
-        <div class="nav-slider-thumb" id="nav-thumb" style="left:18%;"></div>
+        <div class="nav-slider-fill" id="nav-fill" style="left:0;width:45%;"></div>
+        <div class="nav-slider-thumb" id="nav-thumb" style="left:45%;"></div>
       </div>
     </a>
     <div class="nav-links">
@@ -465,10 +473,10 @@
         <div class="demo-dot" style="background:#FF5F57"></div>
         <div class="demo-dot" style="background:#FFBD2E"></div>
         <div class="demo-dot" style="background:#28C840"></div>
-        <div class="demo-url">app.getcomposable.com</div>
+        <div class="demo-url">app.getcomposable.com?comingfrom=landing</div>
       </div>
       <iframe
-        src="https://app.getcomposable.com"
+        src="https://app.getcomposable.com?comingfrom=landing"
         title="Composable — Live Demo"
         style="width:100%;height:780px;border:none;display:block;"
         loading="lazy"
@@ -904,17 +912,17 @@ function scrollToDemo()  { document.getElementById('demo').scrollIntoView({behav
   const fill  = document.getElementById('nav-fill');
   const link  = document.getElementById('nav-logo-link');
 
-  const MIN_PCT = 10;   // leftmost position (%)
-  const MAX_PCT = 92;   // rightmost — triggers confetti
-  let pct = 18;
+  const MIN_PCT = 4;    // leftmost position (%)
+  const MAX_PCT = 94;   // rightmost — triggers confetti
+  let pct = 45;
   let dragging = false;
   let confettiFired = false;
 
   function setPct(p) {
     pct = Math.max(MIN_PCT, Math.min(MAX_PCT, p));
-    thumb.style.left = pct + '%';
-    fill.style.left  = pct + '%';
-    fill.style.right = '0';
+    thumb.style.left  = pct + '%';
+    fill.style.left   = '0';
+    fill.style.width  = pct + '%';
 
     // Confetti at the far right — fires once per drag-to-end
     if (pct >= MAX_PCT && !confettiFired) {
