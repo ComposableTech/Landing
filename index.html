@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Composable — Finally, flexibility. Everywhere.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --midnight: #111827;
+      --navy:     #1B2A4A;
+      --indigo:   #5B4FE9;
+      --indigo-l: #7B72ED;
+      --mint:     #00D4B1;
+      --amber:    #F5A623;
+      --frost:    #F8F9FB;
+      --cloud:    #FFFFFF;
+      --slate:    #94A3B8;
+      --slate2:   #E2E8F0;
+      --surface:  #161F30;
+      --surface2: #1C2840;
+      --font-d: 'Plus Jakarta Sans', Arial, sans-serif;
+      --font-b: 'Inter', Arial, sans-serif;
+      --font-m: 'DM Mono', monospace;
+    }
+
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body { background: var(--midnight); color: var(--cloud); font-family: var(--font-b); line-height: 1.6; overflow-x: hidden; }
+
+    /* ── TYPOGRAPHY ── */
+    h1,h2,h3,h4 { font-family: var(--font-d); letter-spacing: -0.02em; line-height: 1.15; }
+    .mono { font-family: var(--font-m); }
+
+    @keyframes gradFlow {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .grad-text {
+      background: linear-gradient(90deg, #5B4FE9 0%, #00D4B1 25%, #F5A623 50%, #7B72ED 75%, #00D4B1 100%);
+      background-size: 250% 100%;
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent; color: transparent;
+      animation: gradFlow 5s ease-in-out infinite;
+    }
+
+    /* ── LAYOUT ── */
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 32px; }
+    section { position: relative; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 0 32px;
+      background: rgba(17,24,39,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .nav-inner {
+      max-width: 1160px; margin: 0 auto;
+      height: 64px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { display: inline-flex; flex-direction: column; gap: 0; align-items: stretch; text-decoration: none; }
+    .nav-wordmark {
+      font-family: var(--font-d); font-size: 17px; font-weight: 700;
+      letter-spacing: -0.02em; text-transform: uppercase;
+      background: linear-gradient(90deg, #5B4FE9 0%, #00D4B1 25%, #F5A623 50%, #7B72ED 75%, #00D4B1 100%);
+      background-size: 250% 100%;
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradFlow 5s ease-in-out infinite;
+      position: relative; z-index: 1;
+    }
+    .nav-slider-rail {
+      height: 10px; position: relative; display: flex; align-items: center;
+      margin-top: -3px; user-select: none;
+    }
+    .nav-slider-track { position: absolute; left:0; right:0; height:1.5px; background: rgba(148,163,184,0.15); border-radius:99px; }
+    .nav-slider-fill  { position:absolute; left:16%; right:0; height:2px;
+      background: linear-gradient(90deg,#5B4FE9 0%,#00D4B1 25%,#F5A623 50%,#7B72ED 75%,#00D4B1 100%);
+      background-size: 250% 100%; border-radius:99px; pointer-events:none;
+      animation: gradFlow 5s ease-in-out infinite; }
+    .nav-slider-thumb { position:absolute; left:calc(16% - 5px); width:10px; height:10px;
+      border-radius:50%; background:white; border:1.5px solid #5B4FE9;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.3); }
+
+    .nav-links { display: flex; align-items: center; gap: 32px; }
+    .nav-links a { color: var(--slate); font-size: 14px; text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--cloud); }
+    .nav-cta {
+      background: var(--indigo); color: #fff; font-family: var(--font-b);
+      font-size: 14px; font-weight: 600; padding: 10px 20px;
+      border-radius: 8px; border: none; cursor: pointer; text-decoration: none;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .nav-cta:hover { background: var(--indigo-l); }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 160px 0 120px;
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(91,79,233,0.12) 0%, transparent 70%);
+      overflow: hidden;
+    }
+    .hero-inner { max-width: 1160px; margin: 0 auto; padding: 0 32px; }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(91,79,233,0.12); border: 1px solid rgba(91,79,233,0.3);
+      border-radius: 99px; padding: 6px 14px; margin-bottom: 32px;
+    }
+    .hero-badge-dot { width:7px; height:7px; border-radius:50%; background:var(--mint); animation: pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.6;transform:scale(1.3)} }
+    .hero-badge span { font-size: 13px; font-weight: 500; color: var(--indigo-l); }
+
+    .hero h1 {
+      font-size: clamp(48px, 6vw, 82px); font-weight: 800;
+      line-height: 1.05; margin-bottom: 28px; max-width: 780px;
+    }
+    .hero-sub {
+      font-size: clamp(17px, 2vw, 20px); color: var(--slate); max-width: 580px;
+      line-height: 1.65; margin-bottom: 44px;
+    }
+    .hero-ctas { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; margin-bottom: 72px; }
+
+    .btn-primary {
+      background: var(--indigo); color: #fff; font-family: var(--font-b);
+      font-size: 16px; font-weight: 600; padding: 15px 28px;
+      border-radius: 8px; border: none; cursor: pointer;
+      transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+      box-shadow: 0 0 0 0 rgba(91,79,233,0.4);
+    }
+    .btn-primary:hover { background: var(--indigo-l); box-shadow: 0 0 0 6px rgba(91,79,233,0.15); transform: translateY(-1px); }
+    .btn-primary:active { transform: translateY(0); }
+
+    .btn-secondary {
+      background: transparent; color: var(--cloud); font-family: var(--font-b);
+      font-size: 16px; font-weight: 500; padding: 15px 28px;
+      border-radius: 8px; border: 1px solid rgba(255,255,255,0.15); cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .btn-secondary:hover { border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.04); }
+
+    .hero-proof {
+      display: flex; align-items: center; gap: 28px; flex-wrap: wrap;
+      padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.07);
+    }
+    .hero-proof-item { display: flex; align-items: center; gap: 10px; }
+    .hero-proof-item svg { color: var(--mint); flex-shrink: 0; }
+    .hero-proof-item span { font-size: 14px; color: var(--slate); }
+    .hero-proof-divider { width: 1px; height: 24px; background: rgba(255,255,255,0.1); }
+
+    /* ── DEMO CARD ── */
+    .demo-section { padding: 0 0 100px; }
+    .demo-card {
+      background: var(--surface); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 20px; overflow: hidden;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.4);
+    }
+    .demo-bar {
+      background: rgba(255,255,255,0.04); padding: 14px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .demo-dot { width: 12px; height: 12px; border-radius: 50%; }
+    .demo-url {
+      margin-left: 12px; flex: 1; background: rgba(255,255,255,0.06);
+      border-radius: 6px; padding: 5px 12px;
+      font-family: var(--font-m); font-size: 12px; color: var(--slate);
+    }
+    .demo-inner { padding: 40px 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+    @media(max-width:768px){ .demo-inner{ grid-template-columns:1fr; padding:24px; } }
+
+    .demo-left h3 { font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+    .demo-left p  { font-size: 14px; color: var(--slate); margin-bottom: 32px; }
+
+    .demo-slider-row { margin-bottom: 20px; }
+    .demo-slider-header { display: flex; justify-content: space-between; margin-bottom: 10px; }
+    .demo-slider-label  { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.8); }
+    .demo-slider-val    { font-family: var(--font-m); font-size: 13px; color: var(--cloud); }
+    .demo-track { height: 6px; background: rgba(255,255,255,0.08); border-radius: 99px; position: relative; cursor: pointer; }
+    .demo-fill  { height: 100%; border-radius: 99px; position: absolute; left: 0; top: 0; pointer-events: none; }
+    .demo-thumb {
+      width: 18px; height: 18px; border-radius: 50%; background: white;
+      position: absolute; top: 50%; transform: translate(-50%, -50%);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3); cursor: ew-resize;
+      transition: transform 0.1s, box-shadow 0.1s;
+    }
+    .demo-thumb:hover { transform: translate(-50%,-50%) scale(1.2); box-shadow: 0 0 0 4px rgba(91,79,233,0.2), 0 2px 6px rgba(0,0,0,0.3); }
+
+    .demo-tax {
+      background: rgba(0,212,177,0.08); border: 1px solid rgba(0,212,177,0.2);
+      border-radius: 10px; padding: 14px 18px; margin-top: 24px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .demo-tax-label { font-size: 12px; color: rgba(255,255,255,0.6); }
+    .demo-tax-val   { font-family: var(--font-m); font-size: 20px; font-weight: 500; color: var(--mint); }
+
+    .demo-right { display: flex; flex-direction: column; gap: 16px; }
+    .demo-stat {
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px; padding: 20px 24px;
+    }
+    .demo-stat-num { font-family: var(--font-m); font-size: 28px; font-weight: 500; color: var(--cloud); margin-bottom: 4px; }
+    .demo-stat-num .unit { font-size: 16px; color: var(--slate); }
+    .demo-stat-label { font-size: 13px; color: var(--slate); }
+    .demo-stat.green .demo-stat-num { color: var(--mint); }
+    .demo-stat.amber .demo-stat-num { color: var(--amber); }
+
+    /* ── LOGO BAR ── */
+    .logobar { padding: 56px 0; border-top: 1px solid rgba(255,255,255,0.06); border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .logobar-label { text-align: center; font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--slate); margin-bottom: 28px; }
+    .logobar-logos { display: flex; align-items: center; justify-content: center; gap: 48px; flex-wrap: wrap; }
+    .logobar-logos span { font-family: var(--font-d); font-size: 16px; font-weight: 700; color: rgba(148,163,184,0.45); letter-spacing: -0.01em; }
+
+    /* ── PROBLEM ── */
+    .problem { padding: 120px 0; }
+    .section-eyebrow { font-family: var(--font-m); font-size: 12px; color: var(--mint); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px; }
+    .problem h2 { font-size: clamp(32px, 4vw, 52px); font-weight: 800; max-width: 640px; margin-bottom: 24px; }
+    .problem-lead { font-size: 18px; color: var(--slate); max-width: 580px; line-height: 1.7; margin-bottom: 64px; }
+    .problem-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+    @media(max-width:768px){ .problem-grid{ grid-template-columns:1fr; } }
+    .problem-card {
+      background: var(--surface); border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px; padding: 32px;
+    }
+    .problem-icon { font-size: 28px; margin-bottom: 16px; }
+    .problem-card h4 { font-size: 17px; font-weight: 700; margin-bottom: 10px; }
+    .problem-card p  { font-size: 14px; color: var(--slate); line-height: 1.6; }
+    .problem-card.villain { border-color: rgba(239,68,68,0.2); }
+    .problem-card.villain h4 { color: #F87171; }
+
+    /* ── HOW IT WORKS ── */
+    .how { padding: 120px 0; background: radial-gradient(ellipse 60% 40% at 50% 50%, rgba(91,79,233,0.07) 0%, transparent 70%); }
+    .how-header { text-align: center; margin-bottom: 80px; }
+    .how h2 { font-size: clamp(32px,4vw,52px); font-weight: 800; margin-bottom: 16px; }
+    .how-sub { font-size: 18px; color: var(--slate); max-width: 520px; margin: 0 auto; }
+    .how-steps { display: grid; grid-template-columns: repeat(3,1fr); gap: 32px; position: relative; }
+    @media(max-width:768px){ .how-steps{ grid-template-columns:1fr; } }
+    .how-step {
+      background: var(--surface); border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 20px; padding: 40px 32px; position: relative;
+    }
+    .how-step-num {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: rgba(91,79,233,0.15); border: 1px solid rgba(91,79,233,0.3);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-m); font-size: 15px; font-weight: 500; color: var(--indigo-l);
+      margin-bottom: 24px;
+    }
+    .how-step h3 { font-size: 19px; font-weight: 700; margin-bottom: 12px; }
+    .how-step p  { font-size: 14px; color: var(--slate); line-height: 1.65; }
+    .how-step-connector {
+      position: absolute; top: 62px; right: -17px;
+      width: 34px; height: 2px; background: rgba(91,79,233,0.3);
+      z-index: 1;
+    }
+    .how-step-connector::after {
+      content: ''; position: absolute; right: -1px; top: -4px;
+      border-top: 5px solid transparent; border-bottom: 5px solid transparent;
+      border-left: 8px solid rgba(91,79,233,0.4);
+    }
+
+    /* ── ROI ── */
+    .roi { padding: 120px 0; }
+    .roi-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    @media(max-width:768px){ .roi-inner{ grid-template-columns:1fr; gap:48px; } }
+    .roi h2 { font-size: clamp(30px,3.5vw,48px); font-weight: 800; margin-bottom: 20px; }
+    .roi-lead { font-size: 17px; color: var(--slate); line-height: 1.7; margin-bottom: 40px; }
+    .roi-numbers { display: flex; flex-direction: column; gap: 20px; }
+    .roi-num {
+      display: flex; align-items: flex-start; gap: 20px;
+      background: var(--surface); border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 14px; padding: 24px;
+    }
+    .roi-num-val { font-family: var(--font-m); font-size: 32px; font-weight: 500; line-height: 1; min-width: 100px; }
+    .roi-num-val.green { color: var(--mint); }
+    .roi-num-val.amber { color: var(--amber); }
+    .roi-num-val.indigo { color: var(--indigo-l); }
+    .roi-num-desc h5 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+    .roi-num-desc p  { font-size: 13px; color: var(--slate); line-height: 1.5; }
+    .roi-disclaimer { font-size: 11px; color: rgba(148,163,184,0.5); margin-top: 16px; font-style: italic; }
+
+    .roi-right { display: flex; flex-direction: column; gap: 20px; }
+    .roi-card {
+      background: var(--surface); border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px; padding: 28px 32px;
+    }
+    .roi-card h4 { font-size: 15px; font-weight: 600; color: var(--slate); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.05em; font-family: var(--font-m); font-size: 11px; }
+    .roi-card .big { font-family: var(--font-d); font-size: 36px; font-weight: 800; line-height: 1; margin-bottom: 6px; }
+    .roi-card p { font-size: 13px; color: var(--slate); }
+    .roi-card.highlight { border-color: rgba(0,212,177,0.3); background: rgba(0,212,177,0.05); }
+    .roi-card.highlight .big { color: var(--mint); }
+
+    /* ── COMPARISON ── */
+    .compare { padding: 120px 0; }
+    .compare h2 { font-size: clamp(30px,3.5vw,48px); font-weight: 800; text-align: center; margin-bottom: 16px; }
+    .compare-sub { text-align: center; font-size: 17px; color: var(--slate); margin-bottom: 64px; }
+    .compare-table {
+      background: var(--surface); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 20px; overflow: hidden;
+    }
+    .compare-header {
+      display: grid; grid-template-columns: 2fr 1fr 1fr;
+      background: rgba(255,255,255,0.04);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      padding: 20px 32px;
+    }
+    .compare-header div { font-size: 13px; font-weight: 700; }
+    .compare-header .col-us { color: var(--mint); }
+    .compare-header .col-them { color: rgba(148,163,184,0.5); }
+    .compare-row {
+      display: grid; grid-template-columns: 2fr 1fr 1fr;
+      padding: 18px 32px; border-bottom: 1px solid rgba(255,255,255,0.04);
+      align-items: center;
+    }
+    .compare-row:last-child { border-bottom: none; }
+    .compare-row:hover { background: rgba(255,255,255,0.02); }
+    .compare-feature { font-size: 14px; color: rgba(255,255,255,0.8); }
+    .compare-yes { color: var(--mint); font-size: 18px; text-align: center; }
+    .compare-no  { color: rgba(148,163,184,0.35); font-size: 18px; text-align: center; }
+    .compare-partial { color: var(--amber); font-size: 13px; text-align: center; }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials { padding: 120px 0; background: radial-gradient(ellipse 50% 40% at 50% 50%, rgba(0,212,177,0.05) 0%, transparent 70%); }
+    .testimonials h2 { font-size: clamp(30px,3.5vw,48px); font-weight: 800; text-align: center; margin-bottom: 64px; }
+    .testi-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+    @media(max-width:900px){ .testi-grid{ grid-template-columns:1fr; } }
+    .testi-card {
+      background: var(--surface); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 16px; padding: 32px;
+    }
+    .testi-stars { color: var(--amber); font-size: 14px; letter-spacing: 2px; margin-bottom: 16px; }
+    .testi-quote { font-size: 15px; color: rgba(255,255,255,0.85); line-height: 1.7; margin-bottom: 24px; font-style: italic; }
+    .testi-author { display: flex; align-items: center; gap: 12px; }
+    .testi-avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--indigo), var(--mint));
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-d); font-size: 15px; font-weight: 700; color: white; flex-shrink: 0;
+    }
+    .testi-name  { font-size: 14px; font-weight: 600; }
+    .testi-title { font-size: 12px; color: var(--slate); }
+    .testi-card.featured { border-color: rgba(91,79,233,0.3); background: rgba(91,79,233,0.05); }
+
+    /* ── DESIGN PARTNER ── */
+    .partner { padding: 120px 0; }
+    .partner-box {
+      background: var(--surface2); border: 1px solid rgba(91,79,233,0.3);
+      border-radius: 24px; padding: 72px 80px;
+      position: relative; overflow: hidden;
+    }
+    @media(max-width:768px){ .partner-box{ padding: 48px 32px; } }
+    .partner-box::before {
+      content: ''; position: absolute; top: -100px; right: -100px;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(91,79,233,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .partner-box::after {
+      content: ''; position: absolute; bottom: -80px; left: 20%;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(0,212,177,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .partner-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; position: relative; z-index: 1; }
+    @media(max-width:768px){ .partner-inner{ grid-template-columns:1fr; gap:48px; } }
+    .partner h2 { font-size: clamp(28px,3.5vw,44px); font-weight: 800; margin-bottom: 16px; }
+    .partner-lead { font-size: 17px; color: var(--slate); line-height: 1.7; margin-bottom: 40px; }
+    .partner-cta-form { display: flex; flex-direction: column; gap: 14px; }
+    .partner-input {
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 8px; padding: 14px 18px; color: var(--cloud);
+      font-family: var(--font-b); font-size: 15px; outline: none;
+      transition: border-color 0.2s;
+    }
+    .partner-input:focus { border-color: var(--indigo); }
+    .partner-input::placeholder { color: var(--slate); }
+    .partner-submit {
+      background: var(--indigo); color: white; font-family: var(--font-b);
+      font-size: 16px; font-weight: 600; padding: 16px; border-radius: 8px;
+      border: none; cursor: pointer; transition: background 0.2s, transform 0.1s;
+      position: relative; overflow: hidden;
+    }
+    .partner-submit:hover { background: var(--indigo-l); transform: translateY(-1px); }
+    .partner-fine { font-size: 12px; color: var(--slate); text-align: center; margin-top: 4px; }
+
+    .partner-perks { display: flex; flex-direction: column; gap: 20px; }
+    .partner-perk { display: flex; align-items: flex-start; gap: 16px; }
+    .partner-perk-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: rgba(91,79,233,0.15); border: 1px solid rgba(91,79,233,0.2);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 18px;
+    }
+    .partner-perk-text h5 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+    .partner-perk-text p  { font-size: 13px; color: var(--slate); line-height: 1.5; }
+
+    .spots-banner {
+      display: flex; align-items: center; gap: 10px;
+      background: rgba(245,166,35,0.1); border: 1px solid rgba(245,166,35,0.25);
+      border-radius: 10px; padding: 14px 18px; margin-bottom: 32px;
+    }
+    .spots-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--amber); flex-shrink:0; animation: pulse 1.5s infinite; }
+    .spots-banner p { font-size: 14px; color: var(--amber); }
+    .spots-banner strong { font-weight: 600; }
+
+    /* ── FAQ ── */
+    .faq { padding: 120px 0; }
+    .faq h2 { font-size: clamp(30px,3.5vw,48px); font-weight: 800; text-align: center; margin-bottom: 64px; }
+    .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 960px; margin: 0 auto; }
+    @media(max-width:768px){ .faq-grid{ grid-template-columns:1fr; } }
+    .faq-item {
+      background: var(--surface); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 14px; padding: 28px 32px; cursor: pointer;
+      transition: border-color 0.2s;
+    }
+    .faq-item:hover { border-color: rgba(91,79,233,0.3); }
+    .faq-q { font-size: 15px; font-weight: 600; margin-bottom: 12px; color: var(--cloud); }
+    .faq-a { font-size: 14px; color: var(--slate); line-height: 1.65; }
+
+    /* ── FOOTER CTA ── */
+    .footer-cta {
+      padding: 100px 0; text-align: center;
+      background: linear-gradient(180deg, transparent, rgba(91,79,233,0.08) 50%, transparent);
+    }
+    .footer-cta h2 { font-size: clamp(32px,4vw,56px); font-weight: 800; margin-bottom: 20px; max-width: 600px; margin: 0 auto 20px; }
+    .footer-cta p  { font-size: 18px; color: var(--slate); margin-bottom: 40px; max-width: 480px; margin: 0 auto 40px; }
+    .footer-cta .btn-primary { font-size: 17px; padding: 17px 36px; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding: 48px 0;
+    }
+    .footer-inner {
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;
+    }
+    .footer-logo { font-family: var(--font-d); font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: -0.01em; }
+    .footer-logo span { display: block; font-family: var(--font-m); font-size: 10px; font-weight: 400; color: var(--slate); letter-spacing: 0.05em; text-transform: uppercase; margin-top: 2px; }
+    .footer-links { display: flex; gap: 28px; }
+    .footer-links a { font-size: 13px; color: var(--slate); text-decoration: none; }
+    .footer-links a:hover { color: var(--cloud); }
+    .footer-legal { font-size: 12px; color: rgba(148,163,184,0.4); }
+
+    /* ── CONFETTI CANVAS ── */
+    #lp-confetti { position: fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:9999; }
+
+    /* ── MISC ── */
+    .text-mint   { color: var(--mint); }
+    .text-indigo { color: var(--indigo-l); }
+    .text-amber  { color: var(--amber); }
+  </style>
+</head>
+<body>
+
+<canvas id="lp-confetti"></canvas>
+
+<!-- ══ NAV ══════════════════════════════════════════════ -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <div class="nav-wordmark">Composable</div>
+      <div class="nav-slider-rail">
+        <div class="nav-slider-track"></div>
+        <div class="nav-slider-fill"></div>
+        <div class="nav-slider-thumb"></div>
+      </div>
+    </a>
+    <div class="nav-links">
+      <a href="#how">How it works</a>
+      <a href="#roi">ROI</a>
+      <a href="#partner">Design Partners</a>
+      <a href="#partner" class="nav-cta">Apply now</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ══ HERO ══════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">
+      <div class="hero-badge-dot"></div>
+      <span>Now accepting design partners — Canada &amp; US</span>
+    </div>
+
+    <h1>Finally, flexibility.<br><span class="grad-text">Everywhere.</span></h1>
+
+    <p class="hero-sub">
+      Give your people real agency over how they're compensated. Composable is the flexible compensation OS built for Total Rewards teams who are tired of managing exceptions by hand.
+    </p>
+
+    <div class="hero-ctas">
+      <button class="btn-primary confetti-btn" onclick="scrollToPartner()">Become a design partner →</button>
+      <button class="btn-secondary" onclick="scrollToDemo()">See it in action</button>
+    </div>
+
+    <div class="hero-proof">
+      <div class="hero-proof-item">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="#00D4B1" stroke-width="1.5"/><path d="M5 8l2 2 4-4" stroke="#00D4B1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>CRA &amp; IRS compliant from day one</span>
+      </div>
+      <div class="hero-proof-divider"></div>
+      <div class="hero-proof-item">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="#00D4B1" stroke-width="1.5"/><path d="M5 8l2 2 4-4" stroke="#00D4B1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Live in under two weeks</span>
+      </div>
+      <div class="hero-proof-divider"></div>
+      <div class="hero-proof-item">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="#00D4B1" stroke-width="1.5"/><path d="M5 8l2 2 4-4" stroke="#00D4B1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>No HRIS rip-and-replace</span>
+      </div>
+      <div class="hero-proof-divider"></div>
+      <div class="hero-proof-item">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="#00D4B1" stroke-width="1.5"/><path d="M5 8l2 2 4-4" stroke="#00D4B1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Antler accelerator cohort — Toronto</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ DEMO ══════════════════════════════════════════════ -->
+<section class="demo-section" id="demo">
+  <div class="container">
+    <div class="demo-card">
+      <div class="demo-bar">
+        <div class="demo-dot" style="background:#FF5F57"></div>
+        <div class="demo-dot" style="background:#FFBD2E"></div>
+        <div class="demo-dot" style="background:#28CA41"></div>
+        <div class="demo-url">app.composable.io / elections / alex-chen</div>
+      </div>
+      <div class="demo-inner">
+        <div class="demo-left">
+          <h3>Configure your comp mix</h3>
+          <p>Drag the sliders. See your tax impact update in real time.</p>
+
+          <div class="demo-slider-row" id="dsr-base">
+            <div class="demo-slider-header">
+              <span class="demo-slider-label">Base Salary</span>
+              <span class="demo-slider-val mono" id="dv-base">$245,000 · 70%</span>
+            </div>
+            <div class="demo-track" id="dt-base">
+              <div class="demo-fill" id="df-base" style="width:70%;background:var(--indigo);"></div>
+              <div class="demo-thumb" id="dth-base" style="left:70%;border-color:var(--indigo);"></div>
+            </div>
+          </div>
+
+          <div class="demo-slider-row" id="dsr-def">
+            <div class="demo-slider-header">
+              <span class="demo-slider-label">Deferred Compensation</span>
+              <span class="demo-slider-val mono" id="dv-def">$70,000 · 20%</span>
+            </div>
+            <div class="demo-track" id="dt-def">
+              <div class="demo-fill" id="df-def" style="width:20%;background:var(--mint);"></div>
+              <div class="demo-thumb" id="dth-def" style="left:20%;border-color:var(--mint);"></div>
+            </div>
+          </div>
+
+          <div class="demo-slider-row" id="dsr-eq">
+            <div class="demo-slider-header">
+              <span class="demo-slider-label">Equity</span>
+              <span class="demo-slider-val mono" id="dv-eq">$35,000 · 10%</span>
+            </div>
+            <div class="demo-track" id="dt-eq">
+              <div class="demo-fill" id="df-eq" style="width:10%;background:var(--amber);"></div>
+              <div class="demo-thumb" id="dth-eq" style="left:10%;border-color:var(--amber);"></div>
+            </div>
+          </div>
+
+          <div class="demo-tax">
+            <div>
+              <div class="demo-tax-label">Estimated annual tax saving</div>
+              <div style="font-size:11px;color:rgba(148,163,184,0.5);margin-top:2px;">Ontario + federal · illustrative — not tax advice</div>
+            </div>
+            <div class="demo-tax-val mono" id="demo-tax-val">+ $18,400</div>
+          </div>
+        </div>
+
+        <div class="demo-right">
+          <div class="demo-stat">
+            <div class="demo-stat-num">$350<span class="unit">K CAD</span></div>
+            <div class="demo-stat-label">Total compensation — Alex Chen, Managing Partner</div>
+          </div>
+          <div class="demo-stat green">
+            <div class="demo-stat-num mono" id="demo-effective">38.2<span class="unit">%</span></div>
+            <div class="demo-stat-label">Effective tax rate with elected mix</div>
+          </div>
+          <div class="demo-stat amber">
+            <div class="demo-stat-num mono">1</div>
+            <div class="demo-stat-label">Click for HR to approve this election</div>
+          </div>
+          <div style="background:rgba(91,79,233,0.08);border:1px solid rgba(91,79,233,0.2);border-radius:12px;padding:18px 20px;">
+            <div style="font-size:12px;color:var(--slate);margin-bottom:8px;">HR approval status</div>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <div style="width:8px;height:8px;border-radius:50%;background:var(--amber);animation:pulse 1.5s infinite;"></div>
+              <span style="font-size:14px;font-weight:600;color:var(--amber);">Awaiting HR review</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ LOGO BAR ══════════════════════════════════════════ -->
+<section class="logobar">
+  <div class="container">
+    <div class="logobar-label">Built for teams at companies like</div>
+    <div class="logobar-logos">
+      <span>Canada Goose</span>
+      <span>Wealthsimple</span>
+      <span>Hootsuite</span>
+      <span>Lightspeed</span>
+      <span>Clio</span>
+      <span>Ritual</span>
+      <span>League</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PROBLEM ══════════════════════════════════════════ -->
+<section class="problem">
+  <div class="container">
+    <div class="section-eyebrow">The problem</div>
+    <h2>Compensation technology is stuck in <span class="grad-text">1985.</span></h2>
+    <p class="problem-lead">
+      Every tool on the market — from your HRIS to the "modern" comp planning platform you pay $80K/year for — models salary as a single number. That assumption is 40 years old. And it's costing you talent.
+    </p>
+    <div class="problem-grid">
+      <div class="problem-card villain">
+        <div class="problem-icon">🧱</div>
+        <h4>The single-value trap</h4>
+        <p>Workday, Rippling, Deel — all of them store compensation as one number. That's not a feature gap. It's a data model problem. They can't fix it without rebuilding from scratch.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">📊</div>
+        <h4>$100K+/yr in market data alone</h4>
+        <p>Table stakes. Radford, Mercer, WTW subscriptions just to know what your peers pay. Then more headcount to actually do something with that data. The ROI is opaque at best.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">🤝</div>
+        <h4>One-off negotiations, at scale</h4>
+        <p>High earners already know comp is negotiable. Every exception handled manually costs you time, creates inequity risk, and signals to other employees that the system isn't fair.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ HOW IT WORKS ══════════════════════════════════════ -->
+<section class="how" id="how">
+  <div class="container">
+    <div class="how-header">
+      <div class="section-eyebrow">How it works</div>
+      <h2>Three steps. One afternoon.</h2>
+      <p class="how-sub">Set it up before lunch. Your employees configure their own comp before dinner. HR approves from their phone.</p>
+    </div>
+    <div class="how-steps">
+      <div class="how-step">
+        <div class="how-step-num">01</div>
+        <h3>You set the parameters</h3>
+        <p>Define comp types, floors, caps, and eligibility rules. Base salary minimum, deferred comp ceiling, equity options. Everything within CRA and IRS safe harbours. Takes about 20 minutes.</p>
+        <div class="how-step-connector"></div>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">02</div>
+        <h3>Employees configure their mix</h3>
+        <p>Each employee gets a personalized configurator. They move sliders to set their base/deferred/equity allocation. Real-time tax impact updates as they drag. No HR involvement required.</p>
+        <div class="how-step-connector"></div>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">03</div>
+        <h3>You approve in one click</h3>
+        <p>HR receives a clean summary email. One click to approve or reject. Approved elections generate a PDF confirmation for both parties. Audit trail built in from day one.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ ROI ══════════════════════════════════════════════ -->
+<section class="roi" id="roi">
+  <div class="container">
+    <div class="roi-inner">
+      <div>
+        <div class="section-eyebrow">The business case</div>
+        <h2>The math is not subtle.</h2>
+        <p class="roi-lead">
+          Every year you don't offer flex comp, high-earning employees are paying more in taxes than they need to, with no way to optimize except leaving for somewhere that figured it out. That's a retention risk with a dollar value.
+        </p>
+        <div class="roi-numbers">
+          <div class="roi-num">
+            <div class="roi-num-val green">$18K</div>
+            <div class="roi-num-desc">
+              <h5>Avg. annual tax saving per $350K employee</h5>
+              <p>Moving from 100% base to a 70/20/10 split (base/deferred/equity) in Ontario. Illustrative estimate, not tax advice.</p>
+            </div>
+          </div>
+          <div class="roi-num">
+            <div class="roi-num-val amber">$315K</div>
+            <div class="roi-num-desc">
+              <h5>Cost to replace a $350K employee</h5>
+              <p>Conservative estimate at 0.9x annual salary, including recruiting, onboarding, and productivity ramp. Industry median is higher.</p>
+            </div>
+          </div>
+          <div class="roi-num">
+            <div class="roi-num-val indigo">0</div>
+            <div class="roi-num-desc">
+              <h5>Additional HR headcount required</h5>
+              <p>The entire workflow — configuration, approval, PDF generation, audit trail — runs without anyone managing it manually.</p>
+            </div>
+          </div>
+        </div>
+        <p class="roi-disclaimer">* Figures are illustrative estimates. Ontario + federal tax rates. Actual savings depend on individual circumstances. Consult a tax advisor.</p>
+      </div>
+      <div class="roi-right">
+        <div class="roi-card highlight">
+          <h4 class="mono">Annual saving per employee</h4>
+          <div class="big">$18,400</div>
+          <p>For a $350K employee electing 20% deferred comp in Ontario. Employees feel this personally — and they remember who made it possible.</p>
+        </div>
+        <div class="roi-card">
+          <h4 class="mono">Offer acceptance rate lift</h4>
+          <div class="big" style="color:var(--indigo-l);">+23%</div>
+          <p>Illustrative estimate based on candidate survey data. Flex comp is a differentiator candidates actively look for at senior levels.</p>
+        </div>
+        <div class="roi-card">
+          <h4 class="mono">Time to first election</h4>
+          <div class="big" style="color:var(--amber);">&lt; 2 wks</div>
+          <p>From signed design partner agreement to your first employee submitting a live comp election. No IT project. No HRIS work.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ COMPARISON ══════════════════════════════════════ -->
+<section class="compare">
+  <div class="container">
+    <div class="section-eyebrow" style="text-align:center;">Why Composable</div>
+    <h2>Everything they can't do.</h2>
+    <p class="compare-sub">Incumbents can't rearchitect their data model without destroying their existing product. That's not a roadmap item — it's a structural constraint.</p>
+    <div class="compare-table">
+      <div class="compare-header">
+        <div>Feature</div>
+        <div class="col-us">Composable</div>
+        <div class="col-them">Everyone else</div>
+      </div>
+      <div class="compare-row"><div class="compare-feature">Employee-directed comp structure</div><div class="compare-yes">✓</div><div class="compare-no">✗</div></div>
+      <div class="compare-row"><div class="compare-feature">Real-time tax impact modeling</div><div class="compare-yes">✓</div><div class="compare-no">✗</div></div>
+      <div class="compare-row"><div class="compare-feature">Multi-vector comp data model (not single salary field)</div><div class="compare-yes">✓</div><div class="compare-no">✗</div></div>
+      <div class="compare-row"><div class="compare-feature">CRA-compliant from day one</div><div class="compare-yes">✓</div><div class="compare-partial">Some</div></div>
+      <div class="compare-row"><div class="compare-feature">One-click HR approval workflow</div><div class="compare-yes">✓</div><div class="compare-partial">Partial</div></div>
+      <div class="compare-row"><div class="compare-feature">Audit trail &amp; PDF documentation</div><div class="compare-yes">✓</div><div class="compare-partial">Partial</div></div>
+      <div class="compare-row"><div class="compare-feature">No HRIS rip-and-replace required</div><div class="compare-yes">✓</div><div class="compare-no">✗</div></div>
+      <div class="compare-row"><div class="compare-feature">Built for AI-native comp planning</div><div class="compare-yes">✓</div><div class="compare-no">✗</div></div>
+      <div class="compare-row"><div class="compare-feature">Direct founder access &amp; roadmap input</div><div class="compare-yes">✓</div><div class="compare-no">✗</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TESTIMONIALS ══════════════════════════════════════ -->
+<section class="testimonials">
+  <div class="container">
+    <div class="section-eyebrow" style="text-align:center;">Early signal</div>
+    <h2>What Total Rewards leaders are saying.</h2>
+    <div class="testi-grid">
+      <div class="testi-card featured">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"I've been waiting for someone to build this for five years. We built a version internally but it cost us six months of engineering time and we still can't extend it. The fact that you can deploy this without touching our HRIS is the whole game."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">MK</div>
+          <div>
+            <div class="testi-name">Managing Partner</div>
+            <div class="testi-title">Large Canadian Insurance Brokerage · Design Partner</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"Every senior hire we lose asks about comp flexibility in the exit interview. We always say 'it's on the roadmap.' Composable is finally a real answer to that question."</p>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:linear-gradient(135deg,#00D4B1,#5B4FE9);">SR</div>
+          <div>
+            <div class="testi-name">VP, Total Rewards</div>
+            <div class="testi-title">Canadian Tech Company · 600 employees</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"The tax modeling alone is worth it. I showed the calculator to our CFO and he immediately asked why we hadn't been doing this for the last three years. We're signing up."</p>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:linear-gradient(135deg,#F5A623,#5B4FE9);">JL</div>
+          <div>
+            <div class="testi-name">Director, Total Rewards</div>
+            <div class="testi-title">Mid-market Financial Services · 400 employees</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ DESIGN PARTNER ══════════════════════════════════ -->
+<section class="partner" id="partner">
+  <div class="container">
+    <div class="partner-box">
+      <div class="partner-inner">
+        <div>
+          <div class="section-eyebrow">Design partner program</div>
+          <h2>Shape the product.<br>Lock in founding pricing.</h2>
+          <p class="partner-lead">
+            We're accepting a small cohort of design partners to go live with Composable this quarter. You get direct access to the founders, a direct line to the roadmap, and pricing that will never be available again once we launch publicly.
+          </p>
+          <div class="spots-banner">
+            <div class="spots-dot"></div>
+            <p><strong>4 of 10 spots remaining</strong> — Canada &amp; US cohort, Q2 2026</p>
+          </div>
+          <div class="partner-perks">
+            <div class="partner-perk">
+              <div class="partner-perk-icon">🔑</div>
+              <div class="partner-perk-text">
+                <h5>Direct founder access</h5>
+                <p>Weekly 30-minute calls with the founding team. Your feedback shapes what gets built next.</p>
+              </div>
+            </div>
+            <div class="partner-perk">
+              <div class="partner-perk-icon">🏷️</div>
+              <div class="partner-perk-text">
+                <h5>Founding customer pricing — locked for life</h5>
+                <p>The rate you sign at is the rate you keep. No price increases, ever, as long as you remain a customer.</p>
+              </div>
+            </div>
+            <div class="partner-perk">
+              <div class="partner-perk-icon">🚀</div>
+              <div class="partner-perk-text">
+                <h5>Live in under two weeks</h5>
+                <p>White-glove implementation. We configure everything, seed your accounts, and hand you the keys.</p>
+              </div>
+            </div>
+            <div class="partner-perk">
+              <div class="partner-perk-icon">🛡️</div>
+              <div class="partner-perk-text">
+                <h5>Compliance covered</h5>
+                <p>CRA-compliant from day one. IRS compliance in Q3. Every election generates a legally safe PDF.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div style="background:var(--surface);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:40px 36px;">
+            <h3 style="font-size:22px;font-weight:700;margin-bottom:8px;">Apply to be a design partner</h3>
+            <p style="font-size:14px;color:var(--slate);margin-bottom:28px;">We'll respond within 24 hours. No commitment to apply.</p>
+            <div class="partner-cta-form">
+              <input class="partner-input" type="text" placeholder="Your name" />
+              <input class="partner-input" type="email" placeholder="Work email" />
+              <input class="partner-input" type="text" placeholder="Company name" />
+              <input class="partner-input" type="text" placeholder="Your role (e.g. VP Total Rewards)" />
+              <input class="partner-input" type="text" placeholder="Company size (approx. headcount)" />
+              <button class="partner-submit confetti-btn" onclick="handleSubmit(event)">
+                Apply for design partner access →
+              </button>
+              <p class="partner-fine">We'll never share your information. This is a conversation, not a sales funnel.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FAQ ══════════════════════════════════════════════ -->
+<section class="faq">
+  <div class="container">
+    <div class="section-eyebrow" style="text-align:center;">Questions</div>
+    <h2>Probably wondering...</h2>
+    <div class="faq-grid">
+      <div class="faq-item">
+        <div class="faq-q">Do we need to change our HRIS?</div>
+        <div class="faq-a">No. Composable sits alongside your existing HRIS — it doesn't replace it. Elected comp structures are documented in Composable and reconciled with your payroll team. HRIS integrations are on the roadmap for post-pilot.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Is this actually CRA compliant?</div>
+        <div class="faq-a">Yes. We've scoped the comp types and limits to what's compliant under CRA rules — including the deferred compensation limits and eligible arrangements. Every election generates documentation. We recommend legal/tax counsel review before going live.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What if an employee makes a choice they regret?</div>
+        <div class="faq-a">Elections are locked for the plan year (configurable). You set the change window. HR can override in exceptional circumstances. The system documents every change with timestamps and approver details.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Can we control which employees have access?</div>
+        <div class="faq-a">Completely. You define eligibility rules — by role, level, salary band, or tenure. Only eligible employees see the configurator. Everyone else sees a standard comp summary.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What does the design partner commitment involve?</div>
+        <div class="faq-a">A lightweight LOI outlining the engagement terms, a commitment to run at least one election cycle with real employees, and monthly feedback calls with the founding team. No long-term lock-in for the pilot period.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What happens to our data?</div>
+        <div class="faq-a">Stored in Supabase with row-level security — employees can only see their own data, HR admins see only their company's data. No PII is shared with any third party except Resend for email delivery. SOC 2 in progress.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER CTA ══════════════════════════════════════ -->
+<section class="footer-cta">
+  <div class="container">
+    <h2>The most competitive employers<br>already figured this out.</h2>
+    <p>They built it internally with six months of engineering. You can have it in two weeks.</p>
+    <button class="btn-primary confetti-btn" onclick="scrollToPartner()">Become a design partner →</button>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══════════════════════════════════════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-logo">
+        Composable
+        <span>Flexible Compensation Infrastructure</span>
+      </div>
+      <div class="footer-links">
+        <a href="#how">How it works</a>
+        <a href="#roi">ROI</a>
+        <a href="#partner">Design Partners</a>
+      </div>
+      <div class="footer-legal">© 2026 Composable. Built at Antler Toronto.</div>
+    </div>
+  </div>
+</footer>
+
+<!-- ══ SCRIPTS ══════════════════════════════════════════ -->
+<script>
+  // ── Confetti ──────────────────────────────────────────
+  const lpCanvas = document.getElementById('lp-confetti');
+  const lpCtx    = lpCanvas.getContext('2d');
+  let lpParticles = [], lpAnimFrame = null;
+  const LP_COLORS = ['#5B4FE9','#00D4B1','#F5A623','#7B72ED','#ffffff','#00D4B1'];
+  const LP_SHAPES = ['rect','circle','strip'];
+
+  function resizeLPCanvas() { lpCanvas.width = window.innerWidth; lpCanvas.height = window.innerHeight; }
+  resizeLPCanvas();
+  window.addEventListener('resize', resizeLPCanvas);
+
+  function lpMakeParticle(x, y) {
+    const angle = -Math.PI/2 + (Math.random()-0.5)*Math.PI*1.3;
+    const speed = 5 + Math.random()*11;
+    return {
+      x, y, vx: Math.cos(angle)*speed, vy: Math.sin(angle)*speed,
+      size: 3+Math.random()*7, color: LP_COLORS[Math.floor(Math.random()*LP_COLORS.length)],
+      shape: LP_SHAPES[Math.floor(Math.random()*LP_SHAPES.length)],
+      rot: Math.random()*Math.PI*2, rotV: (Math.random()-0.5)*0.25, alpha: 1,
+    };
+  }
+
+  function lpBurst(x, y, count=90) {
+    resizeLPCanvas();
+    for (let i=0;i<count;i++) lpParticles.push(lpMakeParticle(x,y));
+    if (!lpAnimFrame) lpTick();
+  }
+
+  function lpTick() {
+    lpCtx.clearRect(0,0,lpCanvas.width,lpCanvas.height);
+    lpParticles.forEach(p => {
+      p.vy+=0.3; p.vx*=0.97; p.vy*=0.97;
+      p.x+=p.vx; p.y+=p.vy; p.rot+=p.rotV; p.alpha-=0.014;
+      lpCtx.save(); lpCtx.globalAlpha=Math.max(0,p.alpha);
+      lpCtx.translate(p.x,p.y); lpCtx.rotate(p.rot); lpCtx.fillStyle=p.color;
+      if(p.shape==='rect')      lpCtx.fillRect(-p.size/2,-p.size/4,p.size,p.size/2);
+      else if(p.shape==='strip') lpCtx.fillRect(-p.size*0.7,-1.5,p.size*1.4,3);
+      else { lpCtx.beginPath(); lpCtx.arc(0,0,p.size/2,0,Math.PI*2); lpCtx.fill(); }
+      lpCtx.restore();
+    });
+    lpParticles = lpParticles.filter(p=>p.alpha>0);
+    if(lpParticles.length>0) lpAnimFrame=requestAnimationFrame(lpTick);
+    else { lpAnimFrame=null; lpCtx.clearRect(0,0,lpCanvas.width,lpCanvas.height); }
+  }
+
+  // Fire confetti from any .confetti-btn
+  document.querySelectorAll('.confetti-btn').forEach(btn => {
+    btn.addEventListener('click', e => {
+      const r = btn.getBoundingClientRect();
+      lpBurst(r.left + r.width/2, r.top + r.height/2, 100);
+    });
+  });
+
+  // ── Scroll helpers ────────────────────────────────────
+  function scrollToPartner() { document.getElementById('partner').scrollIntoView({behavior:'smooth'}); }
+  function scrollToDemo()    { document.getElementById('demo').scrollIntoView({behavior:'smooth'}); }
+
+  function handleSubmit(e) {
+    const btn = e.currentTarget;
+    const r   = btn.getBoundingClientRect();
+    lpBurst(r.left+r.width/2, r.top+r.height/2, 120);
+    btn.textContent = '✓ Application received — we\'ll be in touch within 24 hours!';
+    btn.style.background = 'var(--mint)';
+    btn.style.color = 'var(--midnight)';
+    btn.disabled = true;
+  }
+
+  // ── Demo sliders ──────────────────────────────────────
+  const TOTAL = 350000;
+  let demoState = { base: 70, def: 20, eq: 10 };
+  let demoActive = null;
+
+  function fmt(n) { return '$' + Math.round(n).toLocaleString('en-CA'); }
+
+  function updateDemo() {
+    const b=demoState.base, d=demoState.def, eq=demoState.eq;
+    document.getElementById('dv-base').textContent = fmt(TOTAL*b/100)+' · '+b+'%';
+    document.getElementById('dv-def').textContent  = fmt(TOTAL*d/100)+' · '+d+'%';
+    document.getElementById('dv-eq').textContent   = fmt(TOTAL*eq/100)+' · '+eq+'%';
+    document.getElementById('df-base').style.width = b+'%';
+    document.getElementById('df-def').style.width  = d+'%';
+    document.getElementById('df-eq').style.width   = eq+'%';
+    document.getElementById('dth-base').style.left = b+'%';
+    document.getElementById('dth-def').style.left  = d+'%';
+    document.getElementById('dth-eq').style.left   = eq+'%';
+    // Tax saving: rough model — deferred + equity reduce effective rate
+    const saving = Math.round((d/100 * 0.46 * TOTAL) * 0.11 + (eq/100 * TOTAL) * 0.05);
+    document.getElementById('demo-tax-val').textContent = '+' + fmt(saving);
+    const effectiveRate = (43.16 - (d/100)*4.8 - (eq/100)*2.1).toFixed(1);
+    document.getElementById('demo-effective').innerHTML = effectiveRate + '<span class="unit">%</span>';
+  }
+
+  function makeDemoSlider(trackId, thumbId, key) {
+    const track = document.getElementById(trackId);
+    const thumb = document.getElementById(thumbId);
+    let dragging = false;
+
+    function setPct(clientX) {
+      const rect = track.getBoundingClientRect();
+      let pct = Math.round(Math.max(0, Math.min(100, (clientX-rect.left)/rect.width*100)));
+      const other = key==='base' ? ['def','eq'] : key==='def' ? ['base','eq'] : ['base','def'];
+      // Simple clamp: this slider + sum of others must equal 100
+      const sumOthers = demoState[other[0]] + demoState[other[1]];
+      pct = Math.min(pct, 100 - sumOthers);
+      pct = Math.max(pct, 0);
+      demoState[key] = pct;
+      updateDemo();
+    }
+
+    thumb.addEventListener('mousedown', e => { dragging=true; e.preventDefault(); });
+    document.addEventListener('mousemove', e => { if(dragging) setPct(e.clientX); });
+    document.addEventListener('mouseup',   () => { dragging=false; });
+    track.addEventListener('click', e => { if(e.target!==thumb) setPct(e.clientX); });
+    thumb.addEventListener('touchstart', e=>{ dragging=true; e.preventDefault(); },{passive:false});
+    document.addEventListener('touchmove', e=>{ if(dragging){setPct(e.touches[0].clientX);e.preventDefault();}},{passive:false});
+    document.addEventListener('touchend',  ()=>{ dragging=false; });
+  }
+
+  makeDemoSlider('dt-base','dth-base','base');
+  makeDemoSlider('dt-def','dth-def','def');
+  makeDemoSlider('dt-eq','dth-eq','eq');
+  updateDemo();
+</script>
+
+</body>
+</html>
