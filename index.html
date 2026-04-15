@@ -19,7 +19,9 @@
       --amber:    #F5A623;
       --frost:    #F8F9FB;
       --cloud:    #FFFFFF;
-      --slate:    #94A3B8;
+      --slate:    #94A3B8;   /* decorative / borders only — fails AA as body text */
+      --text-2:   #4B5563;   /* accessible secondary text — 7:1 on white */
+      --text-3:   #6B7280;   /* accessible muted text — 5:1 on white */
       --slate2:   #E2E8F0;
       --slate3:   #CBD5E1;
       --font-d: 'Plus Jakarta Sans', Arial, sans-serif;
@@ -85,20 +87,21 @@
       position: relative; z-index: 1;
     }
     .nav-slider-rail {
-      height: 10px; position: relative; display: flex; align-items: center;
-      margin-top: -3px; user-select: none;
+      height: 14px; position: relative; display: flex; align-items: center;
+      margin-top: -4px; user-select: none; cursor: ew-resize;
     }
-    .nav-slider-track { position: absolute; left:0; right:0; height:1.5px; background: var(--slate3); border-radius:99px; }
-    .nav-slider-fill  { position:absolute; left:16%; right:0; height:2px;
+    .nav-slider-track { position: absolute; left:0; right:0; height:2px; background: var(--slate2); border-radius:99px; }
+    .nav-slider-fill  { position:absolute; height:2.5px; border-radius:99px; pointer-events:none;
       background: linear-gradient(90deg,#3D2DB5 0%,#F5A623 50%,#3D2DB5 100%);
-      background-size: 200% 100%; border-radius:99px; pointer-events:none;
+      background-size: 200% 100%;
       animation: gradFlow 5s ease-in-out infinite; }
-    .nav-slider-thumb { position:absolute; left:calc(16% - 5px); width:10px; height:10px;
-      border-radius:50%; background:white; border:1.5px solid #5B4FE9;
-      box-shadow: 0 1px 4px rgba(91,79,233,0.3); }
+    .nav-slider-thumb { position:absolute; width:14px; height:14px; transform:translateX(-50%);
+      border-radius:50%; background:white; border:2px solid #5B4FE9;
+      box-shadow: 0 1px 6px rgba(91,79,233,0.35); cursor:ew-resize; transition: box-shadow 0.15s; }
+    .nav-slider-thumb:hover { box-shadow: 0 0 0 4px rgba(91,79,233,0.15), 0 1px 6px rgba(91,79,233,0.3); }
 
     .nav-links { display: flex; align-items: center; gap: 32px; }
-    .nav-links a { color: var(--slate); font-size: 14px; text-decoration: none; transition: color 0.2s; }
+    .nav-links a { color: var(--text-2); font-size: 14px; text-decoration: none; transition: color 0.2s; }
     .nav-links a:hover { color: var(--midnight); }
     .nav-cta {
       background: var(--indigo); color: #fff; font-family: var(--font-b);
@@ -128,7 +131,7 @@
       line-height: 1.05; margin-bottom: 28px; max-width: 780px; color: var(--navy);
     }
     .hero-sub {
-      font-size: clamp(17px, 2vw, 20px); color: var(--slate); max-width: 580px;
+      font-size: clamp(17px, 2vw, 20px); color: var(--text-2); max-width: 580px;
       line-height: 1.65; margin-bottom: 44px;
     }
     .hero-ctas { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; margin-bottom: 72px; }
@@ -157,7 +160,7 @@
     }
     .hero-proof-item { display: flex; align-items: center; gap: 10px; }
     .hero-proof-item svg { color: var(--mint); flex-shrink: 0; }
-    .hero-proof-item span { font-size: 14px; color: var(--slate); }
+    .hero-proof-item span { font-size: 14px; color: var(--text-2); }
     .hero-proof-divider { width: 1px; height: 24px; background: var(--slate2); }
 
     /* ── DEMO CARD ── */
@@ -181,191 +184,17 @@
       font-family: var(--font-m); font-size: 12px; color: var(--slate);
     }
 
-    /* Demo header */
-    .demo-header {
-      background: var(--dp-navy2);
-      padding: 16px 32px;
-      display: flex; align-items: center; justify-content: space-between;
-    }
-    .demo-header-title {
-      font-family: var(--font-d); font-size: 16px; font-weight: 700; color: #fff;
-    }
-    .demo-header-meta { font-size: 12px; color: rgba(255,255,255,0.5); }
-    .demo-subheader {
-      background: var(--dp-navy); border-bottom: 1px solid rgba(26,87,151,0.4);
-      padding: 10px 32px;
-      display: flex; justify-content: space-between; align-items: center;
-    }
-    .demo-subheader span { font-size: 13px; color: rgba(255,255,255,0.6); }
-    .demo-subheader strong { color: #fff; }
-
-    /* Demo main layout */
-    .demo-main {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 0;
-    }
-    @media(max-width:900px){ .demo-main{ grid-template-columns:1fr; } }
-
-    /* Demo left: sliders */
-    .demo-left { padding: 28px 28px 28px 32px; border-right: 1px solid var(--dp-border); }
-    .demo-section-label {
-      font-family: var(--font-d); font-size: 10px; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 0.18em; color: var(--dp-muted);
-      margin-bottom: 10px;
-    }
-
-    /* Package info */
-    .demo-pkg {
-      border: 1px solid var(--dp-border); margin-bottom: 20px;
-    }
-    .demo-pkg-grid { display: grid; grid-template-columns: 1fr 1fr; divide-x: var(--dp-border); }
-    .demo-pkg-stat {
-      padding: 12px 14px; border-right: 1px solid var(--dp-border);
-    }
-    .demo-pkg-stat:last-child { border-right: 0; }
-    .demo-pkg-stat-label {
-      font-family: var(--font-d); font-size: 10px; font-weight: 600;
-      text-transform: uppercase; letter-spacing: 0.12em; color: var(--dp-muted); margin-bottom: 4px;
-    }
-    .demo-pkg-stat-val { font-size: 18px; font-weight: 700; color: var(--dp-navy); font-family: var(--font-m); }
-    .demo-pkg-stat-sub { font-size: 11px; color: var(--dp-muted); margin-top: 2px; }
-    .demo-pkg-meta {
-      background: var(--dp-bg); border-top: 1px solid var(--dp-border);
-      padding: 8px 14px; display: flex; gap: 20px;
-    }
-    .demo-pkg-meta span { font-size: 11px; color: var(--dp-muted); }
-    .demo-pkg-meta strong { color: var(--dp-navy); font-weight: 600; }
-
-    /* Plan picker */
-    .demo-plan-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; margin-bottom: 20px; }
-    .demo-plan-btn {
-      border: 1px solid var(--dp-border); background: #fff; padding: 10px 8px;
-      text-align: left; cursor: pointer; transition: all 0.15s;
-    }
-    .demo-plan-btn:hover { border-color: var(--dp-blue); }
-    .demo-plan-btn.active { border-color: var(--dp-navy); background: var(--dp-navy); }
-    .demo-plan-name {
-      font-family: var(--font-d); font-size: 9px; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 0.14em; margin-bottom: 2px;
-    }
-    .demo-plan-btn .demo-plan-name { color: var(--dp-muted); }
-    .demo-plan-btn.active .demo-plan-name { color: rgba(255,255,255,0.6); }
-    .demo-plan-pool { font-size: 14px; font-weight: 700; color: var(--dp-navy); font-family: var(--font-m); }
-    .demo-plan-btn.active .demo-plan-pool { color: #fff; }
-    .demo-plan-desc { font-size: 10px; color: var(--dp-muted); margin-top: 2px; }
-    .demo-plan-btn.active .demo-plan-desc { color: rgba(255,255,255,0.5); }
-
-    /* Allocation sliders */
-    .demo-sliders { border: 1px solid var(--dp-border); }
-    .demo-slider-row { padding: 12px 14px; border-bottom: 1px solid var(--dp-border); }
-    .demo-slider-row:last-child { border-bottom: 0; }
-    .demo-slider-row.accent-navy  { border-left: 3px solid var(--dp-navy); }
-    .demo-slider-row.accent-green { border-left: 3px solid #10B981; }
-    .demo-slider-row.accent-indigo { border-left: 3px solid #5B6ED2; }
-    .demo-slider-row.accent-violet { border-left: 3px solid #7087FA; }
-    .demo-slider-row.accent-sky    { border-left: 3px solid #38BDF8; }
-    .demo-slider-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-    .demo-slider-label { font-size: 12px; font-weight: 500; color: var(--midnight); }
-    .demo-slider-desc  { font-size: 11px; color: var(--dp-muted); margin-left: 6px; }
-    .demo-slider-amount {
-      font-family: var(--font-m); font-size: 13px; font-weight: 600; color: var(--dp-navy);
-      background: #fff; border: 1px solid var(--dp-border); border-radius: 4px; padding: 3px 8px;
-      min-width: 90px; text-align: right;
-    }
-    .demo-slider-amount.readonly { background: var(--dp-bg); color: #9aafc4; font-weight: 400; border: none; }
-    .demo-track-wrap { position: relative; height: 8px; margin-bottom: 4px; }
-    .demo-track-bg { position: absolute; inset: 0; background: #E2EAF3; border-radius: 99px; }
-    .demo-track-fill { position: absolute; top:0; left:0; height:100%; border-radius:99px; pointer-events:none; transition: width 0.1s; }
-    .demo-range-input {
-      position: absolute; inset: 0; width: 100%; opacity: 0; height: 100%;
-      cursor: pointer; margin: 0;
-    }
-    .demo-range-input:disabled { cursor: default; }
-    .demo-track-thumb {
-      position: absolute; top: 50%; transform: translate(-50%, -50%);
-      width: 16px; height: 16px; border-radius: 50%; background: #fff;
-      border: 2px solid var(--indigo); box-shadow: 0 1px 4px rgba(91,79,233,0.25);
-      pointer-events: none; transition: left 0.1s;
-    }
-    .demo-track-minmax { display: flex; justify-content: space-between; font-size: 10px; color: #9aafc4; }
-
-    /* Flex pool header */
-    .demo-flex-pool-header {
-      background: var(--dp-bg); padding: 10px 14px; border-bottom: 1px solid var(--dp-border);
-    }
-    .demo-flex-pool-bar-wrap { margin-top: 6px; height: 5px; background: var(--dp-border); border-radius: 99px; overflow: hidden; }
-    .demo-flex-pool-bar { height: 100%; background: #5B6ED2; border-radius: 99px; transition: width 0.15s; }
-    .demo-flex-pool-bar.over { background: #d97706; }
-
-    /* Demo total row */
-    .demo-total-row {
-      background: var(--dp-bg); padding: 10px 14px;
-      display: flex; justify-content: space-between; align-items: center;
-      border-top: 1px solid var(--dp-border);
-    }
-
-    /* Demo right: comparison */
-    .demo-right { padding: 28px 32px 28px 28px; }
-    .demo-compare-header { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-bottom: 0; }
-    .demo-col-label {
-      padding: 8px 12px;
-      font-family: var(--font-d); font-size: 10px; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 0.18em;
-    }
-    .demo-col-before { background: var(--dp-bg); color: var(--dp-muted); border: 1px solid var(--dp-border); border-right: 0; }
-    .demo-col-after  { background: var(--dp-navy); color: rgba(255,255,255,0.7); border: 1px solid var(--dp-navy); }
-
-    .demo-takehome-row { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--dp-border); border-top: 0; }
-    .demo-takehome-before { padding: 16px 12px; background: var(--dp-bg); border-right: 1px solid var(--dp-border); }
-    .demo-takehome-after  { padding: 16px 12px; background: #F2F6FF; }
-    .demo-takehome-label { font-size: 10px; color: var(--dp-muted); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 500; margin-bottom: 4px; }
-    .demo-takehome-val { font-family: var(--font-m); font-size: 24px; font-weight: 700; color: var(--dp-navy); }
-    .demo-takehome-after .demo-takehome-val { color: var(--dp-navy); }
-
-    .demo-tax-table { border: 1px solid var(--dp-border); border-top: 0; }
-    .demo-tax-row { display: grid; grid-template-columns: auto 1fr 1fr; border-bottom: 1px solid var(--dp-border); }
-    .demo-tax-row:last-child { border-bottom: 0; }
-    .demo-tax-row-lbl { padding: 8px 12px; font-size: 12px; color: var(--dp-muted); align-self: center; white-space: nowrap; }
-    .demo-tax-row-b   { padding: 8px 10px; font-family: var(--font-m); font-size: 12px; color: #64748B; text-align: right; background: #fff; border-left: 1px solid var(--dp-border); }
-    .demo-tax-row-a   { padding: 8px 10px; font-family: var(--font-m); font-size: 12px; color: var(--dp-muted); text-align: right; background: var(--dp-bg); border-left: 1px solid var(--dp-border); }
-    .demo-tax-row.bold .demo-tax-row-lbl { font-weight: 600; color: var(--dp-navy); }
-    .demo-tax-row.bold .demo-tax-row-b   { font-weight: 700; color: var(--dp-navy); }
-    .demo-tax-row.bold .demo-tax-row-a   { font-weight: 700; color: var(--dp-navy); }
-
-    .demo-savings-panel {
-      background: var(--dp-navy2); border: 1px solid var(--dp-navy); border-top: 2px solid var(--dp-navy);
-      padding: 16px;
-    }
-    .demo-savings-label {
-      font-family: var(--font-d); font-size: 10px; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 0.18em; color: rgba(255,255,255,0.5); margin-bottom: 12px;
-    }
-    .demo-savings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 12px; }
-    .demo-savings-item-label { font-size: 11px; color: rgba(255,255,255,0.45); margin-bottom: 2px; }
-    .demo-savings-item-val { font-family: var(--font-m); font-size: 22px; font-weight: 700; color: #fff; }
-    .demo-benefit-lines { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 10px; display: flex; flex-direction: column; gap: 4px; }
-    .demo-benefit-line { display: flex; justify-content: space-between; font-size: 11px; }
-    .demo-benefit-line span { color: rgba(255,255,255,0.55); }
-    .demo-benefit-line strong { font-family: var(--font-m); color: rgba(255,255,255,0.85); font-weight: 600; }
-    .demo-savings-note { font-size: 10px; color: rgba(255,255,255,0.3); margin-top: 10px; }
-
-    .demo-disclaimer {
-      border: 1px solid #FDE68A; background: #FFFBEB;
-      padding: 12px 16px; margin-top: 12px;
-    }
-    .demo-disclaimer-title { font-family: var(--font-d); font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #92400E; margin-bottom: 4px; }
-    .demo-disclaimer ul { font-size: 10px; color: #B45309; list-style: disc inside; line-height: 1.6; }
-
     /* ── LOGO BAR ── */
     .logobar { padding: 56px 0; background: var(--cloud); border-top: 1px solid var(--slate2); border-bottom: 1px solid var(--slate2); }
-    .logobar-label { text-align: center; font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--slate); margin-bottom: 28px; }
+    .logobar-label { text-align: center; font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-3); margin-bottom: 28px; }
     .logobar-logos { display: flex; align-items: center; justify-content: center; gap: 48px; flex-wrap: wrap; }
-    .logobar-logos span { font-family: var(--font-d); font-size: 16px; font-weight: 700; color: var(--slate3); letter-spacing: -0.01em; }
+    .logobar-logos span { font-family: var(--font-d); font-size: 16px; font-weight: 700; color: var(--text-3); letter-spacing: -0.01em; }
 
     /* ── PROBLEM ── */
     .problem { padding: 120px 0; }
     .section-eyebrow { font-family: var(--font-m); font-size: 12px; color: var(--indigo); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px; }
     .problem h2 { font-size: clamp(32px, 4vw, 52px); font-weight: 800; max-width: 640px; margin-bottom: 24px; color: var(--navy); }
-    .problem-lead { font-size: 18px; color: var(--slate); max-width: 580px; line-height: 1.7; margin-bottom: 64px; }
+    .problem-lead { font-size: 18px; color: var(--text-2); max-width: 580px; line-height: 1.7; margin-bottom: 64px; }
     .problem-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
     @media(max-width:768px){ .problem-grid{ grid-template-columns:1fr; } }
     .problem-card {
@@ -375,7 +204,7 @@
     }
     .problem-icon { font-size: 28px; margin-bottom: 16px; }
     .problem-card h4 { font-size: 17px; font-weight: 700; margin-bottom: 10px; color: var(--navy); }
-    .problem-card p  { font-size: 14px; color: var(--slate); line-height: 1.6; }
+    .problem-card p  { font-size: 14px; color: var(--text-2); line-height: 1.6; }
     .problem-card.villain { border-color: rgba(239,68,68,0.25); background: #FFF5F5; }
     .problem-card.villain h4 { color: #DC2626; }
 
@@ -383,7 +212,7 @@
     .how { padding: 120px 0; background: var(--cloud); border-top: 1px solid var(--slate2); border-bottom: 1px solid var(--slate2); }
     .how-header { text-align: center; margin-bottom: 80px; }
     .how h2 { font-size: clamp(32px,4vw,52px); font-weight: 800; margin-bottom: 16px; color: var(--navy); }
-    .how-sub { font-size: 18px; color: var(--slate); max-width: 520px; margin: 0 auto; }
+    .how-sub { font-size: 18px; color: var(--text-2); max-width: 520px; margin: 0 auto; }
     .how-steps { display: grid; grid-template-columns: repeat(3,1fr); gap: 32px; position: relative; }
     @media(max-width:768px){ .how-steps{ grid-template-columns:1fr; } }
     .how-step {
@@ -399,7 +228,7 @@
       margin-bottom: 24px;
     }
     .how-step h3 { font-size: 19px; font-weight: 700; margin-bottom: 12px; color: var(--navy); }
-    .how-step p  { font-size: 14px; color: var(--slate); line-height: 1.65; }
+    .how-step p  { font-size: 14px; color: var(--text-2); line-height: 1.65; }
     .how-step-connector {
       position: absolute; top: 62px; right: -17px;
       width: 34px; height: 2px; background: rgba(91,79,233,0.2);
@@ -416,7 +245,7 @@
     .roi-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
     @media(max-width:768px){ .roi-inner{ grid-template-columns:1fr; gap:48px; } }
     .roi h2 { font-size: clamp(30px,3.5vw,48px); font-weight: 800; margin-bottom: 20px; color: var(--navy); }
-    .roi-lead { font-size: 17px; color: var(--slate); line-height: 1.7; margin-bottom: 40px; }
+    .roi-lead { font-size: 17px; color: var(--text-2); line-height: 1.7; margin-bottom: 40px; }
     .roi-numbers { display: flex; flex-direction: column; gap: 20px; }
     .roi-num {
       display: flex; align-items: flex-start; gap: 20px;
@@ -429,8 +258,8 @@
     .roi-num-val.amber  { color: var(--amber); }
     .roi-num-val.indigo { color: var(--indigo); }
     .roi-num-desc h5 { font-size: 15px; font-weight: 600; margin-bottom: 4px; color: var(--navy); }
-    .roi-num-desc p  { font-size: 13px; color: var(--slate); line-height: 1.5; }
-    .roi-disclaimer { font-size: 11px; color: var(--slate3); margin-top: 16px; font-style: italic; }
+    .roi-num-desc p  { font-size: 13px; color: var(--text-2); line-height: 1.5; }
+    .roi-disclaimer { font-size: 11px; color: var(--text-3); margin-top: 16px; font-style: italic; }
 
     .roi-right { display: flex; flex-direction: column; gap: 20px; }
     .roi-card {
@@ -438,16 +267,16 @@
       border-radius: 16px; padding: 28px 32px;
       box-shadow: 0 1px 3px rgba(0,0,0,0.05);
     }
-    .roi-card h4 { font-family: var(--font-m); font-size: 11px; font-weight: 400; color: var(--slate); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .roi-card h4 { font-family: var(--font-m); font-size: 11px; font-weight: 400; color: var(--text-3); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.05em; }
     .roi-card .big { font-family: var(--font-d); font-size: 36px; font-weight: 800; line-height: 1; margin-bottom: 6px; color: var(--navy); }
-    .roi-card p { font-size: 13px; color: var(--slate); }
+    .roi-card p { font-size: 13px; color: var(--text-2); }
     .roi-card.highlight { border-color: rgba(0,212,177,0.3); background: rgba(0,212,177,0.04); }
     .roi-card.highlight .big { color: var(--mint); }
 
     /* ── COMPARISON ── */
     .comparison { padding: 120px 0; background: var(--cloud); border-top: 1px solid var(--slate2); border-bottom: 1px solid var(--slate2); }
     .comparison h2 { font-size: clamp(32px,4vw,52px); font-weight: 800; text-align: center; margin-bottom: 16px; color: var(--navy); }
-    .comparison-sub { font-size: 18px; color: var(--slate); text-align: center; margin-bottom: 64px; }
+    .comparison-sub { font-size: 18px; color: var(--text-2); text-align: center; margin-bottom: 64px; }
     .comparison-table { width: 100%; border-collapse: collapse; }
     .comparison-table th {
       padding: 16px 20px; text-align: left; font-size: 13px; font-weight: 600;
@@ -455,7 +284,7 @@
     }
     .comparison-table th:first-child { color: var(--slate); width: 40%; }
     .comparison-table th.us { color: var(--indigo); background: rgba(91,79,233,0.04); border-radius: 8px 8px 0 0; }
-    .comparison-table th.them { color: var(--slate); }
+    .comparison-table th.them { color: var(--text-3); }
     .comparison-table td {
       padding: 14px 20px; font-size: 14px; border-bottom: 1px solid var(--slate2);
       vertical-align: middle;
@@ -463,7 +292,7 @@
     .comparison-table tr:last-child td { border-bottom: 0; }
     .comparison-table td:first-child { color: var(--midnight); font-weight: 500; }
     .comparison-table td.us { background: rgba(91,79,233,0.03); color: var(--mint); font-weight: 600; }
-    .comparison-table td.them { color: var(--slate3); }
+    .comparison-table td.them { color: var(--text-3); }
     .comparison-table tr:hover td { background: var(--frost); }
     .comparison-table tr:hover td.us { background: rgba(91,79,233,0.06); }
     .check { color: var(--mint); font-size: 18px; }
@@ -484,7 +313,7 @@
       grid-column: span 1;
     }
     .testimonial-quote {
-      font-size: 15px; line-height: 1.7; color: var(--midnight); margin-bottom: 24px;
+      font-size: 15px; line-height: 1.7; color: var(--text-2); margin-bottom: 24px;
     }
     .testimonial-quote::before { content: '"'; color: var(--indigo); font-size: 24px; line-height: 0; vertical-align: -6px; margin-right: 2px; }
     .testimonial-author { display: flex; align-items: center; gap: 12px; }
@@ -494,7 +323,7 @@
       font-family: var(--font-d); font-size: 15px; font-weight: 700; color: var(--indigo);
     }
     .testimonial-name { font-size: 14px; font-weight: 600; color: var(--navy); }
-    .testimonial-role { font-size: 12px; color: var(--slate); }
+    .testimonial-role { font-size: 12px; color: var(--text-3); }
 
     /* ── FORM SECTION ── */
     .form-section { padding: 120px 0; background: var(--navy); }
@@ -539,7 +368,7 @@
     .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px 48px; }
     @media(max-width:768px){ .faq-grid{ grid-template-columns:1fr; } }
     .faq-item h4 { font-size: 16px; font-weight: 600; margin-bottom: 10px; color: var(--navy); }
-    .faq-item p  { font-size: 14px; color: var(--slate); line-height: 1.7; }
+    .faq-item p  { font-size: 14px; color: var(--text-2); line-height: 1.7; }
 
     /* ── FOOTER CTA ── */
     .footer-cta { padding: 100px 0; background: var(--midnight); text-align: center; }
@@ -549,10 +378,10 @@
     /* ── FOOTER ── */
     footer { background: var(--midnight); border-top: 1px solid rgba(255,255,255,0.07); padding: 40px 0; }
     .footer-inner { max-width: 1160px; margin: 0 auto; padding: 0 32px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
-    .footer-left { font-size: 13px; color: rgba(255,255,255,0.35); }
+    .footer-left { font-size: 13px; color: rgba(255,255,255,0.65); }
     .footer-right { display: flex; gap: 28px; }
-    .footer-right a { font-size: 13px; color: rgba(255,255,255,0.35); text-decoration: none; transition: color 0.2s; }
-    .footer-right a:hover { color: rgba(255,255,255,0.7); }
+    .footer-right a { font-size: 13px; color: rgba(255,255,255,0.65); text-decoration: none; transition: color 0.2s; }
+    .footer-right a:hover { color: rgba(255,255,255,0.9); }
 
     /* ── CANVAS CONFETTI ── */
     #confetti-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; }
@@ -560,7 +389,7 @@
     /* ── MISC UTILS ── */
     .text-center { text-align: center; }
     .mt-12 { margin-top: 48px; }
-    @media(max-width:768px){ .container{ padding: 0 20px; } .demo-left, .demo-right { padding: 20px; } }
+    @media(max-width:768px){ .container{ padding: 0 20px; } }
   </style>
 </head>
 <body>
@@ -570,12 +399,12 @@
 <!-- ── NAV ── -->
 <nav>
   <div class="nav-inner">
-    <a href="#" class="nav-logo">
+    <a href="#" class="nav-logo" id="nav-logo-link">
       <span class="nav-wordmark">COMPOSABLE</span>
-      <div class="nav-slider-rail">
+      <div class="nav-slider-rail" id="nav-rail">
         <div class="nav-slider-track"></div>
-        <div class="nav-slider-fill"></div>
-        <div class="nav-slider-thumb"></div>
+        <div class="nav-slider-fill" id="nav-fill" style="left:18%;right:0;"></div>
+        <div class="nav-slider-thumb" id="nav-thumb" style="left:18%;"></div>
       </div>
     </a>
     <div class="nav-links">
@@ -636,276 +465,19 @@
         <div class="demo-dot" style="background:#FF5F57"></div>
         <div class="demo-dot" style="background:#FFBD2E"></div>
         <div class="demo-dot" style="background:#28C840"></div>
-        <div class="demo-url">app.getcomposable.com/elections/alex-chen</div>
+        <div class="demo-url">app.getcomposable.com</div>
       </div>
-      <!-- App header -->
-      <div class="demo-header">
-        <div>
-          <div class="demo-header-title">Compensation Allocation Simulator</div>
-        </div>
-        <div class="demo-header-meta">Ontario · 2026 Tax Year · Alex Chen</div>
-      </div>
-      <div class="demo-subheader">
-        <span>Employee Benefits</span>
-        <span>Total comp budget: <strong id="demo-total-label">$150,000</strong></span>
-      </div>
-
-      <div class="demo-main">
-        <!-- LEFT: Sliders -->
-        <div class="demo-left">
-
-          <!-- Package -->
-          <div class="demo-section-label">Your Compensation Package</div>
-          <div class="demo-pkg">
-            <div class="demo-pkg-grid" style="display:grid;grid-template-columns:1fr 1fr;">
-              <div class="demo-pkg-stat">
-                <div class="demo-pkg-stat-label">Total comp budget</div>
-                <div class="demo-pkg-stat-val">$150,000</div>
-                <div class="demo-pkg-stat-sub">annual, set by employer</div>
-              </div>
-              <div class="demo-pkg-stat" style="border-left:1px solid var(--dp-border);">
-                <div class="demo-pkg-stat-label">RRSP room available</div>
-                <div class="demo-pkg-stat-val">$20,000</div>
-                <div class="demo-pkg-stat-sub">this year</div>
-              </div>
-            </div>
-            <div class="demo-pkg-meta">
-              <span>Province: <strong>Ontario</strong></span>
-              <span>Employment: <strong>Full-time</strong></span>
-              <span>Tax year: <strong>2026</strong></span>
-            </div>
-          </div>
-
-          <!-- Plan picker -->
-          <div class="demo-section-label">Your Benefits Plan</div>
-          <div class="demo-plan-grid" id="demo-plan-grid">
-            <button class="demo-plan-btn" data-plan="core" onclick="selectPlan('core')">
-              <div class="demo-plan-name">Core Plan</div>
-              <div class="demo-plan-pool">$5,000</div>
-              <div class="demo-plan-desc">Essential coverage</div>
-            </button>
-            <button class="demo-plan-btn active" data-plan="enhanced" onclick="selectPlan('enhanced')">
-              <div class="demo-plan-name">Enhanced Plan</div>
-              <div class="demo-plan-pool">$8,000</div>
-              <div class="demo-plan-desc">Comprehensive benefits</div>
-            </button>
-            <button class="demo-plan-btn" data-plan="premium" onclick="selectPlan('premium')">
-              <div class="demo-plan-name">Premium Plan</div>
-              <div class="demo-plan-pool">$12,000</div>
-              <div class="demo-plan-desc">Maximum flexibility</div>
-            </button>
-          </div>
-
-          <!-- Allocation sliders -->
-          <div class="demo-section-label">Your Allocation</div>
-          <div class="demo-sliders">
-
-            <!-- Base Salary (read-only) -->
-            <div class="demo-slider-row">
-              <div class="demo-slider-header">
-                <div>
-                  <span class="demo-slider-label">Base Salary</span>
-                  <span class="demo-slider-desc">cash payroll</span>
-                </div>
-                <div class="demo-slider-amount readonly" id="val-base">$150,000</div>
-              </div>
-              <div class="demo-track-wrap">
-                <div class="demo-track-bg"></div>
-                <div class="demo-track-fill" id="fill-base" style="background:#9aafc4;width:100%;"></div>
-              </div>
-              <div class="demo-track-minmax"><span>$0</span><span>$150,000</span></div>
-            </div>
-
-            <!-- RRSP -->
-            <div class="demo-slider-row accent-navy">
-              <div class="demo-slider-header">
-                <div>
-                  <span class="demo-slider-label">Employer RRSP</span>
-                  <span class="demo-slider-desc">pre-tax retirement</span>
-                </div>
-                <div class="demo-slider-amount" id="val-rrsp">$0</div>
-              </div>
-              <div class="demo-track-wrap">
-                <div class="demo-track-bg"></div>
-                <div class="demo-track-fill" id="fill-rrsp" style="background:var(--dp-navy);width:0%;"></div>
-                <input type="range" class="demo-range-input" id="slider-rrsp" min="0" max="20000" step="100" value="0" oninput="updateDemo()">
-                <div class="demo-track-thumb" id="thumb-rrsp" style="left:0%;border-color:var(--dp-navy);"></div>
-              </div>
-              <div class="demo-track-minmax"><span>$0</span><span id="max-rrsp-label">$20,000</span></div>
-            </div>
-
-            <!-- Equity -->
-            <div class="demo-slider-row accent-green">
-              <div class="demo-slider-header">
-                <div>
-                  <span class="demo-slider-label">Equity / RSUs</span>
-                  <span class="demo-slider-desc">vests 4yr · taxed on vest</span>
-                </div>
-                <div class="demo-slider-amount" id="val-equity">$0</div>
-              </div>
-              <div class="demo-track-wrap">
-                <div class="demo-track-bg"></div>
-                <div class="demo-track-fill" id="fill-equity" style="background:#10B981;width:0%;"></div>
-                <input type="range" class="demo-range-input" id="slider-equity" min="0" max="150000" step="100" value="0" oninput="updateDemo()">
-                <div class="demo-track-thumb" id="thumb-equity" style="left:0%;border-color:#10B981;"></div>
-              </div>
-              <div class="demo-track-minmax"><span>$0</span><span id="max-equity-label">$150,000</span></div>
-            </div>
-
-            <!-- Flex pool header -->
-            <div class="demo-flex-pool-header">
-              <div style="display:flex;justify-content:space-between;align-items:center;">
-                <span class="demo-section-label" style="margin-bottom:0;">Flex Benefits Pool</span>
-                <span style="font-size:11px;color:var(--dp-muted);">
-                  <span id="flex-used-label" style="font-weight:700;color:var(--dp-navy);">$0</span>
-                  <span id="flex-pool-label"> of $8,000 used</span>
-                </span>
-              </div>
-              <div class="demo-flex-pool-bar-wrap">
-                <div class="demo-flex-pool-bar" id="flex-pool-bar" style="width:0%;"></div>
-              </div>
-            </div>
-
-            <!-- Dental -->
-            <div class="demo-slider-row accent-indigo">
-              <div class="demo-slider-header">
-                <div>
-                  <span class="demo-slider-label">Dental</span>
-                  <span class="demo-slider-desc">dental &amp; orthodontics</span>
-                </div>
-                <div class="demo-slider-amount" id="val-dental">$0</div>
-              </div>
-              <div class="demo-track-wrap">
-                <div class="demo-track-bg"></div>
-                <div class="demo-track-fill" id="fill-dental" style="background:#5B6ED2;width:0%;"></div>
-                <input type="range" class="demo-range-input" id="slider-dental" min="0" max="5000" step="100" value="0" oninput="updateDemo()">
-                <div class="demo-track-thumb" id="thumb-dental" style="left:0%;border-color:#5B6ED2;"></div>
-              </div>
-              <div class="demo-track-minmax"><span>$0</span><span id="max-dental-label">$5,000</span></div>
-            </div>
-
-            <!-- Medical -->
-            <div class="demo-slider-row accent-violet">
-              <div class="demo-slider-header">
-                <div>
-                  <span class="demo-slider-label">Medical / Extended Health</span>
-                  <span class="demo-slider-desc">vision, prescriptions</span>
-                </div>
-                <div class="demo-slider-amount" id="val-medical">$0</div>
-              </div>
-              <div class="demo-track-wrap">
-                <div class="demo-track-bg"></div>
-                <div class="demo-track-fill" id="fill-medical" style="background:#7087FA;width:0%;"></div>
-                <input type="range" class="demo-range-input" id="slider-medical" min="0" max="6000" step="100" value="0" oninput="updateDemo()">
-                <div class="demo-track-thumb" id="thumb-medical" style="left:0%;border-color:#7087FA;"></div>
-              </div>
-              <div class="demo-track-minmax"><span>$0</span><span id="max-medical-label">$6,000</span></div>
-            </div>
-
-            <!-- Prof Dev -->
-            <div class="demo-slider-row accent-sky">
-              <div class="demo-slider-header">
-                <div>
-                  <span class="demo-slider-label">Professional Development</span>
-                  <span class="demo-slider-desc">courses, certifications</span>
-                </div>
-                <div class="demo-slider-amount" id="val-profdev">$0</div>
-              </div>
-              <div class="demo-track-wrap">
-                <div class="demo-track-bg"></div>
-                <div class="demo-track-fill" id="fill-profdev" style="background:#38BDF8;width:0%;"></div>
-                <input type="range" class="demo-range-input" id="slider-profdev" min="0" max="2500" step="100" value="0" oninput="updateDemo()">
-                <div class="demo-track-thumb" id="thumb-profdev" style="left:0%;border-color:#38BDF8;"></div>
-              </div>
-              <div class="demo-track-minmax"><span>$0</span><span id="max-profdev-label">$2,500</span></div>
-            </div>
-
-            <!-- Total -->
-            <div class="demo-total-row">
-              <span class="demo-section-label" style="margin-bottom:0;">Total employer cost</span>
-              <span style="font-family:var(--font-m);font-size:13px;font-weight:700;color:var(--dp-navy);">$150,000</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- RIGHT: Comparison -->
-        <div class="demo-right">
-          <div class="demo-section-label">Tax Comparison</div>
-
-          <div class="demo-compare-header">
-            <div class="demo-col-label demo-col-before">Before</div>
-            <div class="demo-col-label demo-col-after">After Allocation</div>
-          </div>
-
-          <div class="demo-takehome-row">
-            <div class="demo-takehome-before">
-              <div class="demo-takehome-label">Monthly take-home</div>
-              <div class="demo-takehome-val" id="compare-before-monthly">$8,117</div>
-            </div>
-            <div class="demo-takehome-after">
-              <div class="demo-takehome-label">Monthly take-home</div>
-              <div class="demo-takehome-val" id="compare-after-monthly">$8,117</div>
-            </div>
-          </div>
-
-          <div class="demo-tax-table">
-            <div class="demo-tax-row">
-              <div class="demo-tax-row-lbl">Taxable income</div>
-              <div class="demo-tax-row-b" id="compare-b-taxable">$150,000</div>
-              <div class="demo-tax-row-a" id="compare-a-taxable">$150,000</div>
-            </div>
-            <div class="demo-tax-row">
-              <div class="demo-tax-row-lbl">Federal tax</div>
-              <div class="demo-tax-row-b" id="compare-b-federal">$31,395</div>
-              <div class="demo-tax-row-a" id="compare-a-federal">$31,395</div>
-            </div>
-            <div class="demo-tax-row">
-              <div class="demo-tax-row-lbl">Ontario tax</div>
-              <div class="demo-tax-row-b" id="compare-b-ontario">$16,109</div>
-              <div class="demo-tax-row-a" id="compare-a-ontario">$16,109</div>
-            </div>
-            <div class="demo-tax-row bold">
-              <div class="demo-tax-row-lbl">Total tax</div>
-              <div class="demo-tax-row-b" id="compare-b-total">$47,504</div>
-              <div class="demo-tax-row-a" id="compare-a-total">$47,504</div>
-            </div>
-            <div class="demo-tax-row">
-              <div class="demo-tax-row-lbl">Effective rate</div>
-              <div class="demo-tax-row-b" id="compare-b-rate">31.7%</div>
-              <div class="demo-tax-row-a" id="compare-a-rate">31.7%</div>
-            </div>
-          </div>
-
-          <div class="demo-savings-panel" id="demo-savings-panel" style="display:none;">
-            <div class="demo-savings-label">Annual Benefit</div>
-            <div class="demo-savings-grid">
-              <div>
-                <div class="demo-savings-item-label">Tax saved this year</div>
-                <div class="demo-savings-item-val" id="savings-tax">+$0</div>
-              </div>
-              <div>
-                <div class="demo-savings-item-label">Benefits credited</div>
-                <div class="demo-savings-item-val" id="savings-benefits">$0</div>
-              </div>
-            </div>
-            <div class="demo-benefit-lines" id="demo-benefit-lines"></div>
-            <div class="demo-savings-note">Your employer's total cost stays exactly $150,000.</div>
-          </div>
-
-          <div class="demo-disclaimer">
-            <div class="demo-disclaimer-title">Simplified Model · Not Tax Advice</div>
-            <ul>
-              <li>2026 federal + Ontario marginal brackets; no CPP or EI</li>
-              <li>Dental &amp; medical treated as non-taxable HSA credits</li>
-              <li>Equity / RSUs taxed on vest — not reflected in comparison</li>
-              <li>RRSP room capped at employer-provided figure ($32,490 CRA max)</li>
-            </ul>
-          </div>
-        </div>
-      </div>
+      <iframe
+        src="https://app.getcomposable.com"
+        title="Composable — Live Demo"
+        style="width:100%;height:780px;border:none;display:block;"
+        loading="lazy"
+        allow="same-origin"
+      ></iframe>
     </div>
   </div>
 </section>
+
 
 <!-- ── LOGO BAR ── -->
 <section class="logobar">
@@ -1253,201 +825,6 @@
 </footer>
 
 <script>
-// ── TAX ENGINE (2026 CRA + Ontario brackets) ─────────────────────────────
-const FED = [
-  {min:0,      max:57375,   rate:0.15},
-  {min:57375,  max:114750,  rate:0.205},
-  {min:114750, max:158519,  rate:0.26},
-  {min:158519, max:220000,  rate:0.29},
-  {min:220000, max:1e9,     rate:0.33},
-];
-const ONT = [
-  {min:0,      max:52886,   rate:0.0505},
-  {min:52886,  max:105775,  rate:0.0915},
-  {min:105775, max:150000,  rate:0.1116},
-  {min:150000, max:220000,  rate:0.1216},
-  {min:220000, max:1e9,     rate:0.1316},
-];
-const SURTAX1 = 5315, SURTAX2 = 6802, RRSP_MAX = 32490;
-
-function calcTax(income, brackets) {
-  let t = 0;
-  for (const b of brackets) {
-    if (income <= b.min) break;
-    t += (Math.min(income, b.max) - b.min) * b.rate;
-  }
-  return t;
-}
-function ontSurtax(basic) {
-  let s = 0;
-  if (basic > SURTAX2) s += (basic - SURTAX2)*0.36 + (SURTAX2-SURTAX1)*0.20;
-  else if (basic > SURTAX1) s += (basic - SURTAX1)*0.20;
-  return s;
-}
-function computeTax(income) {
-  const fed   = calcTax(income, FED);
-  const basic = calcTax(income, ONT);
-  const prov  = basic + ontSurtax(basic);
-  const total = fed + prov;
-  const net   = income - total;
-  return {
-    taxableIncome: income,
-    federal: fed,
-    ontario: prov,
-    total,
-    netMonthly: Math.round(net / 12),
-    effectiveRate: income > 0 ? total / income : 0,
-  };
-}
-
-// ── PLAN CONFIG ──────────────────────────────────────────────────────────
-const PLANS = {
-  core:     { pool:5000,  caps:{dental:3000, medical:3000, profdev:1000} },
-  enhanced: { pool:8000,  caps:{dental:5000, medical:6000, profdev:2500} },
-  premium:  { pool:12000, caps:{dental:8000, medical:10000, profdev:4000} },
-};
-const SALARY = 150000;
-const RRSP_ROOM = 20000;
-const RRSP_AVAIL = Math.min(RRSP_ROOM, RRSP_MAX);
-
-let activePlan = 'enhanced';
-
-function selectPlan(id) {
-  activePlan = id;
-  document.querySelectorAll('.demo-plan-btn').forEach(b => b.classList.toggle('active', b.dataset.plan === id));
-  const p = PLANS[id];
-  // Update flex pool label
-  document.getElementById('flex-pool-label').textContent = ` of ${cad(p.pool)} used`;
-  // Clamp existing slider values to new caps
-  const dental  = Math.min(sliderVal('dental'),  p.caps.dental,  p.pool);
-  const medical = Math.min(sliderVal('medical'), p.caps.medical, p.pool - dental);
-  const profdev = Math.min(sliderVal('profdev'), p.caps.profdev, p.pool - dental - medical);
-  setSlider('dental',  dental,  0, Math.min(p.caps.dental,  p.pool));
-  setSlider('medical', medical, 0, Math.min(p.caps.medical, p.pool));
-  setSlider('profdev', profdev, 0, Math.min(p.caps.profdev, p.pool));
-  updateDemo();
-}
-
-function sliderVal(id) { return Number(document.getElementById('slider-'+id).value); }
-
-function setSlider(id, val, min, max) {
-  const el = document.getElementById('slider-'+id);
-  el.min = min; el.max = max; el.value = val;
-  const lbl = document.getElementById('max-'+id+'-label');
-  if (lbl) lbl.textContent = cad(max);
-}
-
-function cad(n) {
-  return new Intl.NumberFormat('en-CA', {style:'currency', currency:'CAD', maximumFractionDigits:0}).format(n);
-}
-function pct(n) { return (n*100).toFixed(1)+'%'; }
-
-function updateDemo() {
-  const p = PLANS[activePlan];
-
-  let rrsp   = sliderVal('rrsp');
-  let equity = sliderVal('equity');
-  let dental = sliderVal('dental');
-  let medical= sliderVal('medical');
-  let profdev= sliderVal('profdev');
-
-  // Enforce RRSP ceiling
-  rrsp = Math.min(rrsp, RRSP_AVAIL, Math.max(0, SALARY - equity - dental - medical - profdev));
-  // Enforce flex pool
-  const flexMax = p.pool;
-  dental  = Math.min(dental,  p.caps.dental,  Math.max(0, flexMax - medical - profdev));
-  medical = Math.min(medical, p.caps.medical, Math.max(0, flexMax - dental  - profdev));
-  profdev = Math.min(profdev, p.caps.profdev, Math.max(0, flexMax - dental  - medical));
-  // Enforce equity ceiling
-  equity = Math.min(equity, Math.max(0, SALARY - rrsp - dental - medical - profdev));
-
-  const baseSalary = SALARY - rrsp - equity - dental - medical - profdev;
-  const flexUsed = dental + medical + profdev;
-  const flexPct = p.pool > 0 ? (flexUsed / p.pool) * 100 : 0;
-
-  // Update slider display values
-  document.getElementById('val-base').textContent   = cad(baseSalary);
-  document.getElementById('val-rrsp').textContent   = cad(rrsp);
-  document.getElementById('val-equity').textContent = cad(equity);
-  document.getElementById('val-dental').textContent = cad(dental);
-  document.getElementById('val-medical').textContent= cad(medical);
-  document.getElementById('val-profdev').textContent= cad(profdev);
-  document.getElementById('flex-used-label').textContent = cad(flexUsed);
-
-  // Update track fills and thumbs
-  function setTrack(id, val, max, color) {
-    const frac = max > 0 ? val / max : 0;
-    document.getElementById('fill-'+id).style.width = (frac*100)+'%';
-    document.getElementById('thumb-'+id).style.left = (frac*100)+'%';
-  }
-  setTrack('base',   baseSalary, SALARY, '#9aafc4');
-  setTrack('rrsp',   rrsp,   RRSP_AVAIL, 'var(--dp-navy)');
-  setTrack('equity', equity, SALARY,     '#10B981');
-  // Update equity max
-  const equityMax = Math.max(0, SALARY - rrsp - dental - medical - profdev);
-  document.getElementById('max-equity-label').textContent = cad(equityMax);
-  document.getElementById('slider-equity').max = equityMax;
-
-  // Flex cap on dental/medical/profdev
-  const dentalMax  = Math.min(p.caps.dental,  Math.max(0, p.pool - medical - profdev));
-  const medicalMax = Math.min(p.caps.medical, Math.max(0, p.pool - dental  - profdev));
-  const profdevMax = Math.min(p.caps.profdev, Math.max(0, p.pool - dental  - medical));
-  document.getElementById('slider-dental').max  = dentalMax;
-  document.getElementById('slider-medical').max = medicalMax;
-  document.getElementById('slider-profdev').max = profdevMax;
-  document.getElementById('max-dental-label').textContent  = cad(dentalMax);
-  document.getElementById('max-medical-label').textContent = cad(medicalMax);
-  document.getElementById('max-profdev-label').textContent = cad(profdevMax);
-  setTrack('dental',  dental,  dentalMax,  '#5B6ED2');
-  setTrack('medical', medical, medicalMax, '#7087FA');
-  setTrack('profdev', profdev, profdevMax, '#38BDF8');
-
-  // Flex pool bar
-  const bar = document.getElementById('flex-pool-bar');
-  bar.style.width = Math.min(flexPct,100)+'%';
-  bar.classList.toggle('over', flexPct >= 100);
-
-  // Tax comparison
-  const before = computeTax(SALARY);
-  // RRSP + HSA (dental+medical) reduce taxable income; wellness/profdev + equity don't for this year
-  const taxableAfter = Math.max(0, SALARY - rrsp - dental - medical);
-  const after = computeTax(taxableAfter);
-
-  document.getElementById('compare-before-monthly').textContent = cad(before.netMonthly);
-  document.getElementById('compare-after-monthly').textContent  = cad(after.netMonthly);
-  document.getElementById('compare-b-taxable').textContent = cad(before.taxableIncome);
-  document.getElementById('compare-a-taxable').textContent = cad(after.taxableIncome);
-  document.getElementById('compare-b-federal').textContent  = cad(before.federal);
-  document.getElementById('compare-a-federal').textContent  = cad(after.federal);
-  document.getElementById('compare-b-ontario').textContent  = cad(before.ontario);
-  document.getElementById('compare-a-ontario').textContent  = cad(after.ontario);
-  document.getElementById('compare-b-total').textContent    = cad(before.total);
-  document.getElementById('compare-a-total').textContent    = cad(after.total);
-  document.getElementById('compare-b-rate').textContent     = pct(before.effectiveRate);
-  document.getElementById('compare-a-rate').textContent     = pct(after.effectiveRate);
-
-  // Savings panel
-  const hasAlloc = rrsp + equity + dental + medical + profdev > 0;
-  const panel = document.getElementById('demo-savings-panel');
-  panel.style.display = hasAlloc ? 'block' : 'none';
-  if (hasAlloc) {
-    const taxSaved = Math.round(before.total - after.total);
-    const totalBenefits = rrsp + equity + dental + medical + profdev;
-    document.getElementById('savings-tax').textContent = '+' + cad(taxSaved);
-    document.getElementById('savings-benefits').textContent = cad(totalBenefits);
-    const lines = document.getElementById('demo-benefit-lines');
-    lines.innerHTML = '';
-    if (rrsp > 0)    lines.innerHTML += `<div class="demo-benefit-line"><span>RRSP retirement savings</span><strong>${cad(rrsp)}</strong></div>`;
-    if (equity > 0)  lines.innerHTML += `<div class="demo-benefit-line"><span style="font-style:italic;color:rgba(255,255,255,0.35)">Equity / RSUs (taxed on vest)</span><strong style="color:rgba(255,255,255,0.4)">${cad(equity)}</strong></div>`;
-    if (dental > 0)  lines.innerHTML += `<div class="demo-benefit-line"><span>Dental</span><strong>${cad(dental)}</strong></div>`;
-    if (medical > 0) lines.innerHTML += `<div class="demo-benefit-line"><span>Medical / Extended Health</span><strong>${cad(medical)}</strong></div>`;
-    if (profdev > 0) lines.innerHTML += `<div class="demo-benefit-line"><span>Professional Development</span><strong>${cad(profdev)}</strong></div>`;
-  }
-}
-
-// Initialize
-updateDemo();
-
 // ── CONFETTI ─────────────────────────────────────────────────────────────
 const canvas = document.getElementById('confetti-canvas');
 const ctx = canvas.getContext('2d');
@@ -1519,6 +896,66 @@ function submitForm() {
 // ── SCROLL HELPERS ───────────────────────────────────────────────────────
 function scrollToApply() { document.getElementById('apply').scrollIntoView({behavior:'smooth'}); }
 function scrollToDemo()  { document.getElementById('demo').scrollIntoView({behavior:'smooth'}); }
+
+// ── NAV LOGO SLIDER ──────────────────────────────────────────────────────
+(function() {
+  const rail  = document.getElementById('nav-rail');
+  const thumb = document.getElementById('nav-thumb');
+  const fill  = document.getElementById('nav-fill');
+  const link  = document.getElementById('nav-logo-link');
+
+  const MIN_PCT = 10;   // leftmost position (%)
+  const MAX_PCT = 92;   // rightmost — triggers confetti
+  let pct = 18;
+  let dragging = false;
+  let confettiFired = false;
+
+  function setPct(p) {
+    pct = Math.max(MIN_PCT, Math.min(MAX_PCT, p));
+    thumb.style.left = pct + '%';
+    fill.style.left  = pct + '%';
+    fill.style.right = '0';
+
+    // Confetti at the far right — fires once per drag-to-end
+    if (pct >= MAX_PCT && !confettiFired) {
+      confettiFired = true;
+      const r = thumb.getBoundingClientRect();
+      spawnConfetti(r.left + r.width / 2, r.top + r.height / 2);
+    }
+    // Reset confetti trigger when pulled back
+    if (pct < MAX_PCT - 6) confettiFired = false;
+  }
+
+  function clientToRailPct(clientX) {
+    const r = rail.getBoundingClientRect();
+    return ((clientX - r.left) / r.width) * 100;
+  }
+
+  // Prevent nav link from following when dragging
+  link.addEventListener('click', e => { if (dragging) e.preventDefault(); });
+
+  // Mouse
+  thumb.addEventListener('mousedown', e => {
+    e.preventDefault();
+    dragging = true;
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('mouseup', onUp);
+  });
+  rail.addEventListener('mousedown', e => {
+    if (e.target === thumb) return;
+    setPct(clientToRailPct(e.clientX));
+    dragging = true;
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('mouseup', onUp);
+  });
+  function onMove(e) { if (dragging) setPct(clientToRailPct(e.clientX)); }
+  function onUp()    { dragging = false; document.removeEventListener('mousemove', onMove); document.removeEventListener('mouseup', onUp); }
+
+  // Touch
+  thumb.addEventListener('touchstart', e => { e.preventDefault(); dragging = true; }, { passive: false });
+  thumb.addEventListener('touchmove',  e => { e.preventDefault(); if (dragging) setPct(clientToRailPct(e.touches[0].clientX)); }, { passive: false });
+  thumb.addEventListener('touchend',   () => { dragging = false; });
+})();
 </script>
 </body>
 </html>
