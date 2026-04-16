@@ -489,10 +489,10 @@
         <div class="demo-url">app.getcomposable.com?comingfrom=landing</div>
       </div>
       <iframe
-        src="https://app.getcomposable.com?comingfrom=landing"
+        id="demo-iframe"
+        data-src="https://app.getcomposable.com?comingfrom=landing"
         title="Composable — Live Demo"
         style="width:100%;height:780px;border:none;display:block;"
-        loading="lazy"
         allow="same-origin"
         tabindex="-1"
       ></iframe>
@@ -919,14 +919,20 @@ function submitForm() {
 function scrollToApply() { document.getElementById('apply').scrollIntoView({behavior:'smooth'}); }
 function scrollToDemo()  { document.getElementById('demo').scrollIntoView({behavior:'smooth'}); }
 
-// ── PREVENT IFRAME FOCUS-SCROLL ON LOAD ──────────────────────────────────
-// If the app inside the iframe auto-focuses a field, the browser will scroll
-// the parent page to show it. Reset to top after any such scroll fires.
+// ── DEFERRED IFRAME LOAD ─────────────────────────────────────────────────
+// Don't load the iframe on page load at all — the embedded app auto-focuses
+// a field on mount, which makes the browser scroll the parent page to it.
+// Only set src once the user has intentionally scrolled to the demo section.
 (function() {
-  if (window.scrollY !== 0) window.scrollTo(0, 0);
-  window.addEventListener('load', function() {
-    window.scrollTo(0, 0);
-  });
+  const iframe = document.getElementById('demo-iframe');
+  if (!iframe) return;
+  const observer = new IntersectionObserver(function(entries) {
+    if (entries[0].isIntersecting) {
+      iframe.src = iframe.dataset.src;
+      observer.disconnect();
+    }
+  }, { rootMargin: '0px 0px -100px 0px' });
+  observer.observe(iframe);
 })();
 
 // ── NAV LOGO SLIDER ──────────────────────────────────────────────────────
