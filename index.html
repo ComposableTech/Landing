@@ -24,8 +24,8 @@
       --mint-d:   #0FB8A0;   /* mint hover */
 
       /* ── Gradient text (light — designed to glow on dark bg) ── */
-      --grad-1:   #A5B4FC;   /* indigo-300 periwinkle */
-      --grad-2:   #5EEAD4;   /* teal-300 mint */
+      --grad-1:   #C084FC;   /* fuchsia-purple — vivid, high saturation */
+      --grad-2:   #2DD4BF;   /* electric teal — clear hue contrast */
 
       /* ── Text ── */
       --text-1:   #F1F5F9;   /* primary — near-white */
@@ -855,7 +855,7 @@ let animId = null;
 function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
 window.addEventListener('resize', resize); resize();
 
-const COLORS = ['#A5B4FC','#5EEAD4','#6366F1','#2DD4BF','#818CF8','#99F6E4'];
+const COLORS = ['#C084FC','#2DD4BF','#6366F1','#A855F7','#0ED8C0','#E879F9'];
 
 function spawnConfetti(x, y) {
   for (let i = 0; i < 80; i++) {
