@@ -494,6 +494,7 @@
         style="width:100%;height:780px;border:none;display:block;"
         loading="lazy"
         allow="same-origin"
+        tabindex="-1"
       ></iframe>
     </div>
   </div>
@@ -917,6 +918,16 @@ function submitForm() {
 // ── SCROLL HELPERS ───────────────────────────────────────────────────────
 function scrollToApply() { document.getElementById('apply').scrollIntoView({behavior:'smooth'}); }
 function scrollToDemo()  { document.getElementById('demo').scrollIntoView({behavior:'smooth'}); }
+
+// ── PREVENT IFRAME FOCUS-SCROLL ON LOAD ──────────────────────────────────
+// If the app inside the iframe auto-focuses a field, the browser will scroll
+// the parent page to show it. Reset to top after any such scroll fires.
+(function() {
+  if (window.scrollY !== 0) window.scrollTo(0, 0);
+  window.addEventListener('load', function() {
+    window.scrollTo(0, 0);
+  });
+})();
 
 // ── NAV LOGO SLIDER ──────────────────────────────────────────────────────
 (function() {
