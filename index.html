@@ -137,6 +137,18 @@
     }
     .nav-cta:hover { background: var(--indigo-l); box-shadow: 0 2px 12px rgba(99,102,241,0.4); }
 
+    /* Mobile nav adjustments */
+    @media(max-width:768px){
+      nav { padding: 0 20px; }
+      .nav-inner { height: 56px; }
+      .nav-wordmark { font-size: 15px; }
+      .nav-slider-rail { height: 12px; margin-top: -3px; }
+      .nav-slider-thumb { width: 12px; height: 12px; }
+      .nav-links { gap: 16px; }
+      .nav-links a:not(.nav-cta) { display: none; }
+      .nav-cta { font-size: 13px; padding: 8px 16px; }
+    }
+
     /* ── HERO ── */
     .hero {
       padding: 160px 0 100px;
