@@ -4,6 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Composable — Finally, flexibility. Everywhere.</title>
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-83TXKG2Q4T', { page_path: window.location.pathname });
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -932,9 +941,18 @@ form.addEventListener('submit', async (e) => {
     const data = await response.json();
 
     if (response.ok) {
+      trackEvent('form_submission', {
+        form_type: 'design_partner_application',
+        status: 'success'
+      });
       document.getElementById('form-fields').style.display = 'none';
       document.getElementById('form-success').style.display = 'block';
     } else {
+      trackEvent('form_submission', {
+        form_type: 'design_partner_application',
+        status: 'error',
+        error_message: data.message
+      });
       alert('Error: ' + data.message);
       submitBtn.textContent = originalText;
       submitBtn.disabled = false;
@@ -946,9 +964,80 @@ form.addEventListener('submit', async (e) => {
   }
 });
 
+// ── GOOGLE ANALYTICS EVENT TRACKING ──────────────────────────────────────
+function trackEvent(eventName, params = {}) {
+  if (typeof gtag === 'function') {
+    gtag('event', eventName, params);
+  }
+}
+
+// Track scroll depth
+let scrollDepthTracked = { 25: false, 50: false, 75: false, 100: false };
+window.addEventListener('scroll', () => {
+  const scrollPercent = Math.round((window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100);
+  if (scrollPercent >= 25 && !scrollDepthTracked[25]) {
+    scrollDepthTracked[25] = true;
+    trackEvent('scroll_depth', { scroll_percent: 25 });
+  }
+  if (scrollPercent >= 50 && !scrollDepthTracked[50]) {
+    scrollDepthTracked[50] = true;
+    trackEvent('scroll_depth', { scroll_percent: 50 });
+  }
+  if (scrollPercent >= 75 && !scrollDepthTracked[75]) {
+    scrollDepthTracked[75] = true;
+    trackEvent('scroll_depth', { scroll_percent: 75 });
+  }
+  if (scrollPercent >= 100 && !scrollDepthTracked[100]) {
+    scrollDepthTracked[100] = true;
+    trackEvent('scroll_depth', { scroll_percent: 100 });
+  }
+});
+
+// Track nav clicks
+document.querySelectorAll('.nav-links a').forEach(link => {
+  link.addEventListener('click', (e) => {
+    const linkText = e.target.textContent.trim();
+    const isCTA = e.target.classList.contains('nav-cta');
+    trackEvent(isCTA ? 'cta_click' : 'nav_click', {
+      link_text: linkText,
+      link_type: isCTA ? 'cta' : 'navigation',
+      location: 'header'
+    });
+  });
+});
+
+// Track hero CTA clicks
+document.querySelectorAll('.hero-ctas button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const buttonText = btn.textContent.trim();
+    trackEvent('cta_click', {
+      button_text: buttonText,
+      location: 'hero',
+      button_type: btn.classList.contains('btn-primary') ? 'primary' : 'secondary'
+    });
+  });
+});
+
+// Track footer CTA clicks
+document.querySelectorAll('.footer-cta button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    trackEvent('cta_click', {
+      button_text: btn.textContent.trim(),
+      location: 'footer',
+      button_type: 'primary'
+    });
+  });
+});
+
 // ── SCROLL HELPERS ───────────────────────────────────────────────────────
-function scrollToApply() { document.getElementById('apply').scrollIntoView({behavior:'smooth'}); }
-function scrollToDemo()  { document.getElementById('demo').scrollIntoView({behavior:'smooth'}); }
+function scrollToApply() {
+  trackEvent('scroll_to_section', { section: 'apply' });
+  document.getElementById('apply').scrollIntoView({behavior:'smooth'});
+}
+function scrollToDemo() {
+  trackEvent('scroll_to_section', { section: 'demo' });
+  document.getElementById('demo').scrollIntoView({behavior:'smooth'});
+}
 
 // ── CLICK-TO-LOAD DEMO ───────────────────────────────────────────────────
 // Never load the iframe automatically — the app auto-focuses a field on
@@ -958,6 +1047,7 @@ function loadDemo() {
   const placeholder = document.getElementById('demo-placeholder');
   const iframe = document.getElementById('demo-iframe');
   if (!iframe || !placeholder) return;
+  trackEvent('demo_interaction', { action: 'load', demo_type: 'embedded_iframe' });
   placeholder.style.display = 'none';
   iframe.style.display = 'block';
   iframe.src = 'https://app.getcomposable.com?comingfrom=landing';
@@ -993,6 +1083,7 @@ function loadDemo() {
     // Confetti at the far right — fires once per drag-to-end
     if (pct >= MAX_PCT && !confettiFired) {
       confettiFired = true;
+      trackEvent('logo_slider_interaction', { action: 'reached_max', percent: Math.round(pct) });
       const r = thumb.getBoundingClientRect();
       spawnConfetti(r.left + r.width / 2, r.top + r.height / 2);
     }
