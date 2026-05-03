@@ -1,0 +1,78 @@
+@import "tailwindcss";
+
+@theme {
+  /* ── Fonts ── */
+  --font-display: var(--font-jakarta);
+  --font-sans:    var(--font-inter);
+
+  /* ── Brand – Indigo ── */
+  --color-brand-50:  #EEF2FF;
+  --color-brand-100: #E0E7FF;
+  --color-brand-200: #C7D2FE;
+  --color-brand-300: #A5B4FC;
+  --color-brand-400: #6366F1;
+  --color-brand-500: #4F46E5;
+  --color-brand-600: #4338CA;
+  --color-brand-700: #3730A3;
+  --color-brand-800: #312E81;
+  --color-brand-900: #1E1B4B;
+
+  /* ── Mint / Teal ── */
+  --color-mint-300: #2DD4BF;
+  --color-mint-400: #14B8A6;
+  --color-mint-500: #0D9488;
+  --color-mint-600: #0F766E;
+
+  /* ── Fuchsia / Purple (gradient accent) ── */
+  --color-purple-400:  #A855F7;
+  --color-purple-500:  #9333EA;
+
+  /* ── Ink (text / border hierarchy) ── */
+  --color-ink-950: #0B1120;
+  --color-ink-900: #1E293B;
+  --color-ink-700: #334155;
+  --color-ink-500: #64748B;
+  --color-ink-400: #94A3B8;
+  --color-ink-300: #CBD5E1;
+  --color-ink-200: #E2E8F0;
+  --color-ink-100: #F1F5F9;
+  --color-ink-50:  #F8FAFC;
+}
+
+/* ── Base ── */
+html { scroll-behavior: smooth; }
+
+body {
+  color: #1E293B;
+  background: #ffffff;
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display), var(--font-sans), ui-sans-serif, sans-serif;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+}
+
+@keyframes gradFlow {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.grad-text {
+  background: linear-gradient(90deg, #9333EA 0%, #0D9488 50%, #9333EA 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: gradFlow 5s ease-in-out infinite;
+}
+
+*:focus-visible {
+  outline: 2px solid #6366F1;
+  outline-offset: 2px;
+}
