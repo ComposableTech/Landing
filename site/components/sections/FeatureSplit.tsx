@@ -7,7 +7,7 @@ import { Placeholder } from '@/components/sections/Placeholder'
 interface FeatureSplitProps {
   eyebrow: string
   headline: string
-  description: string
+  description?: string
   bullets?: string[]
   cta?: { label: string; href: string }
   imageLabel: string
@@ -16,6 +16,7 @@ interface FeatureSplitProps {
   imageHeight?: number
   reverse?: boolean
   accent?: boolean
+  bgClass?: string
 }
 
 export function FeatureSplit({
@@ -30,9 +31,11 @@ export function FeatureSplit({
   imageHeight = 500,
   reverse = false,
   accent = false,
+  bgClass,
 }: FeatureSplitProps) {
+  const bg = bgClass ?? (accent ? 'bg-ink-50' : 'bg-white')
   return (
-    <section className={accent ? 'bg-ink-50 py-20 md:py-28' : 'bg-white py-20 md:py-28'}>
+    <section className={`${bg} py-20 md:py-28`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div
           className={`flex flex-col gap-12 lg:gap-20 lg:items-center ${
@@ -50,9 +53,11 @@ export function FeatureSplit({
             <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-ink-950 mb-5 leading-tight">
               {headline}
             </h2>
-            <p className="text-lg text-ink-500 leading-relaxed mb-6">
-              {description}
-            </p>
+            {description && (
+              <p className="text-lg text-ink-500 leading-relaxed mb-6">
+                {description}
+              </p>
+            )}
             {bullets && bullets.length > 0 && (
               <ul className="space-y-3 mb-8">
                 {bullets.map((b) => (

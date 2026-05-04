@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/badge'
 const proofPoints = [
   'Plugs into Rippling, HiBob, BambooHR & 80+ more',
   'AI-drafted recommendations for every employee',
-  'Immediate headache relief',
+  'Synced to your HRIS and payroll on approval',
 ]
 
 export function Hero() {
@@ -40,7 +40,7 @@ export function Hero() {
 
           {/* Subheadline */}
           <p className="text-xl sm:text-2xl text-ink-500 leading-relaxed max-w-2xl mx-auto mb-10">
-            Composable plugs into your existing data to 10x your compensation intelligence overnight — smart and diligent pay recommendations, at scale.
+            AI-drafted merit recommendations for every employee, grounded in your live data. An always-on agent that replaces the annual cycle with continuous, individualized raises.
           </p>
 
           {/* CTAs */}

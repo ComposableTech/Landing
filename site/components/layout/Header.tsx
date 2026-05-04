@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
-import { ChevronDown, User, Building2, ArrowRight } from 'lucide-react'
+import { ChevronDown, ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
@@ -46,7 +46,7 @@ const resourceLinks = [
 ]
 */
 
-type DropdownKey = 'product' | 'signin' | null
+type DropdownKey = 'product' | null
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false)
@@ -103,50 +103,7 @@ export function Header() {
             <DropdownButton label="Resources" isOpen={openDropdown === 'resources'} onClick={() => toggle('resources')} />
             */}
 
-            <div className="w-px h-5 bg-ink-200 mx-1" />
-
-            {/* Sign in */}
-            <div className="relative">
-              <button
-                onClick={() => toggle('signin')}
-                className={cn(
-                  'flex items-center gap-1 text-sm font-medium rounded-lg px-3 py-2 transition-colors',
-                  openDropdown === 'signin' ? 'bg-ink-100 text-ink-900' : 'text-ink-700 hover:text-ink-900 hover:bg-ink-50'
-                )}
-              >
-                Sign in
-                <ChevronDown size={14} className={cn('transition-transform duration-150', openDropdown === 'signin' && 'rotate-180')} />
-              </button>
-              {openDropdown === 'signin' && (
-                <>
-                  <div className="fixed inset-0 z-40" onClick={() => setOpenDropdown(null)} />
-                  <div className="absolute right-0 top-full mt-2 z-50 w-48 bg-white border border-ink-200 rounded-xl shadow-lg overflow-hidden">
-                    <a
-                      href="https://app.getcomposable.com"
-                      className="flex items-center gap-3 px-4 py-3 text-sm text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors"
-                      onClick={() => setOpenDropdown(null)}
-                    >
-                      <span className="w-7 h-7 rounded-lg bg-brand-50 flex items-center justify-center shrink-0">
-                        <User size={14} className="text-brand-600" />
-                      </span>
-                      Employees
-                    </a>
-                    <a
-                      href="https://app.getcomposable.com"
-                      className="flex items-center gap-3 px-4 py-3 text-sm text-ink-700 hover:bg-ink-50 hover:text-ink-900 transition-colors border-t border-ink-100"
-                      onClick={() => setOpenDropdown(null)}
-                    >
-                      <span className="w-7 h-7 rounded-lg bg-ink-100 flex items-center justify-center shrink-0">
-                        <Building2 size={14} className="text-ink-500" />
-                      </span>
-                      Employers
-                    </a>
-                  </div>
-                </>
-              )}
-            </div>
-
-            <Button asChild size="sm" variant="primary" className="ml-1">
+            <Button asChild size="sm" variant="primary" className="ml-2">
               <Link href="/contact">Become a design partner</Link>
             </Button>
           </div>
