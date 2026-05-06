@@ -5,38 +5,78 @@
   --font-display: var(--font-jakarta);
   --font-sans:    var(--font-inter);
 
-  /* ── Brand – Indigo ── */
-  --color-brand-50:  #EEF2FF;
-  --color-brand-100: #E0E7FF;
-  --color-brand-200: #C7D2FE;
-  --color-brand-300: #A5B4FC;
-  --color-brand-400: #6366F1;
-  --color-brand-500: #4F46E5;
-  --color-brand-600: #4338CA;
-  --color-brand-700: #3730A3;
-  --color-brand-800: #312E81;
-  --color-brand-900: #1E1B4B;
+  /* ── Brand Colors (dynamically set by theme) ── */
+  --color-brand-50:  #ECFEFF;
+  --color-brand-100: #CFFAFE;
+  --color-brand-200: #A5F3FC;
+  --color-brand-300: #67E8F9;
+  --color-brand-400: #22D3EE;
+  --color-brand-500: #06B6D4;
+  --color-brand-600: #0891B2;
+  --color-brand-700: #0E7490;
+  --color-brand-800: #155E75;
+  --color-brand-900: #164E63;
 
-  /* ── Mint / Teal ── */
-  --color-mint-300: #2DD4BF;
-  --color-mint-400: #14B8A6;
-  --color-mint-500: #0D9488;
-  --color-mint-600: #0F766E;
+  /* ── Accent Colors (dynamically set by theme) ── */
+  --color-accent-50:  #F7FEE7;
+  --color-accent-100: #ECFCCB;
+  --color-accent-200: #D9F99D;
+  --color-accent-300: #BEF264;
+  --color-accent-400: #A3E635;
+  --color-accent-500: #84CC16;
+  --color-accent-600: #65A30D;
+  --color-accent-700: #4D7C0F;
+  --color-accent-800: #3F6212;
+  --color-accent-900: #365314;
 
-  /* ── Fuchsia / Purple (gradient accent) ── */
-  --color-purple-400:  #A855F7;
-  --color-purple-500:  #9333EA;
+  /* ── Intelligence/AI Colors (dynamically set by theme) ── */
+  --color-intelligence-400: #C084FC;
+  --color-intelligence-500: #A855F7;
+  --color-intelligence-600: #9333EA;
 
-  /* ── Ink (text / border hierarchy) ── */
-  --color-ink-950: #0B1120;
-  --color-ink-900: #1E293B;
-  --color-ink-700: #334155;
-  --color-ink-500: #64748B;
-  --color-ink-400: #94A3B8;
-  --color-ink-300: #CBD5E1;
-  --color-ink-200: #E2E8F0;
-  --color-ink-100: #F1F5F9;
+  /* ── Base/Ink Colors (dynamically set by theme) ── */
   --color-ink-50:  #F8FAFC;
+  --color-ink-100: #F1F5F9;
+  --color-ink-200: #E2E8F0;
+  --color-ink-300: #CBD5E1;
+  --color-ink-400: #94A3B8;
+  --color-ink-500: #64748B;
+  --color-ink-600: #475569;
+  --color-ink-700: #334155;
+  --color-ink-800: #1E293B;
+  --color-ink-900: #0F172A;
+  --color-ink-950: #020617;
+
+  --color-base-50:  #F8FAFC;
+  --color-base-100: #F1F5F9;
+  --color-base-200: #E2E8F0;
+  --color-base-300: #CBD5E1;
+  --color-base-400: #94A3B8;
+  --color-base-500: #64748B;
+  --color-base-600: #475569;
+  --color-base-700: #334155;
+  --color-base-800: #1E293B;
+  --color-base-900: #0F172A;
+  --color-base-950: #020617;
+
+  /* ── Legacy Mint Colors (for backwards compatibility) ── */
+  --color-mint-300: var(--color-accent-300);
+  --color-mint-400: var(--color-accent-400);
+  --color-mint-500: var(--color-accent-500);
+  --color-mint-600: var(--color-accent-600);
+
+  /* ── Legacy Purple Colors (for backwards compatibility) ── */
+  --color-purple-400: var(--color-intelligence-400);
+  --color-purple-500: var(--color-intelligence-500);
+
+  /* ── Intelligence color scale ── */
+  --color-intelligence-50:  color-mix(in srgb, var(--color-intelligence-500) 10%, white);
+  --color-intelligence-100: color-mix(in srgb, var(--color-intelligence-500) 20%, white);
+  --color-intelligence-200: color-mix(in srgb, var(--color-intelligence-500) 35%, white);
+  --color-intelligence-300: color-mix(in srgb, var(--color-intelligence-500) 50%, white);
+  --color-intelligence-700: color-mix(in srgb, var(--color-intelligence-500) 80%, black);
+  --color-intelligence-800: color-mix(in srgb, var(--color-intelligence-500) 60%, black);
+  --color-intelligence-900: color-mix(in srgb, var(--color-intelligence-500) 40%, black);
 }
 
 /* ── Base ── */
@@ -63,7 +103,12 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .grad-text {
-  background: linear-gradient(90deg, #9333EA 0%, #0D9488 50%, #9333EA 100%);
+  background: linear-gradient(
+    90deg,
+    var(--color-intelligence-500) 0%,
+    var(--color-brand-500) 50%,
+    var(--color-intelligence-500) 100%
+  );
   background-size: 200% 100%;
   -webkit-background-clip: text;
   background-clip: text;
@@ -75,4 +120,62 @@ h1, h2, h3, h4, h5, h6 {
 *:focus-visible {
   outline: 2px solid #6366F1;
   outline-offset: 2px;
+}
+
+/* Grid pattern for backgrounds */
+.grid-pattern {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* Animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 2s ease-in-out infinite;
+}
+
+.animate-gradient-shift {
+  animation: gradientShift 3s ease infinite;
+  background-size: 200% 100%;
 }

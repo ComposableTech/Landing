@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { Check, ArrowRight } from 'lucide-react'
 import { AnimateIn } from '@/components/ui/animate-in'
 import { Placeholder } from '@/components/sections/Placeholder'
+import { ReactNode } from 'react'
 
 interface FeatureSplitProps {
   eyebrow: string
@@ -14,6 +15,7 @@ interface FeatureSplitProps {
   imageSrc?: string
   imageWidth?: number
   imageHeight?: number
+  customComponent?: ReactNode
   reverse?: boolean
   accent?: boolean
   bgClass?: string
@@ -29,11 +31,12 @@ export function FeatureSplit({
   imageSrc,
   imageWidth = 720,
   imageHeight = 500,
+  customComponent,
   reverse = false,
   accent = false,
   bgClass,
 }: FeatureSplitProps) {
-  const bg = bgClass ?? (accent ? 'bg-ink-50' : 'bg-white')
+  const bg = bgClass ?? (accent ? 'bg-gradient-to-b from-ink-50 to-white' : 'bg-white')
   return (
     <section className={`${bg} py-20 md:py-28`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -81,25 +84,31 @@ export function FeatureSplit({
             )}
           </AnimateIn>
 
-          {/* Screenshot block */}
+          {/* Screenshot/Component block */}
           <AnimateIn
             className="flex-1 w-full max-w-xl lg:max-w-none"
             direction={reverse ? 'left' : 'right'}
             delay={0.1}
           >
-            <div className="rounded-2xl border border-ink-200 overflow-hidden shadow-xl shadow-ink-900/5">
-              {imageSrc ? (
-                <Image
-                  src={imageSrc}
-                  alt={imageLabel}
-                  width={imageWidth}
-                  height={imageHeight}
-                  className="w-full h-auto"
-                />
-              ) : (
-                <Placeholder label={imageLabel} width={imageWidth} height={imageHeight} />
-              )}
-            </div>
+            {customComponent ? (
+              <div className="w-full">
+                {customComponent}
+              </div>
+            ) : (
+              <div className="rounded-2xl border border-ink-200 overflow-hidden shadow-xl shadow-ink-900/5">
+                {imageSrc ? (
+                  <Image
+                    src={imageSrc}
+                    alt={imageLabel}
+                    width={imageWidth}
+                    height={imageHeight}
+                    className="w-full h-auto"
+                  />
+                ) : (
+                  <Placeholder label={imageLabel} width={imageWidth} height={imageHeight} />
+                )}
+              </div>
+            )}
           </AnimateIn>
         </div>
       </div>
