@@ -11,15 +11,11 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<ThemeName>('electric-precision')
+  const [theme, setThemeState] = useState<ThemeName>('warm-intelligence')
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
     setMounted(true)
-    const stored = localStorage.getItem('composable-theme') as ThemeName | null
-    if (stored && ['electric-precision', 'deep-forest', 'monochrome-magenta', 'warm-intelligence', 'deep-jewel'].includes(stored)) {
-      setThemeState(stored)
-    }
   }, [])
 
   useEffect(() => {
@@ -54,8 +50,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     Object.entries(themeConfig.colors.base).forEach(([key, value]) => {
       root.style.setProperty(`--color-ink-${key}`, value)
     })
-
-    localStorage.setItem('composable-theme', theme)
   }, [theme, mounted])
 
   const setTheme = (newTheme: ThemeName) => {

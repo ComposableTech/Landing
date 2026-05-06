@@ -4,7 +4,6 @@ import './globals.css'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { ThemeProvider } from '@/components/theme-provider'
-import { ThemeSwitcher } from '@/components/theme-switcher'
 
 const jakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
@@ -57,7 +56,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Header />
           <main className="flex-1">{children}</main>
           <Footer />
-          <ThemeSwitcher />
         </ThemeProvider>
       </body>
     </html>

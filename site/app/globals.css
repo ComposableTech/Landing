@@ -5,59 +5,59 @@
   --font-display: var(--font-jakarta);
   --font-sans:    var(--font-inter);
 
-  /* ── Brand Colors (dynamically set by theme) ── */
-  --color-brand-50:  #ECFEFF;
-  --color-brand-100: #CFFAFE;
-  --color-brand-200: #A5F3FC;
-  --color-brand-300: #67E8F9;
-  --color-brand-400: #22D3EE;
-  --color-brand-500: #06B6D4;
-  --color-brand-600: #0891B2;
-  --color-brand-700: #0E7490;
-  --color-brand-800: #155E75;
-  --color-brand-900: #164E63;
+  /* ── Brand Colors - Warm Intelligence (Coral/Red) ── */
+  --color-brand-50:  #FEF2F2;
+  --color-brand-100: #FEE2E2;
+  --color-brand-200: #FECACA;
+  --color-brand-300: #FCA5A5;
+  --color-brand-400: #F87171;
+  --color-brand-500: #EF4444;
+  --color-brand-600: #DC2626;
+  --color-brand-700: #B91C1C;
+  --color-brand-800: #991B1B;
+  --color-brand-900: #7F1D1D;
 
-  /* ── Accent Colors (dynamically set by theme) ── */
-  --color-accent-50:  #F7FEE7;
-  --color-accent-100: #ECFCCB;
-  --color-accent-200: #D9F99D;
-  --color-accent-300: #BEF264;
-  --color-accent-400: #A3E635;
-  --color-accent-500: #84CC16;
-  --color-accent-600: #65A30D;
-  --color-accent-700: #4D7C0F;
-  --color-accent-800: #3F6212;
-  --color-accent-900: #365314;
+  /* ── Accent Colors - Warm Intelligence (Amber) ── */
+  --color-accent-50:  #FFFBEB;
+  --color-accent-100: #FEF3C7;
+  --color-accent-200: #FDE68A;
+  --color-accent-300: #FCD34D;
+  --color-accent-400: #FBBF24;
+  --color-accent-500: #F59E0B;
+  --color-accent-600: #D97706;
+  --color-accent-700: #B45309;
+  --color-accent-800: #92400E;
+  --color-accent-900: #78350F;
 
-  /* ── Intelligence/AI Colors (dynamically set by theme) ── */
-  --color-intelligence-400: #C084FC;
-  --color-intelligence-500: #A855F7;
-  --color-intelligence-600: #9333EA;
+  /* ── Intelligence/AI Colors - Warm Intelligence ── */
+  --color-intelligence-400: #F87171;
+  --color-intelligence-500: #EF4444;
+  --color-intelligence-600: #DC2626;
 
-  /* ── Base/Ink Colors (dynamically set by theme) ── */
-  --color-ink-50:  #F8FAFC;
-  --color-ink-100: #F1F5F9;
-  --color-ink-200: #E2E8F0;
-  --color-ink-300: #CBD5E1;
-  --color-ink-400: #94A3B8;
-  --color-ink-500: #64748B;
-  --color-ink-600: #475569;
-  --color-ink-700: #334155;
-  --color-ink-800: #1E293B;
-  --color-ink-900: #0F172A;
-  --color-ink-950: #020617;
+  /* ── Base/Ink Colors - Warm Intelligence (Zinc) ── */
+  --color-ink-50:  #FAFAFA;
+  --color-ink-100: #F4F4F5;
+  --color-ink-200: #E4E4E7;
+  --color-ink-300: #D4D4D8;
+  --color-ink-400: #A1A1AA;
+  --color-ink-500: #71717A;
+  --color-ink-600: #52525B;
+  --color-ink-700: #3F3F46;
+  --color-ink-800: #27272A;
+  --color-ink-900: #18181B;
+  --color-ink-950: #09090B;
 
-  --color-base-50:  #F8FAFC;
-  --color-base-100: #F1F5F9;
-  --color-base-200: #E2E8F0;
-  --color-base-300: #CBD5E1;
-  --color-base-400: #94A3B8;
-  --color-base-500: #64748B;
-  --color-base-600: #475569;
-  --color-base-700: #334155;
-  --color-base-800: #1E293B;
-  --color-base-900: #0F172A;
-  --color-base-950: #020617;
+  --color-base-50:  #FAFAFA;
+  --color-base-100: #F4F4F5;
+  --color-base-200: #E4E4E7;
+  --color-base-300: #D4D4D8;
+  --color-base-400: #A1A1AA;
+  --color-base-500: #71717A;
+  --color-base-600: #52525B;
+  --color-base-700: #3F3F46;
+  --color-base-800: #27272A;
+  --color-base-900: #18181B;
+  --color-base-950: #09090B;
 
   /* ── Legacy Mint Colors (for backwards compatibility) ── */
   --color-mint-300: var(--color-accent-300);
