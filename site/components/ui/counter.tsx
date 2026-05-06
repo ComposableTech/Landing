@@ -72,7 +72,12 @@ export function Counter({
     requestAnimationFrame(updateCount)
   }, [hasStarted, end, duration])
 
-  const displayValue = decimals > 0 ? count.toFixed(decimals) : Math.floor(count).toString()
+  const formatter = new Intl.NumberFormat('en-US', {
+    minimumFractionDigits: decimals,
+    maximumFractionDigits: decimals,
+  })
+
+  const displayValue = formatter.format(decimals > 0 ? count : Math.floor(count))
 
   return (
     <span ref={ref} className={className}>

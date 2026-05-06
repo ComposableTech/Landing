@@ -165,11 +165,11 @@ export function ChaosToClarity() {
                   </div>
                 </div>
 
-                {/* AI Rationale */}
+                {/* Advisor Rationale */}
                 <div className="bg-ink-50 border border-ink-100 rounded-lg p-4 mb-6">
                   <div className="flex items-center gap-2 mb-2">
                     <Sparkles className="w-4 h-4 text-brand-600" />
-                    <span className="text-sm font-semibold text-ink-900">AI Rationale</span>
+                    <span className="text-sm font-semibold text-ink-900">Advisor Rationale</span>
                   </div>
                   <p className="text-sm text-ink-600 leading-relaxed">
                     Market rate for this tier increased 6%. Sarah&apos;s performance is top 10%. Flight risk is elevated due to 14-month tenure without adjustment. <strong>Recommendation: Immediate $15K adjustment.</strong>
@@ -210,7 +210,7 @@ export function ChaosToClarity() {
                     <Check className="w-4 h-4 text-accent-600 relative" />
                   </div>
                   <div>
-                    <div className="text-xs font-semibold text-ink-900">AI Generated</div>
+                    <div className="text-xs font-semibold text-ink-900">Synced to HRIS</div>
                     <div className="text-[10px] text-ink-500">Just now</div>
                   </div>
                 </div>
