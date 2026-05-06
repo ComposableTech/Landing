@@ -53,8 +53,8 @@ const metrics = [
     icon: 'dollar' as const,
   },
   {
-    value: '30 hrs',
-    numericValue: 30,
+    value: '10 hrs',
+    numericValue: 10,
     suffix: ' hrs',
     label: 'Per manager per cycle eliminated',
     description: 'Hours managers spend building recommendations from scratch, replaced by AI-drafted starting points grounded in data.',
