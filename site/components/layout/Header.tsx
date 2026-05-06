@@ -104,7 +104,7 @@ export function Header() {
             */}
 
             <Button asChild size="sm" variant="primary" className="ml-2">
-              <Link href="/contact">Become a design partner</Link>
+              <Link href="/contact">Apply for design partner program</Link>
             </Button>
           </div>
 
