@@ -4,7 +4,9 @@ import { FeatureSplit } from '@/components/sections/FeatureSplit'
 import { UseCaseGrid } from '@/components/sections/UseCaseGrid'
 import { MetricsRow } from '@/components/sections/MetricsRow'
 import { CTABanner } from '@/components/sections/CTABanner'
-import { AnimateIn } from '@/components/ui/animate-in'
+import { ChaosToClarity } from '@/components/sections/ChaosToClarity'
+import { MeritCycleDashboard } from '@/components/mockups/MeritCycleDashboard'
+import { CompAgentMonitor } from '@/components/mockups/CompAgentMonitor'
 
 export const metadata: Metadata = {
   title: 'Composable — AI infrastructure for compensation',
@@ -42,88 +44,49 @@ const useCases = [
 const metrics = [
   {
     value: '$300K',
+    numericValue: 300,
+    prefix: '$',
+    suffix: 'K',
     label: 'Labor savings per merit cycle',
     description: 'AI Merit Cycles — labor cost recovered per cycle at 1,000 employees, by eliminating manual prep work for every manager.',
-    accent: 'mint' as const,
+    accent: 'accent' as const,
+    icon: 'dollar' as const,
   },
   {
-    value: '30 hrs',
+    value: '10 hrs',
+    numericValue: 10,
+    suffix: ' hrs',
     label: 'Per manager per cycle eliminated',
     description: 'Hours managers spend building recommendations from scratch, replaced by AI-drafted starting points grounded in data.',
     accent: 'brand' as const,
+    icon: 'clock' as const,
   },
   {
     value: '2%',
+    numericValue: 2,
+    suffix: '%',
     label: 'Total payroll savings annually',
     description: 'Compensation Agent — annual payroll savings from just-in-time raises. Right amount, right person, right moment.',
-    accent: 'mint' as const,
+    accent: 'accent' as const,
+    icon: 'trending' as const,
   },
   {
     value: '$2.5M+',
+    numericValue: 2.5,
+    prefix: '$',
+    suffix: 'M+',
     label: 'Annual recurring savings',
     description: 'Compensation Agent at 1,000 employees. 2% of total payroll, saved every year — from eliminating unnecessary raises alone.',
     accent: 'purple' as const,
+    icon: 'zap' as const,
   },
 ]
 
 export default function HomePage() {
   return (
     <>
-      <Hero />
 
-      {/* Problem section */}
-      <section className="py-20 md:py-28 relative overflow-hidden">
-        <div
-          aria-hidden
-          className="absolute inset-0 -z-10"
-          style={{
-            background: 'linear-gradient(135deg, #4338CA 0%, #6366F1 50%, #2DD4BF 100%)',
-          }}
-        />
-        <div
-          aria-hidden
-          className="absolute inset-0 -z-10 opacity-20"
-          style={{
-            backgroundImage:
-              'radial-gradient(circle at 20% 50%, rgba(255,255,255,0.3) 0%, transparent 50%), radial-gradient(circle at 80% 50%, rgba(255,255,255,0.1) 0%, transparent 50%)',
-          }}
-        />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <AnimateIn>
-            <div className="max-w-2xl mb-12">
-              <p className="text-xs font-semibold tracking-widest text-white/60 uppercase mb-4">
-                The problem
-              </p>
-              <h2 className="font-display text-4xl sm:text-5xl font-extrabold text-white leading-tight">
-                Annual cycles are a retention liability.
-              </h2>
-            </div>
-          </AnimateIn>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-            {[
-              {
-                num: '01',
-                text: 'Six weeks of prep for a cycle already 14 months out of date when it opens.',
-              },
-              {
-                num: '02',
-                text: 'A 4% pool distributed uniformly — overpaying half the team and underpaying the other.',
-              },
-              {
-                num: '03',
-                text: 'The employees you needed to retain didn\'t wait for your next cycle date.',
-              },
-            ].map((item, i) => (
-              <AnimateIn key={item.num} delay={i * 0.08}>
-                <div className="p-6 rounded-2xl border border-white/20 bg-white/10 h-full">
-                  <p className="font-display text-3xl font-extrabold text-white/30 mb-3">{item.num}</p>
-                  <p className="text-white/90 text-base leading-relaxed">{item.text}</p>
-                </div>
-              </AnimateIn>
-            ))}
-          </div>
-        </div>
-      </section>
+      <Hero />
 
       <FeatureSplit
         eyebrow="AI Merit Cycles"
@@ -136,9 +99,7 @@ export default function HomePage() {
         ]}
         cta={{ label: 'See AI merit cycles', href: '/features/ai-merit-cycles' }}
         imageLabel="AI Merit Cycle Recommendations"
-        imageSrc="/mock-slack.png"
-        imageWidth={720}
-        imageHeight={500}
+        customComponent={<MeritCycleDashboard />}
       />
 
       <FeatureSplit
@@ -152,12 +113,12 @@ export default function HomePage() {
         ]}
         cta={{ label: 'See the comp agent', href: '/features/comp-agent' }}
         imageLabel="Always-On Compensation Agent"
-        imageSrc="/mock-slack-auto.png"
-        imageWidth={720}
-        imageHeight={500}
+        customComponent={<CompAgentMonitor />}
         reverse
-        bgClass="bg-brand-50"
+        accent
       />
+
+      <ChaosToClarity />
 
       <MetricsRow
         eyebrow="By the numbers"

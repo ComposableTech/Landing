@@ -17,24 +17,23 @@ export function CTABanner({
 }: CTABannerProps) {
   return (
     <section className="py-20 md:py-28 relative overflow-hidden">
-      {/* Gradient background */}
+      {/* Animated gradient background */}
       <div
         aria-hidden
-        className="absolute inset-0 -z-10"
+        className="absolute inset-0 -z-10 animate-gradient-shift"
         style={{
           background:
-            'linear-gradient(135deg, #4338CA 0%, #6366F1 50%, #2DD4BF 100%)',
+            'linear-gradient(135deg, var(--color-brand-600) 0%, var(--color-intelligence-500) 50%, var(--color-accent-500) 100%)',
+          backgroundSize: '200% 200%',
         }}
       />
-      {/* Subtle noise texture overlay */}
-      <div
-        aria-hidden
-        className="absolute inset-0 -z-10 opacity-20"
-        style={{
-          backgroundImage:
-            'radial-gradient(circle at 20% 50%, rgba(255,255,255,0.3) 0%, transparent 50%), radial-gradient(circle at 80% 50%, rgba(255,255,255,0.1) 0%, transparent 50%)',
-        }}
-      />
+      {/* Animated glow orbs */}
+      <div className="absolute inset-0 -z-10 overflow-hidden">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-white/10 rounded-full blur-[120px] animate-pulse-glow"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-white/10 rounded-full blur-[120px] animate-pulse-glow" style={{ animationDelay: '1.5s' }}></div>
+      </div>
+      {/* Grid pattern overlay */}
+      <div className="absolute inset-0 -z-10 opacity-10 grid-pattern"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <AnimateIn>
