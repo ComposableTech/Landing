@@ -30,6 +30,11 @@ export const metadata: Metadata = {
   authors: [{ name: 'Composable' }],
   creator: 'Composable',
   metadataBase: new URL('https://getcomposable.com'),
+  icons: {
+    icon: '/FavIcon.svg',
+    shortcut: '/FavIcon.svg',
+    apple: '/FavIcon.svg',
+  },
   openGraph: {
     type: 'website',
     locale: 'en_US',

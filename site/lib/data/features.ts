@@ -45,7 +45,7 @@ export const features: Feature[] = [
     tagline: 'Employee-directed allocation across every comp dimension',
     eyebrow: 'Employee Experience',
     description:
-      'Let employees self-allocate their total rewards across base salary, RRSP/401(k), equity, benefits, and perks — within the guardrails you define. The infrastructure behind Shopify\'s FlexComp, available to every company.',
+      'Let employees self-allocate their total rewards across base salary, RRSP/401(k), equity, benefits, and perks — within the guardrails you define. Enterprise-grade infrastructure for employee choice.',
     icon: 'Sliders',
     bullets: [
       '10+ configurable comp dimensions',

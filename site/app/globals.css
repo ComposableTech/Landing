@@ -59,11 +59,14 @@
   --color-base-900: #18181B;
   --color-base-950: #09090B;
 
-  /* ── Legacy Mint Colors (for backwards compatibility) ── */
-  --color-mint-300: var(--color-accent-300);
-  --color-mint-400: var(--color-accent-400);
-  --color-mint-500: var(--color-accent-500);
-  --color-mint-600: var(--color-accent-600);
+  /* ── Mint Colors (green for success/positive values) ── */
+  --color-mint-50:  #F0FDF4;
+  --color-mint-100: #DCFCE7;
+  --color-mint-300: #86EFAC;
+  --color-mint-400: #4ADE80;
+  --color-mint-500: #10B981;
+  --color-mint-600: #059669;
+  --color-mint-700: #047857;
 
   /* ── Legacy Purple Colors (for backwards compatibility) ── */
   --color-purple-400: var(--color-intelligence-400);

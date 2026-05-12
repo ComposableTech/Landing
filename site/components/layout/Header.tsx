@@ -10,21 +10,15 @@ import { cn } from '@/lib/utils'
 
 const productLinks = [
   {
-    label: 'AI Compensation Intelligence',
-    href: '/features/comp-agent',
-    desc: 'Continuous, individualized pay decisions powered by your live data',
+    label: 'Compensation Agent for Merit Cycles',
+    href: '/products/compensation-agent-merit-cycles',
+    desc: 'A compensation intelligence engine that replaces spreadsheets',
     image: '/mock-recommendations.png',
   },
   {
-    label: 'Just-in-time Merit Cycles',
-    href: '/features/ai-merit-cycles',
-    desc: 'AI-drafted recommendations for every employee before the cycle starts',
-    image: '/mock-slack-auto.png',
-  },
-  {
-    label: 'Flexible Compensation',
-    href: '/features/flex-comp-engine',
-    desc: 'Employee-directed allocation across salary, equity, retirement, and benefits',
+    label: 'Flexible Compensation Infrastructure',
+    href: '/products/flexible-compensation-infrastructure',
+    desc: 'Employee-directed total rewards allocation',
     image: '/mock-flex.png',
   },
 ]
@@ -79,8 +73,15 @@ export function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 font-display font-bold text-xl tracking-tight">
-            <span className="grad-text">COMPOSABLE</span>
+          <Link href="/" className="flex items-center">
+            <Image
+              src="/Logo.svg"
+              alt="Composable"
+              width={150}
+              height={40}
+              className="h-8 w-auto"
+              priority
+            />
           </Link>
 
           {/* Right side: Product dropdown + Sign in + CTA */}

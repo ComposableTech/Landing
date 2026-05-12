@@ -29,7 +29,10 @@ export default async function FeatureDetailPage({ params }: { params: Promise<{ 
   if (!feature) notFound()
 
   const Icon = iconMap[feature.icon]
-  const related = features.filter((f) => f.slug !== slug).slice(0, 3)
+  // Filter out current feature and hidden features (total-rewards-statements)
+  const related = features
+    .filter((f) => f.slug !== slug && f.slug !== 'total-rewards-statements')
+    .slice(0, 3)
 
   return (
     <>
